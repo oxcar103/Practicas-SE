@@ -1,0 +1,57 @@
+Instrucciones para instalar la toolchain precompilada para Linux:
+----------------------------------------------------------------
+
+* Descargar la versión adecuada para tu PC:
+  - Sistemas de 64 bits: toolchain_linux_amd64.tar.bz2
+  - Sistemas de 32 bits: toolchain_linux_i386.tar.bz2
+
+* Descomprimir el fichero en el directorio /opt:
+  - OpenOCD no funcionará si la toolchain se descomprime en otro directorio
+
+* Instalar los paquetes necesarios para cubrir las dependencias de la toolchain:
+
+  - Para distribuciones basadas en Debian/Ubuntu:
+     autoconf
+     bison
+     build-essential
+     default-jre
+     flex
+     libftdi-dev
+     libgmp3-dev
+     libmpc-dev
+     libmpfr-dev
+     libncurses5-dev
+     libtool
+     libusb-1.0-0-dev
+     putty
+     texinfo
+     wget
+     xterm
+     zlib1g-dev
+
+  - Para distribuciones basadas en Fedora:
+     autoconf
+     bison
+     flex 
+     gmp-devel
+     java-1.8.0-openjdk
+     libftdi-devel
+     libmpc-devel
+     libtool
+     libusb-devel
+     mpfr-devel
+     ncurses-devel
+     putty
+     texinfo
+     wget
+     xterm
+     zlib-devel
+
+* Crear una regla para que el servicio udev permita usar la placa Econotag a todos los usuarios:
+
+  - Crear un fichero en /etc/udev/rules.d con el nombre 99-ftdi.rules
+  - Rellenar el fichero con el siguiente contenido:
+
+     SUBSYSTEMS=="usb", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE:="666"
+
+
