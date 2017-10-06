@@ -4,8 +4,7 @@ Practicas-SE
 Prácticas de la asignatura Sistemas Empotrados (SE).  
 ------------------------
 
-- **P1-Conexión y gestión remota de la plataforma**: En esta práctica, .  
-<!--- "- **P2-**: .  " -->
+- **P1-Conexión y gestión remota de la plataforma**: En esta práctica, veremos cómo consultar los manuales para encontrar componentes en la placa, y cómo accederlos y grabarle una imagen en RAM a través de *openocd*.  
 
 Licencia  
 ------------------------
