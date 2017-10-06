@@ -1,0 +1,39 @@
+Ejercicios de la Práctica 1:
+
+(Mirando econotag-r2-sch.pdf)
+LED Rojo: GPIO44/TX_ON
+LED Verde: GPIO45/RX_ON
+
+(Mirando MC1322xRM.pdf, sección 11.4.6 Pin Mapping within GPIO Control Registers)
+El bit del LED Rojo (GPIO44) es el 12 de Register X+4
+El bit del LED Verde (GPIO45) es el 13 de Register X+4
+
+(Mirando MC1322xRM.pdf, sección 11.6 GPIO Module Register Memory Map)
+La dirección base es 0x8000_0000
+La dirección del GPIO Pad Direction es Base+0x00 para GPIO 00-31 y Base+0x04 para GPIO 32-63 (nuestro caso)
+La dirección del GPIO Data Set es Base+0x48 para GPIO 00-31 y Base+0x4C para GPIO 32-63 (nuestro caso)
+La dirección del GPIO Data Reset es Base+0x50 para GPIO 00-31 y Base+0x54 para GPIO 32-63 (nuestro caso)
+
+
+
+
+(Por magias de redbee-econotag.cfg y redbee.cfg)
+Ejecutando "openocd -f interface/ftdi/redbee-econotag.cfg -f board/redbee.cfg" con la placa conectada, openocd conecta con la placa mediante las configuraciones dadas en redbee-econotag.cfg y redbee.cfg
+
+(Establecer una conexión telnet, fácil, "man telnet")
+telnet localhost 4444 para conectar por telnet con openocd
+
+(Mirar "help" una vez tenemos la conexión telnet)
+soft_reset_halt para detener el procesador
+resume reactivaría el procesador por la dirección indicada(por defecto, el contador de programa)
+
+(Mirar "help" una vez tenemos la conexión telnet, en particular, la opción "mww")
+"mww 0x80000004 0x1000" si sólo queremos trabajar con el LED rojo, "mww 0x80000004 0x2000" si sólo queremos trabajar con el LED verde, "mww 0x80000004 0x3000" si queremos trabajar con ambos LED's
+Suponiendo que hemos permitido la modificación del LED rojo, "mww 0x8000004C 0x1000" para activarlo, "mww 0x80000054 0x1000" para desactivarlo
+Suponiendo que hemos permitido la modificación del LED verde, "mww 0x8000004C 0x2000" para activarlo, "mww 0x80000054 0x2000" para desactivarlo
+
+(Mirando MC1322xRM.pdf, sección 4.4 Exception Vectors)
+La dirección base de la RAM es 0x0040_0000
+(Mirar "help" una vez tenemos la conexión telnet, en particular, la opción "load_image")
+Lo primero es detener el procesador con "soft_reset_halt"; después cargamos la imagen en la RAM con "load_image <archivo .bin, .ihex, .elf o .s19> <dirección de la RAM>", en nuestro caso, omitimos este último parámetro pues es 0; finalmente ejecutamos dicha imagen con "resume <<dirección de la RAM> + <base de la RAM>>", en nuestro caso, la base era 0x0040_0000.
+
