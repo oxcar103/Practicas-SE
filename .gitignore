@@ -55,3 +55,6 @@ dkms.conf
 # Huge compressed files and metadata
 *.tar.bz2
 *.metadata
+
+# Decompressed manuals
+Manuales/*/*
