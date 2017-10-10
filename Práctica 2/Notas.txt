@@ -1,0 +1,16 @@
+(Mirando econotag-r2-sch.pdf)
+LED Rojo: GPIO44, bit 12 de Register X+4
+LED Verde: GPIO45, bit 13 de Register X+4
+Botón S2: GPIO23-GPIO27, bits 23 y 27 de Register X
+Botón S3: GPIO22-GPIO26, bits 22 y 26 de Register X
+
+(Mirando MC1322xRM.pdf, sección 11.7.1 GPIO Pad Direction Registers (GPIO_PAD_DIR0 and GPIO_PAD_DIR1))
+GPIO22 y GPIO23 están por defecto como salida mientras que GPIO26 y GPIO27 están por defecto como entrada
+
+(Mirando MC1322xRM.pdf, sección 11.6 GPIO Module Register Memory Map)
+La dirección base es 0x8000_0000
+La dirección del GPIO Pad Direction es Base+0x00 para GPIO 00-31 y Base+0x04 para GPIO 32-63
+La dirección del GPIO Data Set es Base+0x48 para GPIO 00-31 y Base+0x4C para GPIO 32-63
+La dirección del GPIO Data Reset es Base+0x50 para GPIO 00-31 y Base+0x54 para GPIO 32-63
+
+
