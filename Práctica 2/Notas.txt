@@ -10,7 +10,14 @@ GPIO22 y GPIO23 están por defecto como salida mientras que GPIO26 y GPIO27 est�
 (Mirando MC1322xRM.pdf, sección 11.6 GPIO Module Register Memory Map)
 La dirección base es 0x8000_0000
 La dirección del GPIO Pad Direction es Base+0x00 para GPIO 00-31 y Base+0x04 para GPIO 32-63
+La dirección del GPIO Data es Base+0x08 para GPIO 00-31 y Base+0x0c para GPIO 32-63
 La dirección del GPIO Data Set es Base+0x48 para GPIO 00-31 y Base+0x4C para GPIO 32-63
 La dirección del GPIO Data Reset es Base+0x50 para GPIO 00-31 y Base+0x54 para GPIO 32-63
 
 
+
+r4 el botón que debemos comprobar
+r5 el led que encendemos y apagamos
+r6 registro GPIO_DATA_SET1
+r7 registro GPIO_DATA_RESET1
+r8 registro GPIO_DATA0
