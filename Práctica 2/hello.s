@@ -103,9 +103,9 @@ gpio_init:
         ldr     r6, =GPIO_DATA0
         ldr     r7, =GPIO_DATA_SET1
         ldr     r8, =GPIO_DATA_RESET1
-
+        ldr     r9, =(BUTTON_S2_IN | BUTTON_S3_IN)
+        ldr    r10, =(LED_RED_MASK | LED_GREEN_MASK)
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
-
 
