@@ -78,6 +78,7 @@ pause:
 @
 @ Función que inicializa leds y botones
 @
+        .type   gpio_init, %function
 gpio_init:
         @ No necesitamos configurar GPIO22, GPIO23, GPIO26 y GPIO26 ya que usaremos sus valores por defecto
         @ Dirección del registro GPIO_DATA_SET0
