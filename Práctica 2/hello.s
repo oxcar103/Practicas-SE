@@ -11,6 +11,10 @@
         .set GPIO_PAD_DIR0,     0x80000000
         .set GPIO_PAD_DIR1,     0x80000004
 
+        @ Registro de datos del GPIO00-GPIO31 y GPIO32-GPIO63
+        .set GPIO_DATA_SET0,    0x80000008
+        .set GPIO_DATA_SET1,    0x8000000c
+
         @ Registro de activación de bits del GPIO00-GPIO31 y GPIO32-GPIO63
         .set GPIO_DATA_SET0,    0x80000048
         .set GPIO_DATA_SET1,    0x8000004c
@@ -41,24 +45,7 @@
         .type   _start, %function
 
 _start:
-
-        @ No necesitamos configurar GPIO22, GPIO23, GPIO26 y GPIO26 ya que usaremos sus valores por defecto
-        @ Dirección del registro GPIO_DATA_SET0
-        ldr     r6, =GPIO_DATA_SET0
-
-        @ Establecemos a 1 la salida de los GPIO22 y GPIO23
-        ldr     r5, =(BUTTON_S2_MASK | BUTTON_S3_MASK)
-        str     r5, [r6]
-
-        @ Configuramos GPIO44 y GPIO45 como salida estableciendo el led rojo como por defecto
-        ldr     r4, =GPIO_PAD_DIR1
-        ldr     r5, =(LED_RED_MASK | LED_GREEN_MASK)
-        str     r5, [r4]
-        ldr     r5, =LED_RED_MASK
-
-        @ Direcciones de los registros GPIO_DATA_SET1 y GPIO_DATA_RESET1
-        ldr     r6, =GPIO_DATA_SET1
-        ldr     r7, =GPIO_DATA_RESET1
+        bl      gpio_init
 
 loop:
         @ Encendemos el led
@@ -88,3 +75,27 @@ pause:
         bne     pause
         mov     pc, lr
 
+@
+@ Función que inicializa leds y botones
+@
+gpio_init:
+        @ No necesitamos configurar GPIO22, GPIO23, GPIO26 y GPIO26 ya que usaremos sus valores por defecto
+        @ Dirección del registro GPIO_DATA_SET0
+        ldr     r6, =GPIO_DATA_SET0
+
+        @ Establecemos a 1 la salida de los GPIO22 y GPIO23
+        ldr     r5, =(BUTTON_S2_MASK | BUTTON_S3_MASK)
+        str     r5, [r6]
+
+        @ Configuramos GPIO44 y GPIO45 como salida estableciendo el led rojo como por defecto
+        ldr     r4, =GPIO_PAD_DIR1
+        ldr     r5, =(LED_RED_MASK | LED_GREEN_MASK)
+        str     r5, [r4]
+        ldr     r5, =LED_RED_MASK
+
+        @ Direcciones de los registros GPIO_DATA_SET1 y GPIO_DATA_RESET1
+        ldr     r6, =GPIO_DATA_SET1
+        ldr     r7, =GPIO_DATA_RESET1
+
+        @ Retornamos a donde se invocó la función
+        mov     pc, lr
