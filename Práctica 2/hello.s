@@ -52,6 +52,9 @@ _start:
         bl      gpio_init
 
 loop:
+        @ Comprobamos botones pulsados
+        bl test_buttons
+
         @ Encendemos el led
         str     r5, [r7]
 
@@ -61,6 +64,9 @@ loop:
 
         @ Apagamos el led
         str     r5, [r8]
+
+        @ Comprobamos botones pulsados
+        bl test_buttons
 
         @ Pausa corta
         ldr     r0, =DELAY
@@ -105,6 +111,22 @@ gpio_init:
         ldr     r8, =GPIO_DATA_RESET1
         ldr     r9, =(BUTTON_S2_IN | BUTTON_S3_IN)
         ldr    r10, =(LED_RED_MASK | LED_GREEN_MASK)
+
+        @ Retornamos a donde se invocó la función
+        mov     pc, lr
+
+@
+@ Función para detectar si un botón se pulsa
+@
+        .type   test_buttons, %function
+test_buttons:
+        @ Comprobamos si el botón está pulsado
+        ldr     r0, [r6]
+        tst     r0, r4
+
+        @ Si lo está, cambiamos el led que debemos encender y el botón que debemos comprobar
+        eorne   r4, r9
+        eorne   r5, r10
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
