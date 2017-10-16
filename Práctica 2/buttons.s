@@ -1,6 +1,5 @@
 @
 @ Sistemas Empotrados
-@ El "hola mundo" en la Redwire EconoTAG
 @
 
 @
