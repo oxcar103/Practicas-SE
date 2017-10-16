@@ -48,7 +48,7 @@ _start:
 gpio_init:
     <Marca como salida GPIO22, GPIO23, GPIO44, GPIO45>                  @ usando ldr y str
     <Marca como entrada GPIO26, GPIO27>                                 @ usando ldr y str
-    <Fijamos los valores iniciales de los registros que vamos a usar>   @usando ldr)
+    <Fijamos los valores iniciales de los registros que vamos a usar>   @ usando ldr
 
 test_buttons:
     if(<Han pulsado el botón>){
