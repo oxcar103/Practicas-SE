@@ -15,9 +15,45 @@ La dirección del GPIO Data Set es Base+0x48 para GPIO 00-31 y Base+0x4C para GP
 La dirección del GPIO Data Reset es Base+0x50 para GPIO 00-31 y Base+0x54 para GPIO 32-63
 
 
-
+Registros usados:
 r4 el botón que debemos comprobar
 r5 el led que encendemos y apagamos
 r6 registro GPIO_DATA_SET1
 r7 registro GPIO_DATA_RESET1
 r8 registro GPIO_DATA0
+r9 BUTTON_S2_IN|BUTTON_S3_IN
+r10 LED_RED_MASK|LED_GREEN_MASK
+
+Buttons.s
+Lo primero es establecer la cabecera de nuestro programa, siendo muy típica:
+    .code 32            @ pudiendo programarse en 8, 16,...
+    .text               @ texto
+    .global _start      @ esta función es visible desde fuera
+
+Tras esto, es importante fijar las direcciones de memoria y los bits que vamos a usar mediante constantes(.set)
+También es importante definir las funciones:
+    .type   <nombre>, %function
+En nuestro caso existen, _start, gpio_init, test_buttons y pause.
+
+_start:
+    gpio_init           @ usando bl
+    loop{
+        test_buttons    @ usando bl
+        <enciende led>
+        pause           @ usando bl
+        <apaga led>
+        pause           @ usando bl
+    }
+
+gpio_init:
+    <Marca como salida GPIO22, GPIO23, GPIO44, GPIO45>                  @ usando ldr y str
+    <Marca como entrada GPIO26, GPIO27>                                 @ usando ldr y str
+    <Fijamos los valores iniciales de los registros que vamos a usar>   @usando ldr)
+
+test_buttons:
+    if(<Han pulsado el botón>){
+        <Cambiar botón que comprobar>   @ usando eor, a.k.a. xor
+        <Cambiar led que encender>      @ usando eor, a.k.a. xor
+    }
+
+Como las funciones son llamadas con "bl", al final debemos devolver al PC el valor que tenía.
