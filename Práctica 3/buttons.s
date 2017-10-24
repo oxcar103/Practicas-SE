@@ -194,12 +194,12 @@ pressed_button:
         @ La entrada del botón S2 es GPIO27 y el del botón S3 es GPIO26
         BUTTON_S2_IN:       .word   (1 << 27)
         BUTTON_S3_IN:       .word   (1 << 26)
-        CHECK_BUTTON:       .word
+        CHECK_BUTTON:       .word   0x0
 
         @ El led rojo está en GPIO44 y el verde en GPIO45
         LED_RED_MASK:       .word   (1 << (44-32))
         LED_GREEN_MASK:     .word   (1 << (45-32))
-        LED_ON:             .word
+        LED_ON:             .word   0x0
 
         @ Retardo para el parpadeo
         DELAY:              .word   0x00080000
