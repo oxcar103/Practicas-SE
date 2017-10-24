@@ -29,6 +29,7 @@ SECTIONS
         .text : ALIGN(4)
         {
                 *(.text);
+                *(.data);
         } > ram0
 
         /* Regiones de testeo de RAM */
@@ -46,4 +47,12 @@ SECTIONS
                 s3 = .;     // Los espacios a cada lado del "=" son importantes
         } > ram3
         */
+
+        /*
+        .data : //ALIGN(4)
+        {
+                *(.data);
+        } > ram1
+        */
+
 }
