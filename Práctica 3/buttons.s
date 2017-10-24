@@ -22,7 +22,6 @@
         .set GPIO_DATA_RESET0,  0x80000050
         .set GPIO_DATA_RESET1,  0x80000054
 
-
         @ La salida del botón S2 es GPIO23 y el del botón S3 es GPIO22
         @.set BUTTON_S2_OUT,     (1 << 23)
         @.set BUTTON_S3_OUT,     (1 << 22)
@@ -57,7 +56,7 @@ loop:
         @ Encendemos el led
         ldr     r4, =LED_ON
         ldr     r5, [r4]
-        str     r5, [r7]
+        str     r5, [r8]
 
         @ Pausa corta
         ldr     r4, =DELAY
@@ -67,7 +66,7 @@ loop:
         @ Apagamos el led
         ldr     r4, =LED_ON
         ldr     r5, [r4]
-        str     r5, [r8]
+        str     r5, [r9]
 
         @ Comprobamos botones pulsados
         bl      test_buttons
@@ -127,9 +126,9 @@ gpio_init:
         ldr     r4, =LED_ON
         str     r5, [r4]
 
-        ldr     r6, =GPIO_DATA0
-        ldr     r7, =GPIO_DATA_SET1
-        ldr     r8, =GPIO_DATA_RESET1
+        ldr     r7, =GPIO_DATA0
+        ldr     r8, =GPIO_DATA_SET1
+        ldr     r9, =GPIO_DATA_RESET1
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
@@ -140,12 +139,13 @@ gpio_init:
         .type   test_buttons, %function
 test_buttons:
         @ Comprobamos si el botón está pulsado
-        ldr     r0, [r6]
-        ldr     r1, =CHECK_BUTTON
+        ldr     r0, [r7]
+        ldr     r4, =CHECK_BUTTON
+        ldr     r1, [r4]
         tst     r0, r1
 
         @ Si lo está, cambiamos el led que debemos encender y el botón que debemos comprobar en otra función
-        blne    pressed_button        
+        blne    pressed_button
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
@@ -164,8 +164,8 @@ pressed_button:
 
         @ Permutamos el valor de CHECK_BUTTON
         ldr     r4, =CHECK_BUTTON
-        ldr     r7, [r4]
-        eor     r5, r7
+        ldr     r6, [r4]
+        eor     r5, r6
         str     r5, [r4]
 
         @ Sumamos ambas máscaras
@@ -177,8 +177,8 @@ pressed_button:
 
         @ Permutamos el valor de LED_ON
         ldr     r4, =LED_ON
-        ldr     r7, [r4]
-        eor     r5, r7
+        ldr     r6, [r4]
+        eor     r5, r6
         str     r5, [r4]
 
         @ Retornamos a donde se invocó la función
@@ -194,13 +194,13 @@ pressed_button:
         @ La entrada del botón S2 es GPIO27 y el del botón S3 es GPIO26
         BUTTON_S2_IN:       .word   (1 << 27)
         BUTTON_S3_IN:       .word   (1 << 26)
-        CHECK_BUTTON:       .word   
+        CHECK_BUTTON:       .word
 
         @ El led rojo está en GPIO44 y el verde en GPIO45
         LED_RED_MASK:       .word   (1 << (44-32))
         LED_GREEN_MASK:     .word   (1 << (45-32))
-        LED_ON:             .word   
+        LED_ON:             .word
 
         @ Retardo para el parpadeo
-        DELAY:              .word   0x00100000
+        DELAY:              .word   0x00080000
 
