@@ -20,3 +20,12 @@ Siendo nm el modo más conciso, ya que informa de los símbolos creados y su dir
 Por otro lado, readelf es el más completo aportando además datos como tipo y visión(local o global) del símbolo.
 
 Y una vez testeado (como nosotros no lo usaremos, lo comentamos)
+
+Sustituir el uso de constantes por variables es relativamente sencillo(siempre y cuando tengas en cuenta que si nos les das un valor inicial... Kablammo! <referencia a Los Simpsons>), basta con:
+    · Tener en cuenta indicar que debemos empezar la sección ".data" antes de declarar las variables.
+    · En la definición, quitamos el ".set", sustituimos "," por ":" pues ahora el nombre de la constante pasa a ser una variable e introducimos la directiva ".word" (aunque podemos usar otras si el dato fuese half-word o byte).
+    · Inicializar la variable, aunque sea con 0x0.
+    · En las lecturas y escrituras, debemos cargar la etiqueta en un registro y después leer o escribir:
+        ldr r4, =LABEL
+        ldr/str r5, [r4]
+
