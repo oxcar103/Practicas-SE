@@ -98,7 +98,7 @@ gpio_init:
         ldr     r5, [r4]
         ldr     r4, =BUTTON_S3_OUT
         ldr     r6, [r4]
-        eor     r5, r6
+        orr     r5, r6
         str     r5, [r7]
 
         @ Configuramos GPIO44 y GPIO45 como salida
@@ -107,7 +107,7 @@ gpio_init:
         ldr     r5, [r4]
         ldr     r4, =LED_GREEN_MASK
         ldr     r6, [r4]
-        eor     r5, r6
+        orr     r5, r6
         str     r5, [r7]
 
         @ Fijamos los valores iniciales de las variables que usaremos
@@ -135,16 +135,48 @@ gpio_init:
 test_buttons:
         @ Comprobamos si el botón está pulsado
         ldr     r0, [r6]
-        tst     r0, r4
+        ldr     r1, =CHECK_BUTTON
+        tst     r0, r1
 
-        @ Si lo está, cambiamos el led que debemos encender y el botón que debemos comprobar
-        eorne   r4, r9
-        eorne   r5, r10
+        @ Si lo está, cambiamos el led que debemos encender y el botón que debemos comprobar en otra función
+        blne    pressed_button        
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
 
+@
+@ Función para cambiar CHECK_BUTTON y LED_ON dado que se ha pulsado el botón.
+@
+        .type   pressed_button, %function
+pressed_button:
+        @ Sumamos ambas máscaras
+        ldr     r4, =BUTTON_S2_IN
+        ldr     r5, [r4]
+        ldr     r4, =BUTTON_S3_IN
+        ldr     r6, [r4]
+        orr     r5, r6
 
+        @ Permutamos el valor de CHECK_BUTTON
+        ldr     r4, =CHECK_BUTTON
+        ldr     r7, r[4]
+        eor     r5, r7
+        str     r5, [r4]
+
+        @ Sumamos ambas máscaras
+        ldr     r4, =LED_RED_MASK
+        ldr     r5, [r4]
+        ldr     r4, =LED_GREEN_MASK
+        ldr     r6, [r4]
+        orr     r5, r6
+
+        @ Permutamos el valor de LED_ON
+        ldr     r4, =LED_ON
+        ldr     r7, [r4]
+        eor     r5, r7
+        str     r5, [r4]
+
+        @ Retornamos a donde se invocó la función
+        mov     pc, lr
 
 @ Variables globales
         .data
