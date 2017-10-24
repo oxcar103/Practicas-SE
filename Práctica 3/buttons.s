@@ -22,21 +22,6 @@
         .set GPIO_DATA_RESET0,  0x80000050
         .set GPIO_DATA_RESET1,  0x80000054
 
-        @ La salida del botón S2 es GPIO23 y el del botón S3 es GPIO22
-        @.set BUTTON_S2_OUT,     (1 << 23)
-        @.set BUTTON_S3_OUT,     (1 << 22)
-
-        @ La entrada del botón S2 es GPIO27 y el del botón S3 es GPIO26
-        @.set BUTTON_S2_IN,      (1 << 27)
-        @.set BUTTON_S3_IN,      (1 << 26)
-
-        @ El led rojo está en GPIO44 y el verde en GPIO45
-        @.set LED_RED_MASK,      (1 << (44-32))
-        @.set LED_GREEN_MASK,    (1 << (45-32))
-
-        @ Retardo para el parpadeo
-        @.set DELAY,             0x00080000
-
 @
 @ Variables globales
 @
