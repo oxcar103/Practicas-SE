@@ -56,6 +56,21 @@
 _start:
         bl      gpio_init
 
+        @ Fijamos los valores iniciales de las variables que usaremos
+        ldr     r4, =BUTTON_S2_IN
+        ldr     r5, [r4]
+        ldr     r4, =CHECK_BUTTON
+        str     r5, [r4]
+        
+        ldr     r4, =LED_RED_MASK
+        ldr     r5, [r4]
+        ldr     r4, =LED_ON
+        str     r5, [r4]
+
+        ldr     r7, =GPIO_DATA0
+        ldr     r8, =GPIO_DATA_SET1
+        ldr     r9, =GPIO_DATA_RESET1
+
 loop:
         @ Comprobamos botones pulsados
         bl      test_buttons
@@ -121,21 +136,6 @@ gpio_init:
         ldr     r6, [r4]
         orr     r5, r6
         str     r5, [r7]
-
-        @ Fijamos los valores iniciales de las variables que usaremos
-        ldr     r4, =BUTTON_S2_IN
-        ldr     r5, [r4]
-        ldr     r4, =CHECK_BUTTON
-        str     r5, [r4]
-        
-        ldr     r4, =LED_RED_MASK
-        ldr     r5, [r4]
-        ldr     r4, =LED_ON
-        str     r5, [r4]
-
-        ldr     r7, =GPIO_DATA0
-        ldr     r8, =GPIO_DATA_SET1
-        ldr     r9, =GPIO_DATA_RESET1
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
