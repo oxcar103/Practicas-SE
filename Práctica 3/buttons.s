@@ -52,23 +52,29 @@ _start:
 
 loop:
         @ Comprobamos botones pulsados
-        bl test_buttons
+        bl      test_buttons
 
         @ Encendemos el led
+        ldr     r4, =LED_ON
+        ldr     r5, [r4]
         str     r5, [r7]
 
         @ Pausa corta
-        ldr     r0, =DELAY
+        ldr     r4, =DELAY
+        ldr     r0, [r4]
         bl      pause
 
         @ Apagamos el led
+        ldr     r4, =LED_ON
+        ldr     r5, [r4]
         str     r5, [r8]
 
         @ Comprobamos botones pulsados
-        bl test_buttons
+        bl      test_buttons
 
         @ Pausa corta
-        ldr     r0, =DELAY
+        ldr     r4, =DELAY
+        ldr     r0, [r4]
         bl      pause
 
         @ Bucle infinito
@@ -158,7 +164,7 @@ pressed_button:
 
         @ Permutamos el valor de CHECK_BUTTON
         ldr     r4, =CHECK_BUTTON
-        ldr     r7, r[4]
+        ldr     r7, [r4]
         eor     r5, r7
         str     r5, [r4]
 
