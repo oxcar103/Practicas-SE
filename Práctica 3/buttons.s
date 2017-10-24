@@ -24,19 +24,19 @@
 
 
         @ La salida del botón S2 es GPIO23 y el del botón S3 es GPIO22
-        .set BUTTON_S2_OUT,     (1 << 23)
-        .set BUTTON_S3_OUT,     (1 << 22)
+        @.set BUTTON_S2_OUT,     (1 << 23)
+        @.set BUTTON_S3_OUT,     (1 << 22)
 
         @ La entrada del botón S2 es GPIO27 y el del botón S3 es GPIO26
-        .set BUTTON_S2_IN,      (1 << 27)
-        .set BUTTON_S3_IN,      (1 << 26)
+        @.set BUTTON_S2_IN,      (1 << 27)
+        @.set BUTTON_S3_IN,      (1 << 26)
 
         @ El led rojo está en GPIO44 y el verde en GPIO45
-        .set LED_RED_MASK,      (1 << (44-32))
-        .set LED_GREEN_MASK,    (1 << (45-32))
+        @.set LED_RED_MASK,      (1 << (44-32))
+        @.set LED_GREEN_MASK,    (1 << (45-32))
 
         @ Retardo para el parpadeo
-        .set DELAY,             0x00080000
+        @.set DELAY,             0x00080000
 
 @
 @ Punto de entrada
@@ -91,25 +91,39 @@ pause:
 gpio_init:
         @ No necesitamos configurar GPIO22, GPIO23, GPIO26 y GPIO26 ya que usaremos sus valores por defecto
         @ Dirección del registro GPIO_DATA_SET0
-        ldr     r6, =GPIO_DATA_SET0
+        ldr     r7, =GPIO_DATA_SET0
 
         @ Establecemos a 1 la salida de los GPIO22 y GPIO23
-        ldr     r5, =(BUTTON_S2_OUT | BUTTON_S3_OUT)
-        str     r5, [r6]
+        ldr     r4, =BUTTON_S2_OUT
+        ldr     r5, [r4]
+        ldr     r4, =BUTTON_S3_OUT
+        ldr     r6, [r4]
+        eor     r5, r6
+        str     r5, [r7]
 
         @ Configuramos GPIO44 y GPIO45 como salida
-        ldr     r4, =GPIO_PAD_DIR1
-        ldr     r5, =(LED_RED_MASK | LED_GREEN_MASK)
-        str     r5, [r4]
+        ldr     r7, =GPIO_PAD_DIR1
+        ldr     r4, =LED_RED_MASK
+        ldr     r5, [r4]
+        ldr     r4, =LED_GREEN_MASK
+        ldr     r6, [r4]
+        eor     r5, r6
+        str     r5, [r7]
 
         @ Fijamos los valores iniciales de las variables que usaremos
-        ldr     r4, =BUTTON_S3_IN
-        ldr     r5, =LED_RED_MASK
+        ldr     r4, =BUTTON_S2_IN
+        ldr     r5, [r4]
+        ldr     r4, =CHECK_BUTTON
+        str     r5, [r4]
+        
+        ldr     r4, =LED_RED_MASK
+        ldr     r5, [r4]
+        ldr     r4, =LED_ON
+        str     r5, [r4]
+
         ldr     r6, =GPIO_DATA0
         ldr     r7, =GPIO_DATA_SET1
         ldr     r8, =GPIO_DATA_RESET1
-        ldr     r9, =(BUTTON_S2_IN | BUTTON_S3_IN)
-        ldr    r10, =(LED_RED_MASK | LED_GREEN_MASK)
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
@@ -129,4 +143,26 @@ test_buttons:
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
+
+
+
+@ Variables globales
+        .data
+
+        @ La salida del botón S2 es GPIO23 y el del botón S3 es GPIO22
+        BUTTON_S2_OUT:      .word   (1 << 23)
+        BUTTON_S3_OUT:      .word   (1 << 22)
+
+        @ La entrada del botón S2 es GPIO27 y el del botón S3 es GPIO26
+        BUTTON_S2_IN:       .word   (1 << 27)
+        BUTTON_S3_IN:       .word   (1 << 26)
+        CHECK_BUTTON:       .word   
+
+        @ El led rojo está en GPIO44 y el verde en GPIO45
+        LED_RED_MASK:       .word   (1 << (44-32))
+        LED_GREEN_MASK:     .word   (1 << (45-32))
+        LED_ON:             .word   
+
+        @ Retardo para el parpadeo
+        DELAY:              .word   0x00100000
 
