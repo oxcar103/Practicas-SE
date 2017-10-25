@@ -124,8 +124,8 @@ test_buttons:
         tst     r0, r4
 
         @ Si lo está, cambiamos el led que debemos encender y el botón que debemos comprobar
-        eorne   r4, r9
-        eorne   r5, r10
+        eorne   r4, r4, r9
+        eorne   r5, r5, r10
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr

@@ -125,7 +125,7 @@ gpio_init:
         ldr     r5, [r4]
         ldr     r4, =BUTTON_S3_OUT
         ldr     r6, [r4]
-        orr     r5, r6
+        orr     r5, r5, r6
         str     r5, [r7]
 
         @ Configuramos GPIO44 y GPIO45 como salida
@@ -134,7 +134,7 @@ gpio_init:
         ldr     r5, [r4]
         ldr     r4, =LED_GREEN_MASK
         ldr     r6, [r4]
-        orr     r5, r6
+        orr     r5, r5, r6
         str     r5, [r7]
 
         @ Retornamos a donde se invocó la función
@@ -167,12 +167,12 @@ pressed_button:
         ldr     r5, [r4]
         ldr     r4, =BUTTON_S3_IN
         ldr     r6, [r4]
-        orr     r5, r6
+        orr     r5, r5, r6
 
         @ Permutamos el valor de CHECK_BUTTON
         ldr     r4, =CHECK_BUTTON
         ldr     r6, [r4]
-        eor     r5, r6
+        eor     r5, r5, r6
         str     r5, [r4]
 
         @ Sumamos ambas máscaras
@@ -180,12 +180,12 @@ pressed_button:
         ldr     r5, [r4]
         ldr     r4, =LED_GREEN_MASK
         ldr     r6, [r4]
-        orr     r5, r6
+        orr     r5, r5, r6
 
         @ Permutamos el valor de LED_ON
         ldr     r4, =LED_ON
         ldr     r6, [r4]
-        eor     r5, r6
+        eor     r5, r5, r6
         str     r5, [r4]
 
         @ Retornamos a donde se invocó la función
