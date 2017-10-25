@@ -3,26 +3,6 @@
 @
 
 @
-@ Constantes
-@
-
-        @ Registro de control de dirección del GPIO00-GPIO31 y GPIO32-GPIO63
-        .set GPIO_PAD_DIR0,     0x80000000
-        .set GPIO_PAD_DIR1,     0x80000004
-
-        @ Registro de datos del GPIO00-GPIO31 y GPIO32-GPIO63
-        .set GPIO_DATA0,        0x80000008
-        .set GPIO_DATA1,        0x8000000c
-
-        @ Registro de activación de bits del GPIO00-GPIO31 y GPIO32-GPIO63
-        .set GPIO_DATA_SET0,    0x80000048
-        .set GPIO_DATA_SET1,    0x8000004c
-
-        @ Registro de limpieza de bits del GPIO00-GPIO31 y GPIO32-GPIO63
-        .set GPIO_DATA_RESET0,  0x80000050
-        .set GPIO_DATA_RESET1,  0x80000054
-
-@
 @ Variables globales
 @
         .data
