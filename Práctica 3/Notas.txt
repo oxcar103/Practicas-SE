@@ -29,3 +29,5 @@ Sustituir el uso de constantes por variables es relativamente sencillo(siempre y
         ldr r4, =LABEL
         ldr/str r5, [r4]
 
+(Mirando MC1322xRM.pdf, sección 11.6 GPIO Module Register Memory Map)
+Para crear la sección gpio, tenemos que tener en cuenta que empieza en la dirección 0x80000000 y que tiene una longitud de 0x68 bytes (la última dirección empieza en base+0x64 y tiene longitud de 32 bits), es decir, 8*(6*16+8) = 832 bits = 0x340 bits, por simplificar, usaremos 0x400 = 1024 bits
