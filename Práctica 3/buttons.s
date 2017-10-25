@@ -37,7 +37,7 @@ _start:
         bl      gpio_init
 
         @ Fijamos los valores iniciales de las variables que usaremos
-        ldr     r4, =BUTTON_S2_IN
+        ldr     r4, =BUTTON_S3_IN
         ldr     r5, [r4]
         ldr     r4, =CHECK_BUTTON
         str     r5, [r4]
@@ -131,7 +131,7 @@ test_buttons:
         tst     r0, r1
 
         @ Si lo está, cambiamos el led que debemos encender y el botón que debemos comprobar en otra función
-        blne    pressed_button
+        bne     pressed_button
 
         @ Retornamos a donde se invocó la función
         mov     pc, lr
