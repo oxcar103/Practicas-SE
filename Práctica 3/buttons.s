@@ -47,10 +47,6 @@ _start:
         ldr     r4, =LED_ON
         str     r5, [r4]
 
-        ldr     r7, =GPIO_DATA0
-        ldr     r8, =GPIO_DATA_SET1
-        ldr     r9, =GPIO_DATA_RESET1
-
 loop:
         @ Comprobamos botones pulsados
         bl      test_buttons
@@ -58,7 +54,8 @@ loop:
         @ Encendemos el led
         ldr     r4, =LED_ON
         ldr     r5, [r4]
-        str     r5, [r8]
+        ldr     r4, =GPIO_DATA_SET1
+        str     r5, [r4]
 
         @ Pausa corta
         ldr     r4, =DELAY
@@ -68,7 +65,8 @@ loop:
         @ Apagamos el led
         ldr     r4, =LED_ON
         ldr     r5, [r4]
-        str     r5, [r9]
+        ldr     r4, =GPIO_DATA_RESET1
+        str     r5, [r4]
 
         @ Comprobamos botones pulsados
         bl      test_buttons
@@ -126,7 +124,8 @@ gpio_init:
         .type   test_buttons, %function
 test_buttons:
         @ Comprobamos si el botón está pulsado
-        ldr     r0, [r7]
+        ldr     r3, =GPIO_DATA0        
+        ldr     r0, [r3]
         ldr     r3, =CHECK_BUTTON
         ldr     r1, [r3]
         tst     r0, r1
