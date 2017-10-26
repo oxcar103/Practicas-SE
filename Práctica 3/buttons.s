@@ -3,7 +3,7 @@
 @
 
 @
-@ Variables globales
+@ Variables globales inicializadas
 @
         .data
 
@@ -22,7 +22,11 @@
         @ Retardo para el parpadeo
         DELAY:              .word   0x00080000
 
+@
+@ Variables globales sin inicializar
+@
         .bss
+
         @ Botón a comprobar
         CHECK_BUTTON:       .word   0x0
         @ Led a encender
