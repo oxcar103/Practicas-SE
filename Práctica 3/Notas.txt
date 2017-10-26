@@ -32,6 +32,8 @@ Sustituir el uso de constantes por variables es relativamente sencillo(siempre y
 (Mirando MC1322xRM.pdf, sección 11.6 GPIO Module Register Memory Map)
 Para crear la sección gpio, tenemos que tener en cuenta que empieza en la dirección 0x80000000 y que tiene una longitud de 0x68 bytes (la última dirección empieza en base+0x64 y tiene longitud de 32 bits), es decir, 8*(6*16+8) = 832 bits = 0x340 bits, por simplificar, usaremos 0x400 = 1024 bits
 
+Para generar el binario de nuestra aplicación, basta con hacer "objcopy <archivo .elf>" y mostrar con ghex el contenido de los distintos ficheros para ver que, efectivamente, se rellena con 0's. La diferencia entre el generado con .data en ram1 y el generado en ram0 es de 8228 bytes frente a 372 bytes. Adicionalmente, si creamos una sección .bss con los datos inicializados a 0, podemos comprimir aún más el binario, quitando 4 bytes por variable en esta sección (en mi caso, 2).
+
 NOTA IMPORTANTE:
 No olvides inicializar las variables
 No olvides guardar y cargar lr si vas a llamar a una función dentro de otra
