@@ -32,26 +32,6 @@ SECTIONS
                 *(.text);
         } > ram0
 
-        .gpio : ALIGN(4)
-        {
-                /* Control de dirección */
-                GPIO_PAD_DIR0 = . + 0x00;
-                GPIO_PAD_DIR1 = . + 0x04;
-
-                /* Datos */
-                GPIO_DATA0 = . + 0x08;
-                GPIO_DATA1 = . + 0x0c;
-
-                /* Activación de bits */
-                GPIO_DATA_SET0 = . + 0x48;
-                GPIO_DATA_SET1 = . + 0x4c;
-
-                /* Limpieza de bits */
-                GPIO_DATA_RESET0 = . + 0x50;
-                GPIO_DATA_RESET1 = . + 0x54;
-        } > gpio
-
-
         /* Regiones de testeo de RAM */
         /*
         .ram1 :
@@ -72,7 +52,30 @@ SECTIONS
         {
                 *(.data);
                 . = ALIGN(4);
-        } > ram1
-        
+        } > ram0
 
+        .bss : /*ALIGN(4)*/
+        {
+                *(.bss);
+                . = ALIGN(4);
+        } > ram0
+
+        .gpio : ALIGN(4)
+        {
+                /* Control de dirección */
+                GPIO_PAD_DIR0 = . + 0x00;
+                GPIO_PAD_DIR1 = . + 0x04;
+
+                /* Datos */
+                GPIO_DATA0 = . + 0x08;
+                GPIO_DATA1 = . + 0x0c;
+
+                /* Activación de bits */
+                GPIO_DATA_SET0 = . + 0x48;
+                GPIO_DATA_SET1 = . + 0x4c;
+
+                /* Limpieza de bits */
+                GPIO_DATA_RESET0 = . + 0x50;
+                GPIO_DATA_RESET1 = . + 0x54;
+        } > gpio
 }
