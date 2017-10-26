@@ -34,6 +34,20 @@ Para crear la sección gpio, tenemos que tener en cuenta que empieza en la direc
 
 Para generar el binario de nuestra aplicación, basta con hacer "objcopy <archivo .elf>" y mostrar con ghex el contenido de los distintos ficheros para ver que, efectivamente, se rellena con 0's. La diferencia entre el generado con .data en ram1 y el generado en ram0 es de 8228 bytes frente a 372 bytes. Adicionalmente, si creamos una sección .bss con los datos inicializados a 0, podemos comprimir aún más el binario, quitando 4 bytes por variable en esta sección (en mi caso, 2).
 
+Adicionalmente, por recomendación del profesor, he decidido añadir una pila a mi programa aunque no era necesario para esta práctica.
+La pila se crea en el script añadiendo:
+        _ram_limit = ORIGIN(ram0) + LENGTH(ram0);       (Para calcular el final de la ram donde irá alojada)
+        _stack_size = 0x400;        /* (1 KB) */        (En mi programa basta con una pila de 32 bits pero ya que te pones a hacer una pila...)
+
+        .stack _ram_limit - _stack_size :               (_ram_limit - _stack_size para dejarla justo al final)
+        {
+            _stack_bottom = . ;
+            . += _stack_size ;
+            _stack_top = . ;                            (Este parámetro lo utilizaremos después para inicializar el registro sp)
+        }
+
+Ahora, en nuestro programa debemos añadir "ldr sp, =_stack_top" para inicializarla y "push/pop {<registros>}" para usarla. Además, podemos ver que no hay diferencia de tamaño (salvo las instrucciones en sí, es decir, 16 bytes) entre este programa y el que no tenía pila.
+
 NOTA IMPORTANTE:
 No olvides inicializar las variables
 No olvides guardar y cargar lr si vas a llamar a una función dentro de otra

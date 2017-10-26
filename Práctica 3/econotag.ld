@@ -60,6 +60,16 @@ SECTIONS
                 . = ALIGN(4);
         } > ram0
 
+        _ram_limit = ORIGIN(ram0) + LENGTH(ram0);
+        _stack_size = 0x400;        /* (1 KB) */
+
+        .stack _ram_limit - _stack_size :
+        {
+            _stack_bottom = . ;
+            . += _stack_size ;
+            _stack_top = . ;
+        }
+
         .gpio : ALIGN(4)
         {
                 /* Control de dirección */
