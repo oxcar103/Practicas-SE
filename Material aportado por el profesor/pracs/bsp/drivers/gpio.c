@@ -211,7 +211,6 @@ inline gpio_err_t gpio_set_port_func (gpio_port_t port, gpio_func_t func, uint32
  * @return	gpio_no_error si los parámetros de entrada son corectos o
  *			gpio_invalid_parameter en otro caso
  */
- */
 inline gpio_err_t gpio_set_pin_func (gpio_pin_t pin, gpio_func_t func)
 {
 	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
