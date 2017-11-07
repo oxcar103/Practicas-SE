@@ -65,9 +65,9 @@ SECTIONS
 
         .stack _ram_limit - _stack_size :
         {
-            _stack_bottom = . ;
-            . += _stack_size ;
-            _stack_top = . ;
+                _stack_bottom = . ;
+                . += _stack_size ;
+                _stack_top = . ;
         }
 
         .gpio : ALIGN(4)
