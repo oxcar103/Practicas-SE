@@ -13,7 +13,7 @@ Para crear una sección:
 } > rami
 
 Para comprobar que los símbolos se han creado podemos usar:
-    · "nm <archivo ELF>"
+    · "(arm-none-eabi-)nm <archivo ELF>"
     · "(arm-none-eabi-)readelf -s <archivo ELF>"
     · "(arm-none-eabi-)objdump -t <archivo ELF>"
 Siendo nm el modo más conciso, ya que informa de los símbolos creados y su dirección.
