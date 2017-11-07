@@ -19,8 +19,8 @@ MEMORY
 
 SECTIONS
 {
-	/* Imagen del firmware */
-	/* Generar una sección al principio de la RAM que organice las secciones del firmware al comienzo de la RAM de la plataforma */
+    /* Imagen del firmware */
+    /* Generar una sección al principio de la RAM que organice las secciones del firmware al comienzo de la RAM de la plataforma */
     .image :
     {
             /* Código del cargador */
@@ -31,7 +31,7 @@ SECTIONS
 
 
             /* Constantes del programa */
-            *(.rodata);
+            *(.rodata*);
             . = ALIGN(4);
 
 

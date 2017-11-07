@@ -25,7 +25,7 @@ static void bsp_excep_init( void )
 
 /**
  * Inicializa los dispositivos del sistema.
- * Esta función se debe llamar después de  bsp_int_init().
+ * Esta función se debe llamar después de bsp_excep_init().
  */
 static void bsp_sys_init( void )
 {
