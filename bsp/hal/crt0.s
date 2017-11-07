@@ -4,37 +4,37 @@
 @ carga la imagen desde la Flash
 @
 
-	.set _IRQ_DISABLE, 0x80 @ cuando el bit I está activo, IRQ está deshabilitado
-	.set _FIQ_DISABLE, 0x40 @ cuando el bit F está activo, FIQ está deshabilitado
+    .set _IRQ_DISABLE, 0x80 @ cuando el bit I está activo, IRQ está deshabilitado
+    .set _FIQ_DISABLE, 0x40 @ cuando el bit F está activo, FIQ está deshabilitado
 
-	.set _USR_MODE, 0x10
-	.set _FIQ_MODE, 0x11
-	.set _IRQ_MODE, 0x12
-	.set _SVC_MODE, 0x13
-	.set _ABT_MODE, 0x17
-	.set _UND_MODE, 0x1B
-	.set _SYS_MODE, 0x1F
+    .set _USR_MODE, 0x10
+    .set _FIQ_MODE, 0x11
+    .set _IRQ_MODE, 0x12
+    .set _SVC_MODE, 0x13
+    .set _ABT_MODE, 0x17
+    .set _UND_MODE, 0x1B
+    .set _SYS_MODE, 0x1F
 
 @
 @ Sección de código de arranque
 @
-	.code 32
-	.section .startup, "xa"
+    .code 32
+    .section .startup, "xa"
 
 
 @
 @ Vectores de excepción en la RAM
 @
-	.globl _vector_table
+    .globl _vector_table
 _vector_table:
-	ldr	pc, [pc, #24]	@ Soft reset
-	ldr	pc, [pc, #24]	@ Undefined
-	ldr	pc, [pc, #24]	@ SWI
-	ldr	pc, [pc, #24]	@ Prefetch abort
-	ldr	pc, [pc, #24]	@ Data abort
-	nop					@ Reserved
-	ldr	pc, [pc, #24]	@ IRQ
-	ldr	pc, [pc, #24]	@ FIQ
+    ldr	pc, [pc, #24]	@ Soft reset
+    ldr	pc, [pc, #24]	@ Undefined
+    ldr	pc, [pc, #24]	@ SWI
+    ldr	pc, [pc, #24]	@ Prefetch abort
+    ldr	pc, [pc, #24]	@ Data abort
+    nop					@ Reserved
+    ldr	pc, [pc, #24]	@ IRQ
+    ldr	pc, [pc, #24]	@ FIQ
 
 
 @
@@ -63,26 +63,26 @@ _excep_handlers:
 @ Manejadores por defecto
 @
 _soft_reset_handler:
-	b	_start
+    b   _start
 _undef_handler:
-	b	.
+    b   .
 _swi_handler:
-	b	.
+    b   .
 _pabt_handler:
-	b	.
+    b   .
 _dabt_handler:
-	b	.
+    b   .
 _irq_handler:
-	b	.
+    b   .
 _fiq_handler:
-	b	.
+    b   .
 
 @
 @ Comienza el CRT
 @
-	.align	4
-	.global	_start
-	.type	_start, %function
+    .align	4
+    .global	_start
+    .type	_start, %function
 _start:
 
 @
@@ -112,6 +112,6 @@ _start:
 @
 @ Colgamos el sistema si main retorna
 @
-	b	.			@ Colgamos el sistema si main retorna
+    b   .           @ Colgamos el sistema si main retorna
 
-	.size   _start, .-_start
+    .size   _start, .-_start
