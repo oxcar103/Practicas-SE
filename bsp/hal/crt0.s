@@ -107,7 +107,14 @@ _start:
 @ Salto a main
 @
 
-@ ESTA PARTE SE COMPLETARÁ EN LA PRÁCTICA 4
+    ldr ip, =main
+
+    @ lr guarda la dirección de retorno
+    @ pc apunta 2 instrucciones más abajo
+    mov lr, pc
+
+    @ Salto global a la funcion main
+    bx ip
 
 @
 @ Colgamos el sistema si main retorna
