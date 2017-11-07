@@ -124,7 +124,7 @@ _start:
 @ Cambiamos a modo User y habilitamos las interrupciones
 @
 
-@ ESTA PARTE SE COMPLETARÁ EN LA PRÁCTICA 4
+    msr cpsr_c, #_USR_MODE
 
 @
 @ Salto a main
