@@ -45,6 +45,7 @@ SECTIONS
     } > ram
 
 	/* Sección .bss */
+    /* Generamos una sección para las variables globales sin inicializar */
     bss :
     {
             _bss_start = .;
@@ -56,6 +57,7 @@ SECTIONS
     } > ram
 
     /* Gestión de las pilas */
+    /* Generar una sección al final de la RAM para las pilas de cada modo y definir símbolos para el tope de cada pila */
     _ram_limit = ORIGIN(ram) + LENGTH(ram);
     _sys_stack_size = 1024;
     _irq_stack_size = 256;
@@ -92,6 +94,7 @@ SECTIONS
     }
 
  	/* Gestión del heap */
+    /* Generar una sección que ocupe el espacio entre la sección .bss y las pilas para el heap, con los símbolos de inicio y fin del heap */
     _heap_size = _stacks_bottom - _bss_end;
 
 	.heap _bss_end :
