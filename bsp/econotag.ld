@@ -92,6 +92,13 @@ SECTIONS
     }
 
  	/* Gestión del heap */
-	/* Generar una sección que ocupe el espacio entre la sección .bss y las pilas para el heap, con los símbolos de inicio y fin del heap */
+    _heap_size = _stacks_bottom - _bss_end;
+
+	.heap _bss_end :
+    {
+            _heap_start = .;
+            . += _heap_size;
+            _heap_end = .;
+    }
 }
 
