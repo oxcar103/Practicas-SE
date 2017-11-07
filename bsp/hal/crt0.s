@@ -118,7 +118,9 @@ _start:
 @ Inicialización de la plataforma (llamada a bsp_init)
 @
 
-@ ESTA PARTE SE COMPLETARÁ EN LA PRÁCTICA 4
+    ldr ip, = bsp_init
+    mov lr, pc
+    bx  ip
 
 @
 @ Cambiamos a modo User y habilitamos las interrupciones
@@ -137,7 +139,7 @@ _start:
     mov lr, pc
 
     @ Salto global a la funcion main
-    bx ip
+    bx  ip
 
 @
 @ Colgamos el sistema si main retorna
