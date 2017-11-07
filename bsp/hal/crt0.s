@@ -89,7 +89,30 @@ _start:
 @ Inicializamos las pilas para cada modo
 @
 
-@ ESTA PARTE SE COMPLETARÁ EN LA PRÁCTICA 4
+    @ Pila del modo FIQ
+    msr cpsr_c, #(_FIQ_MODE | _IRQ_DISABLE | _FIQ_DISABLE)
+    ldr sp, =_fiq_stack_top
+
+    @ Pila del modo IRQ
+    msr cpsr_c, #(_IRQ_MODE | _IRQ_DISABLE | _FIQ_DISABLE)
+    ldr sp, =_irq_stack_top
+
+    @ Pila del modo Undefined
+    msr cpsr_c, #(_UND_MODE | _IRQ_DISABLE | _FIQ_DISABLE)
+    ldr sp, =_und_stack_top
+
+    @ Pila del modo Abort
+    msr cpsr_c, #(_ABT_MODE | _IRQ_DISABLE | _FIQ_DISABLE)
+    ldr sp, =_abt_stack_top
+
+    @ Pila del modo System
+    msr cpsr_c, #(_SYS_MODE | _IRQ_DISABLE | _FIQ_DISABLE)
+    ldr sp, =_sys_stack_top
+
+    @ Pila del modo Supervisor
+    @ La última para que el cargador siga en modo SVC
+    msr cpsr_c, #(_SVC_MODE | _IRQ_DISABLE | _FIQ_DISABLE)
+    ldr sp, =_svc_stack_top
 
 @
 @ Inicialización de la plataforma (llamada a bsp_init)
