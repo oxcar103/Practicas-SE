@@ -1,0 +1,2 @@
+(Mirando MC1322xRM.pdf, sección 3.12 Bootloader)
+Podemos ver que: busca una imagen válida en varios puntos --> los vectores de excepción están al principio de la memoria (0x00000000-0x0000001f) pero como es inaccesible, son saltos al principio de la RAM (0x00400000-0x0040001f) para poder modificarse --> vacía la RAM, es decir, todo a 0 --> copia el contenido de la memoria FLASH a la memoria RAM --> inhabilita la memoria FLASH. 
