@@ -21,6 +21,28 @@ SECTIONS
 {
 	/* Imagen del firmware */
 	/* Generar una sección al principio de la RAM que organice las secciones del firmware al comienzo de la RAM de la plataforma */
+    .image :
+    {
+            /* Código del cargador */
+            *(.startup);
+
+            /* Código del programa */
+            *(.text);
+
+
+            /* Constantes del programa */
+            (.rodata*);
+            . = ALIGN(4);
+
+
+            /* Variables del programa */
+            _data_start = . ;
+            *(.data);
+            . = ALIGN(4) ;
+            _data_end = .
+
+
+    } > ram
 
 	/* Sección .bss */
         /* Generamos una sección para las variables globales sin inicializar */
