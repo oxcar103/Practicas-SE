@@ -4,3 +4,8 @@ Podemos ver que la placa, por defecto: busca una imagen válida en varios puntos
 Por la estructura que tiene por defecto la placa, nos podemos ahorrar la inicialización de las variables, tanto las de .data como las de .bss, y de las pilas (aunque no estén inicializadas a 0xdeadbeef, están inicializadas) y el heap
 
 También nos podemos saltar el remapeo de memoria y el vector de interrupciones pues lo colocamos al principio del crt0.s (que irá al principio de la RAM)
+
+
+
+
+Si queremos usar make run2, debemos asegurarnos primero de cambiar los permisos del puerto USB correspondiente. Además, se debe pulsar el botón de reset para que se escriba la imagen en la memoria
