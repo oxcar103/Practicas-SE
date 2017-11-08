@@ -45,6 +45,12 @@ uint32_t const led_green_mask = (1 << (45-32));
  */
 uint32_t const delay = 0x20000;
  
+/*
+ * Variables globales: máscaras del led que se hará parpadear y del botón que se comprobará
+ */
+uint32_t the_led;
+uint32_t the_button;
+
 /*****************************************************************************/
 
 /*
@@ -109,12 +115,6 @@ void test_button(void)
 }
 
 /*****************************************************************************/
-
-/*
- * Máscaras del led que se hará parpadear y del botón que se comprobará
- */
-uint32_t the_led;
-uint32_t the_button;
 
 /*
  * Programa principal

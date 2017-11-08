@@ -118,7 +118,7 @@ _start:
 @ Inicialización de la plataforma (llamada a bsp_init)
 @
 
-    ldr ip, = bsp_init
+    ldr ip, =bsp_init
     mov lr, pc
     bx  ip
 
