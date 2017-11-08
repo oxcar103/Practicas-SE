@@ -94,9 +94,19 @@ void pause(void)
 /*****************************************************************************/
 
 /*
- * Máscara del led que se hará parpadear
+ * Comprueba si se pulsó el botón esperado, y cambia led y botón en caso afirmativo
+ */
+void test_button(void)
+{
+}
+
+/*****************************************************************************/
+
+/*
+ * Máscaras del led que se hará parpadear y del botón que se comprobará
  */
 uint32_t the_led;
+uint32_t the_button;
 
 /*
  * Programa principal
@@ -106,13 +116,15 @@ int main ()
     gpio_init();
 
     the_led = led_red_mask;
-
+    the_button = button_s3_in;
     while (1)
     {
+        test_button();
         leds_on(the_led);
         pause();
 
         leds_off(the_led);
+        test_button();
         pause();
     }
 
