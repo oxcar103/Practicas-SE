@@ -102,6 +102,10 @@ void pause(void)
  */
 void test_button(void)
 {
+    if(*reg_gpio_data0 & the_button){
+        the_led = (the_led == led_red_mask) ? led_green_mask : led_red_mask;
+        the_button = (the_button == button_s3_in) ? button_s2_in : button_s3_in;
+    }
 }
 
 /*****************************************************************************/
