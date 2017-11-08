@@ -11,17 +11,34 @@
  * Constantes relativas a la plataforma
  */
 
-/* Dirección del registro de control de dirección del GPIO32-GPIO63 */
-volatile uint32_t * const reg_gpio_pad_dir1    = (uint32_t *) 0x80000004;
+/* Direcciones de los registros de control de dirección de los GPIO00-GPIO31 y GPIO32-GPIO63 */
+volatile uint32_t * const reg_gpio_pad_dir0     = (uint32_t *) 0x80000000;
+volatile uint32_t * const reg_gpio_pad_dir1     = (uint32_t *) 0x80000004;
 
-/* Dirección del registro de activación de bits del GPIO32-GPIO63 */
-volatile uint32_t * const reg_gpio_data_set1   = (uint32_t *) 0x8000004c;
+/* Direcciones de los registros de datos de los GPIO00-GPIO31 y GPIO32-GPIO63 */
+volatile uint32_t * const reg_gpio_data0        = (uint32_t *) 0x80000008;
+volatile uint32_t * const reg_gpio_data1        = (uint32_t *) 0x8000000c;
 
-/* Dirección del registro de limpieza de bits del GPIO32-GPIO63 */
-volatile uint32_t * const reg_gpio_data_reset1 = (uint32_t *) 0x80000054;
+/* Direcciones de los registros de activación de bits de los GPIO00-GPIO31 y GPIO32-GPIO63 */
+volatile uint32_t * const reg_gpio_data_set0    = (uint32_t *) 0x80000048;
+volatile uint32_t * const reg_gpio_data_set1    = (uint32_t *) 0x8000004c;
 
-/* El led rojo está en el GPIO 44 (el bit 12 de los registros GPIO_X_1) */
-uint32_t const led_red_mask = (1 << (44-32));
+/* Direcciones de los registros de limpieza de bits de los GPIO00-GPIO31 y GPIO32-GPIO63 */
+volatile uint32_t * const reg_gpio_data_reset0  = (uint32_t *) 0x80000050;
+volatile uint32_t * const reg_gpio_data_reset1  = (uint32_t *) 0x80000054;
+
+
+/* La salida del botón S2 está en el GPIO 23 y la del botón S3 en el GPIO 22 */
+uint32_t const button_s2_out =  (1 << 23);
+uint32_t const button_s3_out =  (1 << 22);
+
+/* La entrada del botón S2 está en el GPIO 27 y la del botón S3 en el GPIO 26 */
+uint32_t const button_s2_in =   (1 << 27);
+uint32_t const button_s3_in =   (1 << 26);
+
+/* El led rojo está en el GPIO 44 y el verde en el GPIO 45 (bits 12 y 13 de los registros GPIO_X_1) */
+uint32_t const led_red_mask =   (1 << (44-32));
+uint32_t const led_green_mask = (1 << (45-32));
 
 /*
  * Constantes relativas a la aplicacion
