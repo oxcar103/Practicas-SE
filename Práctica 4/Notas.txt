@@ -7,5 +7,11 @@ También nos podemos saltar el remapeo de memoria y el vector de interrupciones 
 
 Definiremos también las pilas y el heap de la placa en el linker script, y estableceremos los modos de ejecución a la vez que le indicamos a cada uno donde está el tope de su pila.
 
+Después, llamaremos a bsp_init() para que:
+    * Inicialice los vectores de excepción y el controlador de interrupciones.
+    * Inicialice los dispositivos del sistema.
+    * Inicializa los dispositivos del entrada, salida y error que usará el dispositivo.
+
+Por último, cambiamos a modo usuario y llamamos a main().
 
 Si queremos usar make run2, debemos asegurarnos primero de cambiar los permisos del puerto USB correspondiente. Además, se debe pulsar el botón de reset para que se escriba la imagen en la memoria
