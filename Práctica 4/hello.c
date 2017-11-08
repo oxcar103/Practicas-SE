@@ -52,8 +52,12 @@ uint32_t const delay = 0x20000;
  */
 void gpio_init(void)
 {
-    /* Configuramos el GPIO44 para que sea de salida */
-    *reg_gpio_pad_dir1 = led_red_mask;
+    /* Configuramos GPIO 44 y GPIO 45 para que sean de salida */
+    *reg_gpio_pad_dir1 = led_red_mask | led_green_mask;
+
+    /* No es necesario configurar los GPIO 22, GPIO 23, GPIO 26 y GPIO 27 porque usaremos su valor por defecto */
+    *reg_gpio_data_set0 = button_s2_out | button_s3_out;
+    
 }
 
 /*****************************************************************************/
