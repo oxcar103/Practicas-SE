@@ -8,7 +8,9 @@ Prácticas de la asignatura Sistemas Empotrados (SE).
 
 - **P2-Introducción al ensamblador**: En esta práctica, tendremos nuestra primera toma de contacto con la arquitectura ARM y su repertorio de instrucciones mediante la configuración de un programa básico en el cuál el led que parpadea depende del último botón pulsado.  
 
-- **P3-Introducción al enlazador y el resto de las binutils**: En esta práctica, configuraremos el script de enlazado, estableciendo las direcciones de memoria que queremos usar y redistribuyendo las zonas de código en ella a nuestro gusto, y definiendo algunas constantes para el acceso rápido a las direcciones del GPIO. Además, modificaremos nuestro programa principal para que se aproveche de estos cambios.
+- **P3-Introducción al enlazador y el resto de las binutils**: En esta práctica, configuraremos el script de enlazado, estableciendo las direcciones de memoria que queremos usar y redistribuyendo las zonas de código en ella a nuestro gusto, y definiendo algunas constantes para el acceso rápido a las direcciones del GPIO. Además, modificaremos nuestro programa principal para que se aproveche de estos cambios.  
+
+- **P4-Arranque e inicialización del entorno de ejecución**: En esta práctica, crearemos el *C RunTime* (**CRT**) con una configuración básica: inicializar los dispositivos del sistema(entrada, salida, excepciones,...), establecer los modos de ejecución de nuestra placa, las pilas necesarias y el heap. Además, pasaremos nuestro programa de prueba a C para comprobar que nuestra configuración funciona.  
 
 Licencia  
 ------------------------
