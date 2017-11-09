@@ -14,4 +14,6 @@ Después, llamaremos a bsp_init() para que:
 
 Por último, cambiamos a modo usuario y llamamos a main().
 
+Para comprobar que nuestra configuración es correcta, adaptamos nuestro código de prueba a C. No hay mucho que destacar salvo que podemos usar el operador ternario. <3
+
 Si queremos usar make run2, debemos asegurarnos primero de cambiar los permisos del puerto USB correspondiente. Además, se debe pulsar el botón de reset para que se escriba la imagen en la memoria
