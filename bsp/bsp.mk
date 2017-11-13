@@ -19,7 +19,7 @@ BSP_LIB        = lib$(BSP).a
 # Path al script de enlazado
 BSP_LINKER_SCRIPT = $(BSP_ROOT_DIR)/econotag.ld
 
-# Ruta a la raiz de todas las cabeceras que el BSP proporciona a la aplicación.
+# Ruta a la raíz de todas las cabeceras que el BSP proporciona a la aplicación.
 # Las siguientes rutas se añaden a la lista de cabeceras que la aplicación o
 # cualquier componente del BSP usen.
 BSP_INCLUDE_DIRS = $(sort $(dir $(shell find $(BSP_ROOT_DIR) -name '*.h' -print)))
