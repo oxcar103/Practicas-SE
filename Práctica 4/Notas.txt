@@ -1,7 +1,7 @@
 (Mirando MC1322xRM.pdf, sección 3.12 Bootloader)
 Podemos ver que la placa, por defecto: busca una imagen válida en varios puntos --> los vectores de excepción están al principio de la memoria (0x00000000-0x0000001f) pero como es inaccesible, son saltos al principio de la RAM (0x00400000-0x0040001f) para poder modificarse --> vacía la RAM, es decir, todo a 0 --> copia el contenido de la memoria FLASH a la memoria RAM --> inhabilita la memoria FLASH
 
-Por la estructura que tiene por defecto la placa, nos podemos ahorrar la inicialización de las variables, tanto las de .data como las de .bss, y de las pilas (aunque no estén inicializadas a 0xdeadbeef, están inicializadas) y el heap
+Por la estructura que tiene por defecto la placa, nos podemos ahorrar la inicialización de las variables, tanto las de .data como las de .bss, y de las pilas (aunque no estén inicializadas a 0xdeadbeef para medir su uso, están inicializadas) y el heap
 
 También nos podemos saltar el remapeo de memoria y el vector de interrupciones pues lo colocamos al principio del crt0.s (que irá al principio de la RAM)
 
