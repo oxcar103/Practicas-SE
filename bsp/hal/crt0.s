@@ -54,7 +54,7 @@ _excep_handlers:
 @
 @ Incluimos la nota del copyright al principio de la ROM
 @
-	.string "Copyright (C) Universidad de Granada. All Rights Reserved."
+	.string "Copyright (C) oxcar103. GNU GENERAL PUBLIC LICENSE Version 3."
 
 	@ Las instrucciones deben estar alineadas a una frontera de 32 bits
 	.align	4
