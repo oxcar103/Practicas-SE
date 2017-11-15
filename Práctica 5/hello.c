@@ -77,7 +77,7 @@ void pause(void){
 /*****************************************************************************/
 
 /*
- * Manejador de instrucciones UNDEF
+ * Manejador de interrupciones UNDEF
  */
 __attribute__ ((interrupt ("UNDEF")))
 void my_undef_handler(void){
