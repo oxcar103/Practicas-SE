@@ -128,7 +128,7 @@ inline void excep_restore_fiq (uint32_t f_bit)
  */
 inline void excep_set_handler (excep_t excep, excep_handler_t handler)
 {
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 5 */
+    return _excep_handlers[excep];
 }
 
 /*****************************************************************************/
@@ -139,8 +139,7 @@ inline void excep_set_handler (excep_t excep, excep_handler_t handler)
  */
 inline excep_handler_t excep_get_handler (excep_t excep)
 {
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 5 */
-    return NULL;
+    return _excep_handlers[excep];
 }
 
 /*****************************************************************************/
