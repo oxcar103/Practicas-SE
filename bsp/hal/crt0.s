@@ -42,14 +42,14 @@ _vector_table:
 @
 	.globl	_excep_handlers
 _excep_handlers:
-	.word	_soft_reset_handler
-	.word	_undef_handler
-	.word	_swi_handler
-	.word	_pabt_handler
-	.word	_dabt_handler
-	nop
-	.word	_irq_handler
-	.word	_fiq_handler
+    .word	_soft_reset_handler
+    .word	_undef_handler
+    .word	_swi_handler
+    .word	_pabt_handler
+    .word	_dabt_handler
+    nop
+    .word	_irq_handler
+    .word	_fiq_handler
 
 @
 @ Incluimos la nota del copyright al principio de la ROM

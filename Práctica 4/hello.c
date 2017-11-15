@@ -56,24 +56,21 @@ uint32_t the_button;
 /*
  * Inicialización de los pines de E/S
  */
-void gpio_init(void)
-{
+void gpio_init(void){
     /* Configuramos GPIO 44 y GPIO 45 para que sean de salida */
     *reg_gpio_pad_dir1 = led_red_mask | led_green_mask;
 
     /* No es necesario configurar los GPIO 22, GPIO 23, GPIO 26 y GPIO 27 porque usaremos su valor por defecto */
     *reg_gpio_data_set0 = button_s2_out | button_s3_out;
-    
 }
 
 /*****************************************************************************/
 
 /*
  * Enciende los leds indicados en la máscara
- * @param mask Máscara para seleccionar leds
+ * @param mask  Máscara para seleccionar leds
  */
-void leds_on (uint32_t mask)
-{
+void leds_on (uint32_t mask){
     /* Encendemos los leds indicados en la máscara */
     *reg_gpio_data_set1 = mask;
 }
@@ -82,10 +79,9 @@ void leds_on (uint32_t mask)
 
 /*
  * Apaga los leds indicados en la máscara
- * @param mask Máscara para seleccionar leds
+ * @param mask  Máscara para seleccionar leds
  */
-void leds_off (uint32_t mask)
-{
+void leds_off (uint32_t mask){
     /* Apagamos los leds indicados en la máscara */
     *reg_gpio_data_reset1 = mask;
 }
@@ -95,8 +91,7 @@ void leds_off (uint32_t mask)
 /*
  * Retardo para el parpedeo
  */
-void pause(void)
-{
+void pause(void){
     uint32_t i;
     for (i=0 ; i<delay ; i++);
 }
@@ -106,8 +101,7 @@ void pause(void)
 /*
  * Comprueba si se pulsó el botón esperado, y cambia led y botón en caso afirmativo
  */
-void test_button(void)
-{
+void test_button(void){
     if(*reg_gpio_data0 & the_button){
         the_led = (the_led == led_red_mask) ? led_green_mask : led_red_mask;
         the_button = (the_button == button_s3_in) ? button_s2_in : button_s3_in;
@@ -119,14 +113,12 @@ void test_button(void)
 /*
  * Programa principal
  */
-int main ()
-{
+int main (){
     gpio_init();
 
     the_led = led_red_mask;
     the_button = button_s3_in;
-    while (1)
-    {
+    while (1){
         test_button();
         leds_on(the_led);
         pause();
