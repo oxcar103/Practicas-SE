@@ -95,12 +95,24 @@ uint32_t the_led;
  * Programa principal
  */
 int main (){
+    // Variable que contendrá el valor actual de (I, F)
+    uint32_t bits;
+
+    // Deshabilitamos las interrupciones
+    bits = excep_disable_ints ()
+
+    // Ejecutamos gpio_init()
     gpio_init();
 
+    // Las habilitamos
+    excep_enable_ints(bits)
+
+    // Asignamos el nuevo manejador a la excepción UNDEF
     excep_set_handler (excep_undef, my_undef_handler);
 
     the_led = led_red_mask;
 
+    // Fuerza el modo UNDEF
     asm(".word 0x26889912\n");
 
     while (1){
