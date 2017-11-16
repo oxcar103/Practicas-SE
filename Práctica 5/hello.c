@@ -99,13 +99,13 @@ int main (){
     uint32_t bits;
 
     // Deshabilitamos las interrupciones
-    bits = excep_disable_ints ()
+    bits = excep_disable_ints();
 
     // Ejecutamos gpio_init()
     gpio_init();
 
     // Las habilitamos
-    excep_enable_ints(bits)
+    excep_restore_ints(bits);
 
     // Asignamos el nuevo manejador a la excepción UNDEF
     excep_set_handler (excep_undef, my_undef_handler);
