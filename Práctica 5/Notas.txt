@@ -5,5 +5,19 @@ Luego, simplemente basta en nuestro programa que definamos una función sin argu
 
 En nuestro caso, la excepción que escogimos fue "UNDEF" ya que podíamos forzarla mediante asm en línea y el valor "0x26889912" que no se puede descifrar como ninguna instrucción.
 
+Para desactivar todas las interrupciones, como vimos en clase, es necesario recurrir a ensamblador en línea pues C no tiene instrucciones equivalentes a "msr" o "mrs".
+Para ello, basta con unos sencillos pasos:
+  - Para deshabilitarlas:
+    * Guardamos "cpsr" en otro registro
+    * Hacemos "cpsr" ^ 0xC0 (si los bits I, F están a 1, están deshabilitadas, y son los bits 6 y 7)
+    * Guardamos el resultado en "cpsr"
+    * Devolvemos el valor de la pareja (I, F) para cuando queramos volver al estado que estábamos
+
+  - Para habilitarlas:
+    * Pasamos "cpsr" a un registro (para poder operar con él)
+    * Vaciamos los bits de I, F (6 y 7) con "bic reg 0xC0" o con reg v !0xC0
+    * Restauramos el valor que tenía (I, F) a partir del parámetro que nos han pasado
+    * Guardamos el resultado en "cpsr"
+
 NOTA IMPORTANTE:
 No olvides hacer make en el directorio bsp para actualizar la librería o perderás 2 tardes de una forma muy tonta -.-
