@@ -42,8 +42,8 @@ inline uint32_t excep_disable_ints (){
         "msr cpsr_c, r12"                       /* cpsr <- r12 */
         :[bits] "=r" (if_bits)                  /* Parámetros de salida */
         :                                       /* Parámetros de entrada */
-        :"r12", "cc");                          /* Preservar */
-    }
+        :"r12", "cc"                            /* Preservar */
+    );
 
     return (if_bits << 6) & 3;
 }
@@ -59,18 +59,18 @@ inline uint32_t excep_disable_ints (){
  *          1: I=1  (IRQ deshabilitadas)
  */
 inline uint32_t excep_disable_irq (){
-uint32_t i_bits;
+uint32_t i_bit;
 
     asm volatile(
         "mrs %[bits], cpsr\n\t"                 /* bits <- cpsr */
         "orr r12, %[bits], #0x80\n\t"           /* I <- 1 */
         "msr cpsr_c, r12"                       /* cpsr <- r12 */
-        :[bits] "=r" (i_bits)                   /* Parámetros de salida */
+        :[bits] "=r" (i_bit)                    /* Parámetros de salida */
         :                                       /* Parámetros de entrada */
-        :"r12", "cc");                          /* Preservar */
-    }
+        :"r12", "cc"                            /* Preservar */
+    );
 
-    return (i_bits << 7) & 1;
+    return (i_bit << 7) & 1;
 }
 
 /*****************************************************************************/
@@ -84,18 +84,18 @@ uint32_t i_bits;
  *          1: F=1  (FIQ deshabilitadas)
  */
 inline uint32_t excep_disable_fiq (){
-uint32_t f_bits;
+uint32_t f_bit;
 
     asm volatile(
         "mrs %[bits], cpsr\n\t"                 /* bits <- cpsr */
         "orr r12, %[bits], #0x40\n\t"           /* F <- 1 */
         "msr cpsr_c, r12"                       /* cpsr <- r12 */
-        :[bits] "=r" (f_bits)                   /* Parámetros de salida */
+        :[bits] "=r" (f_bit)                    /* Parámetros de salida */
         :                                       /* Parámetros de entrada */
-        :"r12", "cc");                          /* Preservar */
-    }
+        :"r12", "cc"                            /* Preservar */
+    );
 
-    return (f_bits << 6) & 1;
+    return (f_bit << 6) & 1;
 }
 
 /*****************************************************************************/
@@ -118,8 +118,8 @@ inline void excep_restore_ints (uint32_t if_bits){
         "msr cpsr_c, r12"                       /* cpsr <- r12 */
         :                                       /* Parámetros de salida */
         :[bits] "r" (if_bits & 3)               /* Parámetros de entrada */
-        :"r12", "cc");                          /* Preservar */
-    }
+        :"r12", "cc"                            /* Preservar */
+    );
 }
 
 /*****************************************************************************/
@@ -139,9 +139,9 @@ inline void excep_restore_irq (uint32_t i_bit){
         "orr r12, r12, %[bits], LSL #7\n\t"     /* Restauramos los bits */
         "msr cpsr_c, r12"                       /* cpsr <- r12 */
         :                                       /* Parámetros de salida */
-        :[bits] "r" (i_bits & 1)                /* Parámetros de entrada */
-        :"r12", "cc");                          /* Preservar */
-    }
+        :[bits] "r" (i_bit & 1)                 /* Parámetros de entrada */
+        :"r12", "cc"                            /* Preservar */
+    );
 }
 
 /*****************************************************************************/
@@ -161,9 +161,9 @@ inline void excep_restore_fiq (uint32_t f_bit){
         "orr r12, r12, %[bits], LSL #6\n\t"     /* Restauramos los bits */
         "msr cpsr_c, r12"                       /* cpsr <- r12 */
         :                                       /* Parámetros de salida */
-        :[bits] "r" (f_bits & 1)                /* Parámetros de entrada */
-        :"r12", "cc");                          /* Preservar */
-    }
+        :[bits] "r" (f_bit & 1)                 /* Parámetros de entrada */
+        :"r12", "cc"                            /* Preservar */
+    );
 }
 
 /*****************************************************************************/
