@@ -59,8 +59,18 @@ inline uint32_t excep_disable_ints (){
  *          1: I=1  (IRQ deshabilitadas)
  */
 inline uint32_t excep_disable_irq (){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 5 */
-    return 0;
+uint32_t i_bits;
+
+    asm volatile(
+        "mrs %[bits], cpsr\n\t"                 /* bits <- cpsr */
+        "orr r12, %[bits], #0x80\n\t"           /* I <- 1 */
+        "msr cpsr_c, r12"                       /* cpsr <- r12 */
+        :[bits] "=r" (i_bits)                   /* Parámetros de salida */
+        :                                       /* Parámetros de entrada */
+        :"r12", "cc");                          /* Preservar */
+    }
+
+    return (i_bits << 7) & 1;
 }
 
 /*****************************************************************************/
@@ -74,8 +84,18 @@ inline uint32_t excep_disable_irq (){
  *          1: F=1  (FIQ deshabilitadas)
  */
 inline uint32_t excep_disable_fiq (){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 5 */
-    return 0;
+uint32_t f_bits;
+
+    asm volatile(
+        "mrs %[bits], cpsr\n\t"                 /* bits <- cpsr */
+        "orr r12, %[bits], #0x40\n\t"           /* F <- 1 */
+        "msr cpsr_c, r12"                       /* cpsr <- r12 */
+        :[bits] "=r" (f_bits)                   /* Parámetros de salida */
+        :                                       /* Parámetros de entrada */
+        :"r12", "cc");                          /* Preservar */
+    }
+
+    return (f_bits << 6) & 1;
 }
 
 /*****************************************************************************/
@@ -113,7 +133,15 @@ inline void excep_restore_ints (uint32_t if_bits){
  *                      1: I=1  (IRQ deshabilitadas)
  */
 inline void excep_restore_irq (uint32_t i_bit){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 5 */
+    asm volatile(
+        "mrs r12, cpsr\n\t"                     /* r12 <- cpsr */
+        "bic r12, r12, #0x80\n\t"               /* I <- 0 */
+        "orr r12, r12, %[bits], LSL #7\n\t"     /* Restauramos los bits */
+        "msr cpsr_c, r12"                       /* cpsr <- r12 */
+        :                                       /* Parámetros de salida */
+        :[bits] "r" (i_bits & 1)                /* Parámetros de entrada */
+        :"r12", "cc");                          /* Preservar */
+    }
 }
 
 /*****************************************************************************/
@@ -127,7 +155,15 @@ inline void excep_restore_irq (uint32_t i_bit){
  *                      1: F=1  (FIQ deshabilitadas)
  */
 inline void excep_restore_fiq (uint32_t f_bit){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 5 */
+    asm volatile(
+        "mrs r12, cpsr\n\t"                     /* r12 <- cpsr */
+        "bic r12, r12, #0x40\n\t"               /* F <- 0 */
+        "orr r12, r12, %[bits], LSL #6\n\t"     /* Restauramos los bits */
+        "msr cpsr_c, r12"                       /* cpsr <- r12 */
+        :                                       /* Parámetros de salida */
+        :[bits] "r" (f_bits & 1)                /* Parámetros de entrada */
+        :"r12", "cc");                          /* Preservar */
+    }
 }
 
 /*****************************************************************************/
