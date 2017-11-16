@@ -3,5 +3,7 @@ A partir de entonces, esta tabla se trata como un vector, realizándose el set y
 
 Luego, simplemente basta en nuestro programa que definamos una función sin argumentos y que no devuelve nada con las acciones que queramos, y la convirtamos en el manejador de excepciones que más nos convenga con el set explicado antes. Para que nuestra función realice las tareas que deben realizarse cuando se produce una excepción (cambiar de modo, guardar registros, resolver excepción, cargar registros y retornar de modo) debemos cambiar su atributo "interrupt" escribiendo "__attribute__ ((interrupt (<tipo excepción>)))" antes de la cabecera de la misma. Los tipos que conoce el compilador de GNU son: "IRQ", "FIQ", "SWI", "ABORT", "UNDEF"
 
+En nuestro caso, la excepción que escogimos fue "UNDEF" ya que podíamos forzarla mediante asm en línea y el valor "0x26889912" que no se puede descifrar como ninguna instrucción.
+
 NOTA IMPORTANTE:
 No olvides hacer make en el directorio bsp para actualizar la librería o perderás 2 tardes de una forma muy tonta -.-
