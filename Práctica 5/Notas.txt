@@ -19,5 +19,7 @@ Para ello, basta con unos sencillos pasos:
     * Restauramos el valor que tenía (I, F) a partir del parámetro que nos han pasado
     * Guardamos el resultado en "cpsr"
 
+Deshabilitar sólo una es idéntico para con distintas constantes, por ejemplo, en lugar de 0xC0 se usa 0x80 para I y 0x40 para F.
+
 NOTA IMPORTANTE:
 No olvides hacer make en el directorio bsp para actualizar la librería o perderás 2 tardes de una forma muy tonta -.-
