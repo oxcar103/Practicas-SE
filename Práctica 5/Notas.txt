@@ -1,0 +1,5 @@
+En el archivo excep.h se define el enum de excepciones, después en excep.c se define la tabla de manejadores como "extern volatile excep_handler_t _excep_handlers[excep_max]"
+A partir de entonces, esta tabla se trata como un vector, realizándose el set y get de manejadores como "_excep_handlers[excep] = handler;" y "return _excep_handlers[excep];", respectivamente
+
+Luego, simplemente basta en nuestro programa que definamos una función sin argumentos y que no devuelve nada con las acciones que queramos, y la convirtamos en el manejador de excepciones que más nos convenga con el set explicado antes. Para que nuestra función realice las tareas que deben realizarse cuando se produce una excepción (cambiar de modo, guardar registros, resolver excepción, cargar registros y retornar de modo) debemos cambiar su atributo "interrupt" escribiendo "__attribute__ ((interrupt (<tipo excepción>)))" antes de la cabecera de la misma. Los tipos que conoce el compilador de GNU son: "IRQ", "FIQ", "SWI", "ABORT", "UNDEF"
+
