@@ -101,7 +101,7 @@ int main (){
 
     the_led = led_red_mask;
 
-    //asm(".word 0x26889912\n");
+    asm(".word 0x26889912\n");
 
     while (1){
         leds_on(the_led);
