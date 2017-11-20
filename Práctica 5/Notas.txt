@@ -15,7 +15,7 @@ Para ello, basta con unos sencillos pasos:
 
   - Para habilitarlas:
     * Pasamos "cpsr" a un registro (para poder operar con él)
-    * Vaciamos los bits de I, F (6 y 7) con "bic reg 0xC0" o con reg v !0xC0
+    * Vaciamos los bits de I, F (6 y 7) con "bic reg 0xC0" o con reg ∧ !0xC0
     * Restauramos el valor que tenía (I, F) a partir del parámetro que nos han pasado
     * Guardamos el resultado en "cpsr"
 
