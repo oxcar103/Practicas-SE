@@ -33,6 +33,13 @@ static volatile itc_regs_t* const itc_regs = ITC_BASE;
  */
 static itc_handler_t itc_handlers[itc_src_max];
 
+
+/**
+ * Almacena el estado de INTENABLE cuando se deshabilitan las interrupciones
+ * para poder restaurarlo cuando se habiliten de nuevo.
+ */
+static uint32_t v_intenable;
+
 /*****************************************************************************/
 
 /**
@@ -52,9 +59,9 @@ inline void itc_init ()
  * Deshabilita el envío de peticiones de interrupción a la CPU
  * Permite implementar regiones críticas en modo USER
  */
-inline void itc_disable_ints ()
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_disable_ints (){
+    v_intenable = itc_regs->INTENABLE;
+    itc_regs->INTENABLE = 0;
 }
 
 /*****************************************************************************/
@@ -63,9 +70,8 @@ inline void itc_disable_ints ()
  * Vuelve a habilitar el envío de peticiones de interrupción a la CPU
  * Permite implementar regiones críticas en modo USER
  */
-inline void itc_restore_ints ()
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_restore_ints (){
+    itc_regs->INTENABLE = v_intenable;
 }
 
 /*****************************************************************************/
