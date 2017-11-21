@@ -1,6 +1,7 @@
 (Mirando MC1322xRM.pdf, sección 8.5 Interrupt Controller Memory Map)
 ITC base address = 0x8002_0000.
 Definimos itc_regs_t usando la tabla 8.2 ITC Register Memory Map
+Usaremos el tipo uint32
 
 base+0x18 - base+0x24 -> Reservados
 0x28-0x18 = 0x10 = 4 registros
