@@ -7,3 +7,5 @@ base+0x18 - base+0x24 -> Reservados
 
 Para desactivar interrupciones, debemos modificar un registro en particular y guardar su valor previo para poder restaurarlo al habilitarlas.
 Para acceder a dicho registro, usaremos itc_regs->INTENABLE (o cualquier otro nombre de registro si queremos modificar otro)
+
+Para desactivar o activar interrupciones de una determinada fuente, basta con modificar el valor del registro INTDISNUM o INTENNUM respectivamente

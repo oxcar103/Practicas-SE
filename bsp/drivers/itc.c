@@ -106,7 +106,7 @@ inline void itc_set_priority (itc_src_t src, itc_priority_t priority)
  */
 inline void itc_enable_interrupt (itc_src_t src)
 {
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    itc_regs->INTENNUM = src
 }
 
 /*****************************************************************************/
@@ -117,7 +117,7 @@ inline void itc_enable_interrupt (itc_src_t src)
  */
 inline void itc_disable_interrupt (itc_src_t src)
 {
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    itc_regs->INTDISNUM = src
 }
 
 /*****************************************************************************/
