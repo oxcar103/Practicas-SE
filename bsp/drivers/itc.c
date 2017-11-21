@@ -10,9 +10,20 @@
 /**
  * Acceso estructurado a los registros de control del ITC del MC1322x
  */
-typedef struct
-{
-	/* ESTA ESTRUCTURA SE DEFINIRÁ EN LA PRÁCTICA 6 */
+typedef struct{
+    uint32_t INTCNTL;       // Interrupt Control Register
+    uint32_t NIMASK;        // Normal Interrupt Mask Register
+    uint32_t INTENNUM;      // Interrupt Enable Number Register
+    uint32_t INTDISNUM;     // Interrupt Disable Number Register
+    uint32_t INTENABLE;     // Interrupt Enable Register
+    uint32_t INTTYPE;       // Interrupt Type Register
+    uint32_t reserved[4];   // Reserved
+    uint32_t NIVECTOR;      // Normal Interrupt Vector
+    uint32_t FIVECTOR;      // Fast Interrupt Vector
+    uint32_t INTSRC;        // Interrupt Source Register
+    uint32_t INTFRC;        // Interrupt Force Register
+    uint32_t NIPEND;        // Normal Interrupt Pending Register
+    uint32_t FIPEND;        // Fast Interrupt Pending Register
 } itc_regs_t;
 
 static volatile itc_regs_t* const itc_regs = ITC_BASE;
