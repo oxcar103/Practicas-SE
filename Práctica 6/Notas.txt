@@ -18,3 +18,9 @@ Para dar servicio a una interrupción rápida o normal, basta con llamar a su ma
 Es importante notar que, como es un manejador, debemos recordar modificar el atributo interrupt para gestionar IRQ mediante "__attribute__ ((interrupt ("IRQ")))".
 
 Para forzar/desforzar interrupciones, haremos uso del registro itc_regs->INTFRC, y como debemos escribirle de forma que modificamos su valor, tenemos que encargarnos de hacer (1 << src) junto con un "or" de su contenido actual para forzar una nueva interrupción y no machacar el resto, y junto con un "and" de su contenido actual (y un "not" de (1 << src)) para borrar esa interrupción y dejar inalteradas las demás.
+
+Para inicializar el controlador de interrupciones:
+  · Todos los manejadores deben ser NULL.
+  · No debe haber interrupciones forzadas.
+  · No debe haber fuentes de interrupción.
+  · Los bits NIAD y FIAD de INTCNTL deben estar a 0 para habilitar las interrupciones.
