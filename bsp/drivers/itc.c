@@ -81,9 +81,8 @@ inline void itc_restore_ints (){
  * @param src		Identificador de la fuente
  * @param handler	Manejador
  */
-inline void itc_set_handler (itc_src_t src, itc_handler_t handler)
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_set_handler (itc_src_t src, itc_handler_t handler){
+    itc_handlers[src] = handler;
 }
 
 /*****************************************************************************/
