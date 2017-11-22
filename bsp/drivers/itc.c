@@ -63,7 +63,8 @@ uint32_t const MASK_FN = (1 << FIAD) | (1 << NIAD);     // Mask of FIAD and NIAD
  */
 inline void itc_init (){
     // Todos los manejadores a NULL
-    for i in itc_src_t {
+    uint32_t i;
+    for(i = 0; i < itc_src_max; i++){
         itc_handlers[i] = NULL;
     }
 
