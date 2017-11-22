@@ -49,9 +49,9 @@ static uint32_t v_intcntl;
 /**
  * Registros de INTCNTL para regular el control de interrupciones.
  */
-uint32_t const FIAD = 19;                           // Fast Interrupt Arbiter Disable
-uint32_t const NIAD = 20;                           // Normal Interrupt Arbiter Disable
-uint32_t const MASK_FN= (1 << FIAD) | (1 << NIAD);  // Mask of FIAD and NIAD
+#define FIAD 19                                         // Fast Interrupt Arbiter Disable
+#define NIAD 20                                         // Normal Interrupt Arbiter Disable
+uint32_t const MASK_FN = (1 << FIAD) | (1 << NIAD);     // Mask of FIAD and NIAD
 
 /*****************************************************************************/
 
