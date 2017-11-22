@@ -8,10 +8,13 @@ base+0x18 - base+0x24 -> Reservados
 Para desactivar interrupciones, debemos modificar un registro en particular y guardar su valor previo para poder restaurarlo al habilitarlas.
 Para acceder a dicho registro, usaremos itc_regs->INTENABLE (o cualquier otro nombre de registro si queremos modificar otro)
 
-Para desactivar o activar interrupciones de una determinada fuente, basta con modificar el valor del registro INTDISNUM o INTENNUM respectivamente
+Para desactivar o activar interrupciones de una determinada fuente, basta con modificar el valor del registro INTDISNUM o INTENNUM respectivamente.
 
 Para establecer una prioridad a un dispositivo, nos basta con usar el registro INTTYPE y marcarlo con un 1 en el bit del dispositivo mientras dejamos el resto a 0, esto se puede hacer con itc_regs->INTTYPE = (1 << dispositivo). Para quitar la prioridad a ese dispositivo, nos basta con que el bit (1 << dispositivo) sea 0, esto lo haremos con itc_regs->INTTYPE &= ~(1 << dispositivo).
 
 Asignar un manejador de interrupción no tiene magia, es modificar el valor del array de manejadores correspondiente.
+
+Para dar servicio a una interrupción rápida o normal, basta con llamar a su manejador. Para llamarlo, basta con usar el vector de manejadores itc_handlers y la posición dentro de este array nos viene dada por itc_regs->FIVECTOR o itc_regs->NIVECTOR respectivamente. Adicionalmente, en hal/excep.c debemos definir el manejador para las IRQ, que es simplemente llamar a la función que acabamos de definir para interrupciones normales.
+Es importante notar que, como es un manejador, debemos recordar modificar el atributo interrupt para gestionar IRQ mediante "__attribute__ ((interrupt ("IRQ")))".
 
 Para forzar/desforzar interrupciones, haremos uso del registro itc_regs->INTFRC, y como debemos escribirle de forma que modificamos su valor, tenemos que encargarnos de hacer (1 << src) junto con un "or" de su contenido actual para forzar una nueva interrupción y no machacar el resto, y junto con un "and" de su contenido actual (y un "not" de (1 << src)) para borrar esa interrupción y dejar inalteradas las demás.

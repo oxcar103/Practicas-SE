@@ -149,7 +149,7 @@ inline void itc_unforce_interrupt (itc_src_t src){
  * completado el servicio de la IRQ para evitar inversiones de prioridad
  */
 void itc_service_normal_interrupt (){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    itc_handlers[itc_regs->NIVECTOR]();
 }
 
 /*****************************************************************************/
@@ -158,7 +158,7 @@ void itc_service_normal_interrupt (){
  * Da servicio a la interrupción rápida pendiente de más prioridad
  */
 void itc_service_fast_interrupt (){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    itc_handlers[itc_regs->FIVECTOR]();
 }
 
 /*****************************************************************************/
