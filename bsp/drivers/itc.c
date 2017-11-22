@@ -40,6 +40,13 @@ static itc_handler_t itc_handlers[itc_src_max];
  */
 static uint32_t v_intenable;
 
+/**
+ * Registros de INTCNTL para regular el control de interrupciones.
+ */
+uint32_t const FIAD = 19;                           // Fast Interrupt Arbiter Disable
+uint32_t const NIAD = 20;                           // Normal Interrupt Arbiter Disable
+uint32_t const MASK_FN= (1 << FIAD) | (1 << NIAD);  // Mask of FIAD and NIAD
+
 /*****************************************************************************/
 
 /**
@@ -49,7 +56,14 @@ static uint32_t v_intenable;
  * de interupciones.
  */
 inline void itc_init (){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    // Todos los manejadores a NULL
+    for i in itc_src_t {
+        itc_handlers[i] = NULL;
+    }
+
+    itc_regs->INTFRC = 0;               // Sin interrupciones forzadas
+    itc_regs->INTENABLE = 0;            // Sin fuentes de interrupción
+    itc_regs->INTCNTL &= ~(MASK_FN);    // Interrupciones habilitadas
 }
 
 /*****************************************************************************/
