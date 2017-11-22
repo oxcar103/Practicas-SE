@@ -41,6 +41,12 @@ static itc_handler_t itc_handlers[itc_src_max];
 static uint32_t v_intenable;
 
 /**
+ * Almacena el estado de INTCNTL cuando se deshabilitan las interrupciones
+ * para poder restaurarlo cuando se habiliten de nuevo.
+ */
+static uint32_t v_intcntl;
+
+/**
  * Registros de INTCNTL para regular el control de interrupciones.
  */
 uint32_t const FIAD = 19;                           // Fast Interrupt Arbiter Disable
@@ -74,7 +80,9 @@ inline void itc_init (){
  */
 inline void itc_disable_ints (){
     v_intenable = itc_regs->INTENABLE;
+    v_intcntl = itc_regs->INTCNTL;
     itc_regs->INTENABLE = 0;
+    itc_regs->INTCNTL |= (MASK_FN);
 }
 
 /*****************************************************************************/
@@ -85,6 +93,8 @@ inline void itc_disable_ints (){
  */
 inline void itc_restore_ints (){
     itc_regs->INTENABLE = v_intenable;
+    itc_regs->INTCNTL &= ~(MASK_FN);
+    itc_regs->INTCNTL |= (v_intcntl & MASK_FN)
 }
 
 /*****************************************************************************/
