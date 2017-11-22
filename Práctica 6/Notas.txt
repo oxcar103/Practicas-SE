@@ -9,3 +9,5 @@ Para desactivar interrupciones, debemos modificar un registro en particular y gu
 Para acceder a dicho registro, usaremos itc_regs->INTENABLE (o cualquier otro nombre de registro si queremos modificar otro)
 
 Para desactivar o activar interrupciones de una determinada fuente, basta con modificar el valor del registro INTDISNUM o INTENNUM respectivamente
+
+Para establecer una prioridad a un dispositivo, nos basta con usar el registro INTTYPE y marcarlo con un 1 en el bit del dispositivo mientras dejamos el resto a 0. Esto se puede hacer con itc_regs->INTTYPE = (1 << dispositivo). De igual manera, como sólo puede haber un FIQ a la vez, si quitamos la prioridad a dicho dispositivo, todo quedará a 0, es decir, nos basta hacer itc_regs->INTTYPE = 0.
