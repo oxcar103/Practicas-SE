@@ -79,10 +79,11 @@ inline void itc_init (){
  * Permite implementar regiones críticas en modo USER
  */
 inline void itc_disable_ints (){
-    v_intenable = itc_regs->INTENABLE;
-    v_intcntl = itc_regs->INTCNTL;
-    itc_regs->INTENABLE = 0;
-    itc_regs->INTCNTL |= (MASK_FN);
+    v_intcntl = itc_regs->INTCNTL;      // Guardamos el antiguo valor de INTCNTL
+    itc_regs->INTCNTL |= (MASK_FN);     // NIAD, FIAD <- 1 para desactivar interrupciones
+
+    v_intenable = itc_regs->INTENABLE;  // Guardamos el antiguo valor de INTENABLE
+    itc_regs->INTENABLE = 0;            // INTENABLE <- 0 para limpiar las fuentes de interrupción
 }
 
 /*****************************************************************************/
@@ -92,9 +93,9 @@ inline void itc_disable_ints (){
  * Permite implementar regiones críticas en modo USER
  */
 inline void itc_restore_ints (){
-    itc_regs->INTENABLE = v_intenable;
-    itc_regs->INTCNTL &= ~(MASK_FN);
-    itc_regs->INTCNTL |= (v_intcntl & MASK_FN)
+    itc_regs->INTENABLE = v_intenable;              // Restauramos el valor original de INTENABLE
+    itc_regs->INTCNTL &= ~(MASK_FN);                // Limpiamos los bits de FIAD y NIAD
+    itc_regs->INTCNTL |= (v_intcntl & MASK_FN);     // Restauramos su valor original
 }
 
 /*****************************************************************************/
