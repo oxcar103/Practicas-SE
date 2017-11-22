@@ -93,9 +93,13 @@ inline void itc_set_handler (itc_src_t src, itc_handler_t handler)
  * @param src		Identificador de la fuente
  * @param priority	Tipo de prioridad
  */
-inline void itc_set_priority (itc_src_t src, itc_priority_t priority)
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_set_priority (itc_src_t src, itc_priority_t priority){
+    if(priority == itc_priority_fast){
+        itc_regs->INTTYPE = (1 << src);     // Sólo puede haber una FIQ a la vez
+    }
+    else{
+        itc_regs->INTTYPE = 0;              // Si la que había, la quitas, todas quedan a 0
+    }
 }
 
 /*****************************************************************************/
@@ -104,9 +108,8 @@ inline void itc_set_priority (itc_src_t src, itc_priority_t priority)
  * Habilita las interrupciones de una determinda fuente
  * @param src		Identificador de la fuente
  */
-inline void itc_enable_interrupt (itc_src_t src)
-{
-    itc_regs->INTENNUM = src
+inline void itc_enable_interrupt (itc_src_t src){
+    itc_regs->INTENNUM = src;
 }
 
 /*****************************************************************************/
@@ -115,9 +118,8 @@ inline void itc_enable_interrupt (itc_src_t src)
  * Deshabilita las interrupciones de una determinda fuente
  * @param src		Identificador de la fuente
  */
-inline void itc_disable_interrupt (itc_src_t src)
-{
-    itc_regs->INTDISNUM = src
+inline void itc_disable_interrupt (itc_src_t src){
+    itc_regs->INTDISNUM = src;
 }
 
 /*****************************************************************************/
