@@ -13,17 +13,16 @@
 /**
  * Tipos de excepción
  */
-typedef enum
-{
-	excep_reset = 0,
-	excep_undef,
-	excep_swi,
-	excep_pabt,
-	excep_dabt,
-	excep_rsv,
-	excep_irq,
-	excep_fiq,
-	excep_max
+typedef enum{
+    excep_reset = 0,
+    excep_undef,
+    excep_swi,
+    excep_pabt,
+    excep_dabt,
+    excep_rsv,
+    excep_irq,
+    excep_fiq,
+    excep_max
 } excep_t;
 
 /*****************************************************************************/
@@ -47,10 +46,10 @@ void excep_init ();
  * Esta función sólo funciona en modos privilegiados. Desde modo USER no se
  * permite alterar los bits I y F de los registros de control
  * @return	El valor de los bits I y F antes de deshabilitar las interrupciones:
- * 			0: I=0, F=0	(IRQ habilitadas,    FIQ habilitadas)
- * 			1: I=0, F=1	(IRQ habilitadas,    FIQ deshabilitadas)
- * 			2: I=1, F=0	(IRQ deshabilitadas, FIQ habilitadas)
- * 			3: I=1, F=1	(IRQ deshabilitadas, FIQ deshabilitadas)
+ *          0: I=0, F=0	(IRQ habilitadas,       FIQ habilitadas)
+ *          1: I=0, F=1	(IRQ habilitadas,       FIQ deshabilitadas)
+ *          2: I=1, F=0	(IRQ deshabilitadas,    FIQ habilitadas)
+ *          3: I=1, F=1	(IRQ deshabilitadas,    FIQ deshabilitadas)
  */
 inline uint32_t excep_disable_ints ();
 
@@ -60,9 +59,9 @@ inline uint32_t excep_disable_ints ();
  * Deshabilita las interrupciones normales
  * Esta función sólo funciona en modos privilegiados. Desde modo USER no se
  * permite alterar el bit I de los registros de control
- * @return	El valor del bit I antes de deshabilitar las interrupciones:
- * 			0: I=0	(IRQ habilitadas)
- * 			1: I=1	(IRQ deshabilitadas)
+ * @return  El valor del bit I antes de deshabilitar las interrupciones:
+ *          0: I=0  (IRQ habilitadas)
+ *          1: I=1  (IRQ deshabilitadas)
  */
 inline uint32_t excep_disable_irq ();
 
@@ -72,9 +71,9 @@ inline uint32_t excep_disable_irq ();
  * Deshabilita las interrupciones rápidas
  * Esta función sólo funciona en modos privilegiados. Desde modo USER no se
  * permite alterar el bit F de los registros de control
- * @return	El valor del bit F antes de deshabilitar las interrupciones:
- * 			0: F=0	(FIQ habilitadas)
- * 			1: F=1	(FIQ deshabilitadas)
+ * @return  El valor del bit F antes de deshabilitar las interrupciones:
+ *          0: F=0  (FIQ habilitadas)
+ *          1: F=1  (FIQ deshabilitadas)
  */
 inline uint32_t excep_disable_fiq ();
 
@@ -84,11 +83,11 @@ inline uint32_t excep_disable_fiq ();
  * Restaura los antiguos valores de las máscaras de interrupción
  * Esta función sólo funciona en modos privilegiados. Desde modo USER no se
  * permite alterar los bits I y F de los registros de control
- * @param if_bits	Valores anteriores de las máscaras
- * 						0: I=0, F=0	(IRQ habilitadas,    FIQ habilitadas)
- *			 			1: I=0, F=1	(IRQ habilitadas,    FIQ deshabilitadas)
- * 						2: I=1, F=0	(IRQ deshabilitadas, FIQ habilitadas)
- *			 			3: I=1, F=1	(IRQ deshabilitadas, FIQ deshabilitadas)
+ * @param if_bits   Valores anteriores de las máscaras
+ *                      0: I=0, F=0	(IRQ habilitadas,       FIQ habilitadas)
+ *                      1: I=0, F=1	(IRQ habilitadas,       FIQ deshabilitadas)
+ *                      2: I=1, F=0	(IRQ deshabilitadas,    FIQ habilitadas)
+ *                      3: I=1, F=1	(IRQ deshabilitadas,    FIQ deshabilitadas)
  */
 inline void excep_restore_ints (uint32_t if_bits);
 
@@ -99,8 +98,8 @@ inline void excep_restore_ints (uint32_t if_bits);
  * Esta función sólo funciona en modos privilegiados. Desde modo USER no se
  * permite alterar el bit I de los registros de control
  * @param i_bit	Valor anterior de la máscara
- * 						0: I=0	(IRQ habilitadas)
- * 						1: I=1	(IRQ deshabilitadas)
+ *                      0: I=0  (IRQ habilitadas)
+ * 						1: I=1  (IRQ deshabilitadas)
  */
 inline void excep_restore_irq (uint32_t i_bit);
 
@@ -111,8 +110,8 @@ inline void excep_restore_irq (uint32_t i_bit);
  * Esta función sólo funciona en modos privilegiados. Desde modo USER no se
  * permite alterar el bit F de los registros de control
  * @param f_bit	Valor anterior de la máscara
- * 						0: F=0	(FIQ habilitadas)
- * 						1: F=1	(FIQ deshabilitadas)
+ *                      0: F=0  (FIQ habilitadas)
+ *                      1: F=1  (FIQ deshabilitadas)
  */
 inline void excep_restore_fiq (uint32_t f_bit);
 
@@ -120,8 +119,8 @@ inline void excep_restore_fiq (uint32_t f_bit);
 
 /**
  * Asigna un manejador de interrupción/excepción
- * @param excep		Tipo de excepción
- * @param handler	Manejador
+ * @param excep     Tipo de excepción
+ * @param handler   Manejador
  */
 inline void excep_set_handler (excep_t excep, excep_handler_t handler);
 
@@ -129,7 +128,7 @@ inline void excep_set_handler (excep_t excep, excep_handler_t handler);
 
 /**
  * Retorna un manejador de interrupción/excepción
- * @param excep		Tipo de excepción
+ * @param excep     Tipo de excepción
  */
 inline excep_handler_t excep_get_handler (excep_t excep);
 

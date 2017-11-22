@@ -48,9 +48,8 @@ static uint32_t v_intenable;
  * y habilita el arbitraje de interrupciones Normales y rápidas en el controlador
  * de interupciones.
  */
-inline void itc_init ()
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_init (){
+    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
 }
 
 /*****************************************************************************/
@@ -78,8 +77,8 @@ inline void itc_restore_ints (){
 
 /**
  * Asigna un manejador de interrupción
- * @param src		Identificador de la fuente
- * @param handler	Manejador
+ * @param src       Identificador de la fuente
+ * @param handler   Manejador
  */
 inline void itc_set_handler (itc_src_t src, itc_handler_t handler){
     itc_handlers[src] = handler;
@@ -89,8 +88,8 @@ inline void itc_set_handler (itc_src_t src, itc_handler_t handler){
 
 /**
  * Asigna una prioridad (normal o fast) a una fuente de interrupción
- * @param src		Identificador de la fuente
- * @param priority	Tipo de prioridad
+ * @param src       Identificador de la fuente
+ * @param priority  Tipo de prioridad
  */
 inline void itc_set_priority (itc_src_t src, itc_priority_t priority){
     if(priority == itc_priority_fast){
@@ -105,7 +104,7 @@ inline void itc_set_priority (itc_src_t src, itc_priority_t priority){
 
 /**
  * Habilita las interrupciones de una determinda fuente
- * @param src		Identificador de la fuente
+ * @param src       Identificador de la fuente
  */
 inline void itc_enable_interrupt (itc_src_t src){
     itc_regs->INTENNUM = src;
@@ -115,7 +114,7 @@ inline void itc_enable_interrupt (itc_src_t src){
 
 /**
  * Deshabilita las interrupciones de una determinda fuente
- * @param src		Identificador de la fuente
+ * @param src       Identificador de la fuente
  */
 inline void itc_disable_interrupt (itc_src_t src){
     itc_regs->INTDISNUM = src;
@@ -125,22 +124,20 @@ inline void itc_disable_interrupt (itc_src_t src){
 
 /**
  * Fuerza una interrupción con propósitos de depuración
- * @param src		Identificador de la fuente
+ * @param src       Identificador de la fuente
  */
-inline void itc_force_interrupt (itc_src_t src)
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_force_interrupt (itc_src_t src){
+    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
 }
 
 /*****************************************************************************/
 
 /**
  * Desfuerza una interrupción con propósitos de depuración
- * @param src		Identificador de la fuente
+ * @param src       Identificador de la fuente
  */
-inline void itc_unforce_interrupt (itc_src_t src)
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+inline void itc_unforce_interrupt (itc_src_t src){
+    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
 }
 
 /*****************************************************************************/
@@ -151,9 +148,8 @@ inline void itc_unforce_interrupt (itc_src_t src)
  * anidadas, debe deshabilitar las IRQ de menor prioridad hasta que se haya
  * completado el servicio de la IRQ para evitar inversiones de prioridad
  */
-void itc_service_normal_interrupt ()
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+void itc_service_normal_interrupt (){
+    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
 }
 
 /*****************************************************************************/
@@ -161,9 +157,8 @@ void itc_service_normal_interrupt ()
 /**
  * Da servicio a la interrupción rápida pendiente de más prioridad
  */
-void itc_service_fast_interrupt ()
-{
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+void itc_service_fast_interrupt (){
+    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
 }
 
 /*****************************************************************************/
