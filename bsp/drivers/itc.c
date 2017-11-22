@@ -98,9 +98,7 @@ inline void itc_set_priority (itc_src_t src, itc_priority_t priority){
         itc_regs->INTTYPE = (1 << src);     // Sólo puede haber una FIQ a la vez
     }
     else{
-        if(itc_regs->INTTYPE == (1 << src)){
-            itc_regs->INTTYPE = 0;          // Si la que había, la quitas, todas quedan a 0
-        }
+        itc_regs->INTTYPE &= ~(1 << src);   // Si era FIQ, lo quitamos
     }
 }
 
