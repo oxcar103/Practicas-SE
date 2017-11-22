@@ -127,7 +127,7 @@ inline void itc_disable_interrupt (itc_src_t src){
  * @param src       Identificador de la fuente
  */
 inline void itc_force_interrupt (itc_src_t src){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    itc_regs->INTFRC |= (1 << src);
 }
 
 /*****************************************************************************/
@@ -137,7 +137,7 @@ inline void itc_force_interrupt (itc_src_t src){
  * @param src       Identificador de la fuente
  */
 inline void itc_unforce_interrupt (itc_src_t src){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 6 */
+    itc_regs->INTFRC &= ~(1 << src);
 }
 
 /*****************************************************************************/
