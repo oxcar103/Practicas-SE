@@ -101,6 +101,8 @@ int main (){
     // Asignamos el nuevo manejador a la interrupción asm
     itc_set_handler (itc_src_asm, my_asm_handler);
 
+    // Habilitamos la interrupción asm
+    itc_enable_interrupt (itc_src_asm);
 
     the_led = led_red_mask;
 
