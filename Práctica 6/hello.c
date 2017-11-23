@@ -77,10 +77,10 @@ void pause(void){
 /*****************************************************************************/
 
 /*
- * Manejador de interrupciones UNDEF
+ * Manejador de interrupciones asm
  */
-__attribute__ ((interrupt ("UNDEF")))
-void my_undef_handler(void){
+void my_asm_handler(void){
+    itc_unforce_interrupt(itc_src_asm);
     leds_on (led_green_mask);
 }
 
@@ -98,13 +98,14 @@ int main (){
     // Ejecutamos gpio_init()
     gpio_init();
 
-    // Asignamos el nuevo manejador a la excepción UNDEF
-    excep_set_handler (excep_undef, my_undef_handler);
+    // Asignamos el nuevo manejador a la interrupción asm
+    itc_set_handler (itc_src_asm, my_asm_handler);
+
 
     the_led = led_red_mask;
 
-    // Fuerza el modo UNDEF
-    asm(".word 0x26889912\n");
+    // Fuerza la interrupción asm
+    itc_unforce_interrupt(itc_src_asm);
 
     while (1){
         leds_on(the_led);
