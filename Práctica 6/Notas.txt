@@ -25,3 +25,6 @@ Para inicializar el controlador de interrupciones:
   · No debe haber interrupciones forzadas.
   · No debe haber fuentes de interrupción.
   · Los bits NIAD y FIAD de INTCNTL deben estar a 0 para habilitar las interrupciones.
+
+Para comprobar el correcto funcionamiento, implementamos un manejador que se encargue de atender una interrupción (en nuestro caso, asm) y después, la forzamos.
+Hay que encargarse de informar al dispositivo responsable de la interrupción pero como estamos forzando una interrupción, deberíamos dejar de forzarla. Además, encendemos el led verde para saber que la hemos procesado.
