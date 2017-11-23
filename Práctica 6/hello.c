@@ -107,7 +107,7 @@ int main (){
     the_led = led_red_mask;
 
     // Fuerza la interrupción asm
-    itc_unforce_interrupt(itc_src_asm);
+    itc_force_interrupt(itc_src_asm);
 
     while (1){
         leds_on(the_led);
