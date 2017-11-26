@@ -95,8 +95,10 @@ uint32_t the_led;
  * Programa principal
  */
 int main (){
-    // Ejecutamos gpio_init()
+    // Ejecutamos gpio_init() dentro de una sección crítica
+    itc_disable_ints();
     gpio_init();
+    itc_restore_ints();
 
     // Asignamos el nuevo manejador a la interrupción asm
     itc_set_handler (itc_src_asm, my_asm_handler);
