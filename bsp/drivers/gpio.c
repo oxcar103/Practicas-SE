@@ -162,7 +162,7 @@ inline gpio_err_t gpio_clear_pin (gpio_pin_t pin){
  *          gpio_invalid_parameter en otro caso
  */
 inline gpio_err_t gpio_get_port (gpio_port_t port, uint32_t *port_data){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
+    port_data = gpio_regs->DATA[port & 1];
 
     return gpio_no_error;
 }
@@ -178,7 +178,7 @@ inline gpio_err_t gpio_get_port (gpio_port_t port, uint32_t *port_data){
  *          gpio_invalid_parameter en otro caso
  */
 inline gpio_err_t gpio_get_pin (gpio_pin_t pin, uint32_t *pin_data){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
+    port_data = gpio_regs->DATA[(pin >> 5) & 1];
 
     return gpio_no_error;
 }
