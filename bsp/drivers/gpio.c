@@ -11,7 +11,18 @@
  * Acceso estructurado a los registros de control del gpio del MC1322x
  */
 typedef struct{
-    
+    uint32_t PAD_DIR[2];
+    uint32_t DATA[2];
+    uint32_t PU_EN[2];
+    uint32_t FUNC_SEL[4];
+    uint32_t DATA_SEL[2];
+    uint32_t PAD_PU_SEL[2];
+    uint32_t PAD_HYST_EN[2];
+    uint32_t PAD_KEEP[2];
+    uint32_t DATA_SET[2];
+    uint32_t DATA_RESET[2];
+    uint32_t DIR_SET[2];
+    uint32_t DIR_RESET[2];
 } gpio_regs_t;
 
 static volatile gpio_regs_t* const gpio_regs = GPIO_BASE;
