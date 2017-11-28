@@ -69,7 +69,7 @@ inline gpio_err_t gpio_set_port_dir_output (gpio_port_t port, uint32_t mask){
  *          gpio_invalid_parameter en otro caso
  */
 inline gpio_err_t gpio_set_pin_dir_input (gpio_pin_t pin){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
+    gpio_regs->DIR_RESET[(pin >> 5) & 1] = 1 << (pin & 0x1f);
 
     return gpio_no_error;
 }
@@ -84,7 +84,7 @@ inline gpio_err_t gpio_set_pin_dir_input (gpio_pin_t pin){
  *          gpio_invalid_parameter en otro caso
  */
 inline gpio_err_t gpio_set_pin_dir_output (gpio_pin_t pin){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
+    gpio_regs->DIR_SET[(pin >> 5) & 1] = 1 << (pin & 0x1f);
 
     return gpio_no_error;
 }
