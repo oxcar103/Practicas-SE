@@ -2,3 +2,5 @@
 GPIO base address = 0x8000_0000.
 Definimos gpio_regs_t usando la tabla 11-7. GPIO Module Register Memory Map
 Usaremos el tipo uint32
+
+Para fijar un pin o conjunto de pines de un mismo puerto a entrada/salida es tan fácil como pasarle el puerto a gpio_regs->DIR_RESET para entrada y gpio_regs->DIR_SET para salida, y los pines que queremos modificar en forma de máscara. Análogamente para escribir 0's o 1's en los pines de salida cambiando el registro por gpio_regs->DATA_RESET para entrada y gpio_regs->DATA_SET para salida. De manera similar, podemos leer los pines de entrada accediendo a gpio_regs->DATA.
