@@ -1,0 +1,4 @@
+(Mirando MC1322xRM.pdf, sección 11.6 GPIO Module Register Memory Map)
+GPIO base address = 0x8000_0000.
+Definimos gpio_regs_t usando la tabla 11-7. GPIO Module Register Memory Map
+Usaremos el tipo uint32
