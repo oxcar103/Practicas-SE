@@ -5,3 +5,6 @@ Usaremos el tipo uint32
 
 Para fijar un pin o conjunto de pines de un mismo puerto a entrada/salida es tan fácil como pasarle el puerto a gpio_regs->DIR_RESET para entrada y gpio_regs->DIR_SET para salida, y los pines que queremos modificar en forma de máscara. Análogamente para escribir 0's o 1's en los pines de salida cambiando el registro por gpio_regs->DATA_RESET para entrada y gpio_regs->DATA_SET para salida. De manera similar, podemos leer los pines de entrada accediendo a gpio_regs->DATA.
 Es importante comprobar que los parámetros son correctos.
+
+Fijar el modo de funcionamiento no es especialmente difícil, es esencialmente lo mismo que hacíamos antes con los pines de entrada/salida y sus datos pero usando gpio_regs->FUNC_SEL, la principal diferencia es que en esta ocasión hay 4 modos en lugar de 2 como estábamos acostumbrados y eso requiere un esfuerzo extra a la hora de calcular dónde va y cómo pasarlo al registro.
+Adicionalmente, como no tiene un registro de SET y otro de RESET, tenemos que meterlo nosotros mismos asegurándonos de no modificar el resto. Es decir, hay que hacer un bit clear con la máscara correspondiente y un orr con el valor que queremos introducir correctamente colocado.
