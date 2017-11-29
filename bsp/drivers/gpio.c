@@ -235,7 +235,15 @@ inline gpio_err_t gpio_get_pin (gpio_pin_t pin, uint32_t *pin_data){
  *          gpio_invalid_parameter en otro caso
  */
 inline gpio_err_t gpio_set_port_func (gpio_port_t port, gpio_func_t func, uint32_t mask){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
+    // Si el puerto o la función es mayor que el máximo que hay, los parámetros están mal
+    if(port >= gpio_port_max  || func >= gpio_func_max)
+        return gpio_invalid_parameter;
+
+    for(int i = 0; i <= gpio_pin_max/gpio_port_max; i++)
+        if((mask & (1 << i)) == 1){
+            gpio_regs->FUNC_SEL[2*port+(i>>4)] &= ~(3 << (2*i & 0x1f));     // Limpiamos los bits
+            gpio_regs->FUNC_SEL[2*port+(i>>4)] |= (func << (2*i & 0x1f));   // Escribimos la función
+        }
 
     return gpio_no_error;
 }
@@ -251,7 +259,12 @@ inline gpio_err_t gpio_set_port_func (gpio_port_t port, gpio_func_t func, uint32
  *          gpio_invalid_parameter en otro caso
  */
 inline gpio_err_t gpio_set_pin_func (gpio_pin_t pin, gpio_func_t func){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 7 */
+    // Si el pin o la función es mayor que el máximo que hay, los parámetros están mal
+    if(pin >= gpio_pin_max || func >= gpio_func_max)
+        return gpio_invalid_parameter;
+
+    gpio_regs->FUNC_SEL[(pin >> 4)] &= ~(3 << (2*pin & 0x1f));      // Limpiamos los bits
+    gpio_regs->FUNC_SEL[(pin >> 4)] |= (func << (2*pin & 0x1f));    // Escribimos la función
 
     return gpio_no_error;
 }
