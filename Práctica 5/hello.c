@@ -38,7 +38,7 @@ uint32_t const delay = 0x20000;
  * Inicialización de los pines de E/S
  */
 void gpio_init(void){
-    /* Configuramos el GPIO44 para que sea de salida */
+    /* Configuramos GPIO44 y GPIO45 para que sean de salida */
     *reg_gpio_pad_dir1 = led_red_mask | led_green_mask;
 }
 
