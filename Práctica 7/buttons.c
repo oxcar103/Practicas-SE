@@ -100,27 +100,17 @@ uint32_t the_button;
  * Programa principal
  */
 int main (){
-    // Ejecutamos gpio_init() dentro de una sección crítica
-    itc_disable_ints();
     gpio_init();
-    itc_restore_ints();
 
-    // Asignamos el nuevo manejador a la interrupción asm
-    itc_set_handler (itc_src_asm, my_asm_handler);
-
-    // Habilitamos la interrupción asm
-    itc_enable_interrupt (itc_src_asm);
-
-    the_led = led_red_mask;
-
-    // Fuerza la interrupción asm
-    itc_force_interrupt(itc_src_asm);
-
+    the_led = LED_RED;
+    the_button = BUTTON_S3_IN;
     while (1){
+        test_button();
         leds_on(the_led);
         pause();
 
         leds_off(the_led);
+        test_button();
         pause();
     }
 
