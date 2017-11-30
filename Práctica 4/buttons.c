@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /*                                                                           */
 /* Sistemas Empotrados                                                       */
-/* El "hola mundo" en la Redwire EconoTAG en C                               */
+/* Testeo de botones en la Redwire EconoTAG en C                             */
 /*                                                                           */
 /*****************************************************************************/
 
