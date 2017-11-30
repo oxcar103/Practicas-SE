@@ -23,6 +23,12 @@
  * Constantes relativas a la aplicacion
  */
 uint32_t const delay = 0x20000;
+
+/*
+ * Variables globales: máscaras del led que se hará parpadear y del botón que se comprobará
+ */
+uint32_t the_led;
+uint32_t the_button;
  
 /*****************************************************************************/
 
@@ -79,7 +85,7 @@ void pause(void){
  * Comprueba si se pulsó el botón esperado, y cambia led y botón en caso afirmativo
  */
 void test_button(void){
-    uint32_t value;
+    uint32_t * value = NULL;
     gpio_get_pin(the_button, value);
 
     if(value != 0){
@@ -89,12 +95,6 @@ void test_button(void){
 }
 
 /*****************************************************************************/
-
-/*
- * Variables globales: máscaras del led que se hará parpadear y del botón que se comprobará
- */
-uint32_t the_led;
-uint32_t the_button;
 
 /*
  * Programa principal
