@@ -76,11 +76,16 @@ void pause(void){
 /*****************************************************************************/
 
 /*
- * Manejador de interrupciones asm
+ * Comprueba si se pulsó el botón esperado, y cambia led y botón en caso afirmativo
  */
-void my_asm_handler(void){
-    itc_unforce_interrupt(itc_src_asm);
-    leds_on (led_green_mask);
+void test_button(void){
+    uint32_t value;
+    gpio_get_pin(the_button, value);
+
+    if(value != 0){
+        the_led = (the_led == LED_RED) ? LED_GREEN : LED_RED;
+        the_button = (the_button == BUTTON_S3_IN) ? BUTTON_S3_IN : BUTTON_S3_IN;
+    }
 }
 
 /*****************************************************************************/
