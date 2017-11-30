@@ -1,7 +1,7 @@
 /*****************************************************************************/
 /*                                                                           */
 /* Sistemas Empotrados                                                       */
-/* El "hola mundo" en la Redwire EconoTAG en C                               */
+/* Testeo de botones en la Redwire EconoTAG en C                             */
 /*                                                                           */
 /*****************************************************************************/
 
@@ -12,21 +12,13 @@
  * Constantes relativas a la plataforma
  */
 
-/* Dirección del registro de control de dirección del GPIO32-GPIO63 */
-volatile uint32_t * const reg_gpio_pad_dir1     = (uint32_t *) 0x80000004;
-
-/* Dirección del registro de activación de bits del GPIO32-GPIO63 */
-volatile uint32_t * const reg_gpio_data_set1    = (uint32_t *) 0x8000004c;
-
-/* Dirección del registro de limpieza de bits del GPIO32-GPIO63 */
-volatile uint32_t * const reg_gpio_data_reset1  = (uint32_t *) 0x80000054;
-
-/* El led rojo está en el GPIO 44 (el bit 12 de los registros GPIO_X_1) */
-uint32_t const led_red_mask =   (1 << (44-32));
-
-/* El led verde está en el GPIO 45 (el bit 13 de los registros GPIO_X_1) */
-uint32_t const led_green_mask = (1 << (45-32));
-
+#define LED_RED         gpio_pin_44
+#define LED_GREEN       gpio_pin_45
+#define BUTTON_S2_OUT   gpio_pin_23
+#define BUTTON_S3_OUT   gpio_pin_22
+#define BUTTON_S2_IN    gpio_pin_27
+#define BUTTON_S3_IN    gpio_pin_26
+ 
 /*
  * Constantes relativas a la aplicacion
  */
@@ -87,9 +79,10 @@ void my_asm_handler(void){
 /*****************************************************************************/
 
 /*
- * Máscara del led que se hará parpadear
+ * Variables globales: máscaras del led que se hará parpadear y del botón que se comprobará
  */
 uint32_t the_led;
+uint32_t the_button;
 
 /*
  * Programa principal
