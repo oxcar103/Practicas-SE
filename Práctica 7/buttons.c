@@ -44,23 +44,23 @@ void gpio_init(void){
 /*****************************************************************************/
 
 /*
- * Enciende los leds indicados en la máscara
- * @param mask  Máscara para seleccionar leds
+ * Enciende el led indicado
+ * @param led   Pin del led a encender
  */
-void leds_on (uint32_t mask){
-    /* Encendemos los leds indicados en la máscara */
-    *reg_gpio_data_set1 = mask;
+void leds_on (uint32_t led){
+    /* Encendemos el led indicado */
+    gpio_set_pin(led);
 }
 
 /*****************************************************************************/
 
 /*
- * Apaga los leds indicados en la máscara
- * @param mask  Máscara para seleccionar leds
+ * Apaga el led indicado
+ * @param led   Pin del led a apagar
  */
-void leds_off (uint32_t mask){
-    /* Apagamos los leds indicados en la máscara */
-    *reg_gpio_data_reset1 = mask;
+void leds_off (uint32_t led){
+    /* Apagamos el led indicado */
+    gpio_clear_pin(led);
 }
 
 /*****************************************************************************/
