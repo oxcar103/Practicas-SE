@@ -30,8 +30,15 @@ uint32_t const delay = 0x20000;
  * Inicialización de los pines de E/S
  */
 void gpio_init(void){
-    /* Configuramos el GPIO44 para que sea de salida */
-    *reg_gpio_pad_dir1 = led_red_mask | led_green_mask;
+    /* Configuramos GPIO 44 y GPIO 45 para que sean de salida */
+    gpio_set_pin_dir_output(LED_RED);
+    gpio_set_pin_dir_output(LED_GREEN);
+
+    /* No es necesario configurar los GPIO22, GPIO 23, GPIO 26 y GPIO 27 porque usaremos su valor por defecto */
+
+    /* Fijamos a 1 la salida de los botones */
+    gpio_set_pin(BUTTON_S2_OUT);
+    gpio_set_pin(BUTTON_S3_OUT);
 }
 
 /*****************************************************************************/
