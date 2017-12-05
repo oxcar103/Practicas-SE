@@ -85,8 +85,8 @@ void pause(void){
  * Comprueba si se pulsó el botón esperado, y cambia led y botón en caso afirmativo
  */
 void test_button(void){
-    uint32_t * value = NULL;
-    gpio_get_pin(the_button, value);
+    uint32_t value;
+    gpio_get_pin(the_button, &value);
 
     if(value != 0){
         the_led = (the_led == LED_RED) ? LED_GREEN : LED_RED;
