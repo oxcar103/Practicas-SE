@@ -15,7 +15,70 @@
  */
 
 typedef struct{
-    /* ESTA ESTRUCTURA SE DEFINIRÁ EN LA PRÁCTICA 8 */
+    union{
+        struct{
+            uint32_t TxE                :1;
+            uint32_t RxE                :1;
+            uint32_t PEN                :1;
+            uint32_t EP                 :1;
+            uint32_t ST2                :1;
+            uint32_t SB                 :1;
+            uint32_t conTx              :1;
+            uint32_t Tx_oen_b           :1;
+            uint32_t                    :2;
+            uint32_t xTIM               :1;
+            uint32_t FCp                :1;
+            uint32_t FCe                :1;
+            uint32_t mTxr               :1;
+            uint32_t mRxr               :1;
+            uint32_t TST                :1;
+        };
+        uint32_t CON;
+    };
+
+    union{
+        struct{
+            uint32_t SE                 :1;
+            uint32_t PE                 :1;
+            uint32_t FE                 :1;
+            uint32_t TOE                :1;
+            uint32_t RUE                :1;
+            uint32_t RxRdy              :1;
+            uint32_t TxRdy              :1;
+        };
+        uint32_t STAT;
+    };
+
+    union{
+        uint32_t Rx_data                :8;
+        uint32_t Tx_data                :8;
+        uint32_t DATA;
+    };
+
+    union{
+        uint32_t RxLevel                :5;
+        uint32_t Rx_fifo_addr_diff      :6;
+        uint32_t RxCON;
+    };
+
+    union{
+        uint32_t TxLevel                :5;
+        uint32_t Tx_fifo_addr_diff      :6;
+        uint32_t TxCON;
+    };
+
+    union{
+        uint32_t CTS_Level              :5;
+        uint32_t CTS;
+    };
+
+    union{
+        struct{
+            uint32_t BRMOD              :16;
+            uint32_t BRINC              :16;
+        };
+        uint32_t BR;
+    };
 } uart_regs_t;
 
 /*****************************************************************************/
