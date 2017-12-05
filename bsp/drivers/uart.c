@@ -50,8 +50,8 @@ typedef struct{
     };
 
     union{
-        uint32_t Rx_data                :8;
-        uint32_t Tx_data                :8;
+        uint8_t Rx_data;
+        uint8_t Tx_data;
         uint32_t DATA;
     };
 
@@ -74,8 +74,8 @@ typedef struct{
 
     union{
         struct{
-            uint32_t BRMOD              :16;
-            uint32_t BRINC              :16;
+            uint16_t BRMOD;
+            uint16_t BRINC;
         };
         uint32_t BR;
     };
