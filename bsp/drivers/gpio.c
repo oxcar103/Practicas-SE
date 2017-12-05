@@ -218,7 +218,7 @@ inline gpio_err_t gpio_get_pin (gpio_pin_t pin, uint32_t *pin_data){
     if(pin >= gpio_pin_max)
         return gpio_invalid_parameter;
 
-    *pin_data = gpio_regs->DATA[(pin >> 5)];
+    *pin_data = gpio_regs->DATA[(pin >> 5)] & (1 << (pin & 0x1f));
 
     return gpio_no_error;
 }
