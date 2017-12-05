@@ -40,7 +40,7 @@ void gpio_init(void){
     gpio_set_pin_dir_output(LED_RED);
     gpio_set_pin_dir_output(LED_GREEN);
 
-    /* No es necesario configurar los GPIO22, GPIO 23, GPIO 26 y GPIO 27 porque usaremos su valor por defecto */
+    /* No es necesario configurar los GPIO 22, GPIO 23, GPIO 26 y GPIO 27 porque usaremos su valor por defecto */
 
     /* Fijamos a 1 la salida de los botones */
     gpio_set_pin(BUTTON_S2_OUT);
@@ -90,7 +90,7 @@ void test_button(void){
 
     if(value != 0){
         the_led = (the_led == LED_RED) ? LED_GREEN : LED_RED;
-        the_button = (the_button == BUTTON_S3_IN) ? BUTTON_S3_IN : BUTTON_S3_IN;
+        the_button = (the_button == BUTTON_S3_IN) ? BUTTON_S2_IN : BUTTON_S3_IN;
     }
 }
 
