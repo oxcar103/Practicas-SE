@@ -179,7 +179,7 @@ uint8_t uart_receive_byte (uart_id_t uart){
     while (uart_regs[uart]->Rx_fifo_addr_diff == 0);
     
     /* Leemos el byte */
-    return regs[uart]->Rx_data;
+    return uart_regs[uart]->Rx_data;
 }
 
 /*****************************************************************************/
