@@ -175,8 +175,11 @@ void uart_send_byte (uart_id_t uart, uint8_t c){
  * @return      El byte recibido
  */
 uint8_t uart_receive_byte (uart_id_t uart){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 8 */
-    return 0;
+    /* Esperamos a que haya datos que leer */
+    while (uart_regs[uart]->Rx_fifo_addr_diff == 0);
+    
+    /* Leemos el byte */
+    return regs[uart]->Rx_data;
 }
 
 /*****************************************************************************/
