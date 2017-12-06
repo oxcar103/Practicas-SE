@@ -4,5 +4,7 @@ UART2 base address = 0x8000_B000.
 Definimos uart_regs_t usando la tabla 13-6. UART Module Register Memory Map y la sección 13.9 UART Registers
 Usaremos el tipo uint32
 
+Para inicializar la UART, necesitamos cumplir 4 pasos básicos: Deshabilitamos la uart, Configuramos los parámetros, Habilitamos la uart, Asignamos los pines a la UART y Definimos la dirección de los pines.
+
 Para el caso de la lectura/escritura de un byte, esperamos a tener caracteres/huecos en la cola y después leemos/escribimos nosotros.
 La lectura/escritura es básicamente el acceso a Rx_data/Tx_data del registro uart_regs[uart] respectivamente.
