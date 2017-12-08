@@ -55,6 +55,34 @@ void leds_off (uint32_t led){
 /*****************************************************************************/
 
 /*
+ * Envía todo el string que se le pase
+ * @param str   String a enviar
+ */
+void send_str (char * str){
+    while (*str)
+        uart_send_byte(UART1_ID, *str++);
+}
+
+/*****************************************************************************/
+
+/*
+ * Recibe hasta encontrar un fin de línea
+ * @param led   Pin del led a apagar
+ */
+char * recieve_str (){
+    char * str="";
+    char c=''; 
+    do{
+        c=uart_receive_byte (UART1_ID);
+        strcat(str, c);
+    }while(c != '\n');
+
+    return str;
+}
+
+/*****************************************************************************/
+
+/*
  * Programa principal
  */
 int main (){
