@@ -67,11 +67,10 @@ void send_str (char * str){
 
 /*
  * Recibe hasta encontrar un fin de línea
- * @param led   Pin del led a apagar
  */
 char * recieve_str (){
     char * str="";
-    char c=''; 
+    char c='';
     do{
         c=uart_receive_byte (UART1_ID);
         strcat(str, c);
@@ -86,6 +85,8 @@ char * recieve_str (){
  * Programa principal
  */
 int main (){
+    int change = 0, the_led;
+    char c;
     gpio_init();
 
     /* Leds apagados al principio */
@@ -93,15 +94,33 @@ int main (){
     led_state[1] = 0;
 
     while (1){
-        
-        if(led_state[the_led] == 0){
-            leds_on(the_led);
+        send_str("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
+        change=0;
+
+        c = uart_receive_byte(UART1_ID);
+        if (c =='r'){
+            the_led=LED_RED;
+            change=1;
+        }
+        else if (c =='g'){
+            the_led=LED_GREEN;
+            change=1;
         }
         else{
-            leds_off(the_led);
+            send_str("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
         }
 
-        led_state[the_led] ^= 1;
+
+        if(change != 0){
+            if(led_state[the_led] == 0){
+                leds_on(the_led);
+            }
+            else{
+                leds_off(the_led);
+            }
+
+            led_state[the_led] ^= 1;
+        }
     }
 
     return 0;
