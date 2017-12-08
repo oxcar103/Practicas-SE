@@ -18,6 +18,8 @@ Prácticas de la asignatura Sistemas Empotrados (SE).
 
 - **P7-Gestión de los pines de entrada/salida**: En esta práctica, abstraeremos la capa hardware del GPIO mediante una API básica con una serie de funciones *get* y *set* para fijar ciertos pines a entrada/salida y con ello escribirlos, leerlos o asignarles una función usando el número de pin o mediante el puerto y una máscara si son del mismo puerto. Adicionalmente, modificaremos el programa que editamos por última vez en **P4** para adaptarlo a la abstracción actual de nuestro BSP.  
 
+- **P8-Desarrollo de un driver L0 para las UART**: En esta práctica, empezaremos a desarrollar el diseño de los drivers, empezando por el nivel 0 o L0 consistente únicamente en la construcción de la estructura de registros, la inicialización correspondiente y las funciones de envío y recepción de caracteres. Adicionalmente, implementaremos un sencillo programa para testear el correcto funcionamiento de esta capa de drivers.  
+
 Licencia  
 ------------------------
 El proyecto en conjunto se distribuye bajo la licencia [GPL](https://github.com/oxcar103/Practicas-SE/blob/master/LICENSE).  
