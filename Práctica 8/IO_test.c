@@ -6,6 +6,7 @@
 /*****************************************************************************/
 
 #include <stdint.h>
+#include <string.h>
 #include "system.h"
 
 /*
@@ -70,10 +71,10 @@ void send_str (char * str){
  */
 char * recieve_str (){
     char * str="";
-    char c='';
+    char c=' ';
     do{
         c=uart_receive_byte (UART1_ID);
-        strcat(str, c);
+        strcat(str, &c);
     }while(c != '\n');
 
     return str;
