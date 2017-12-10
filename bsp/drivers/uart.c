@@ -42,6 +42,7 @@ typedef struct{
             uint32_t PE                 :1;
             uint32_t FE                 :1;
             uint32_t TOE                :1;
+            uint32_t ROE                :1;
             uint32_t RUE                :1;
             uint32_t RxRdy              :1;
             uint32_t TxRdy              :1;
@@ -74,8 +75,8 @@ typedef struct{
 
     union{
         struct{
-            uint16_t BRMOD;
-            uint16_t BRINC;
+            uint32_t BRMOD              :16;
+            uint32_t BRINC              :16;
         };
         uint32_t BR;
     };
