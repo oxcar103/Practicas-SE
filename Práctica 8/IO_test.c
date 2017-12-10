@@ -99,7 +99,7 @@ int main (){
     while (1){
         change=0;
         c = uart_receive_byte(UART1_ID);
-        send_str1("\n\r");
+        send_str("\n\r");
 
         if (c =='r'){
             the_led=LED_RED;
@@ -119,7 +119,7 @@ int main (){
         if(change != 0){
             if(led_state[the_led] == 0){
                 leds_on(the_led);
-                send_str1("encendido\n\r");
+                send_str("encendido\n\r");
             }
             else{
                 leds_off(the_led);
