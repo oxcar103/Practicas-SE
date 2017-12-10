@@ -14,6 +14,7 @@
  */
 #define LED_RED         gpio_pin_44
 #define LED_GREEN       gpio_pin_45
+#define UART_ID         UART1_ID
  
 /*
  * Estado de los leds: 0 apagado, 1 encendido
@@ -57,23 +58,25 @@ void leds_off (uint32_t led){
 
 /*
  * Envía todo el string que se le pase
+ * @param uart  Identificador de la uart
  * @param str   String a enviar
  */
-void send_str (char * str){
+void send_str (uart_id_t uart, char * str){
     while (*str)
-        uart_send_byte(UART1_ID, *str++);
+        uart_send_byte(uart, *str++);
 }
 
 /*****************************************************************************/
 
 /*
  * Recibe hasta encontrar un fin de línea
+ * @param uart  Identificador de la uart
  */
-char * recieve_str (){
+char * recieve_str (uart_id_t uart){
     char * str="";
     char c=' ';
     do{
-        c=uart_receive_byte (UART1_ID);
+        c=uart_receive_byte(uart);
         strcat(str, &c);
     }while(c != '\n');
 
@@ -94,36 +97,36 @@ int main (){
     led_state[0] = 0;
     led_state[1] = 0;
 
-    send_str("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
+    send_str(UART_ID, "Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
 
     while (1){
         change=0;
-        c = uart_receive_byte(UART1_ID);
-        send_str("\n\r");
+        c = uart_receive_byte(UART_ID);
+        send_str(UART_ID, "\n\r");
 
-        if (c =='r'){
+        if (c == 'r'){
             the_led=LED_RED;
-            send_str("Led rojo ");
+            send_str(UART_ID, "Led rojo ");
             change=1;
         }
-        else if (c =='g'){
+        else if (c == 'g'){
             the_led=LED_GREEN;
-            send_str("Led verde ");
+            send_str(UART_ID, "Led verde ");
             change=1;
         }
         else{
-            send_str("Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
+            send_str(UART_ID, "Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
         }
 
 
         if(change != 0){
             if(led_state[the_led] == 0){
                 leds_on(the_led);
-                send_str("encendido\n\r");
+                send_str(UART_ID, "encendido\n\r");
             }
             else{
                 leds_off(the_led);
-                send_str("apagado\n\r");
+                send_str(UART_ID, "apagado\n\r");
             }
 
             led_state[the_led] ^= 1;
