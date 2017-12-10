@@ -72,13 +72,17 @@ void send_str (uart_id_t uart, char * str){
  * Recibe hasta encontrar un fin de línea
  * @param uart  Identificador de la uart
  */
-/*char * recieve_str (uart_id_t uart){
-    char * str="";
-    char c=' ';
-    do{
+/*char * receive_str (uart_id_t uart){
+    char * str = "", *aux = "x";
+    char c;
+
+    c=uart_receive_byte(uart);
+
+    while(c != ' '){
+        *aux = c;
+        strcat(str, aux);
         c=uart_receive_byte(uart);
-        strcat(str, &c);
-    }while(c != '\n');
+    }
 
     return str;
 }*/
