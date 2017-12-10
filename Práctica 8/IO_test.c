@@ -94,30 +94,36 @@ int main (){
     led_state[0] = 0;
     led_state[1] = 0;
 
-    while (1){
-        send_str("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
-        change=0;
+    send_str("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
 
+    while (1){
+        change=0;
         c = uart_receive_byte(UART1_ID);
+        send_str1("\n\r");
+
         if (c =='r'){
             the_led=LED_RED;
+            send_str("Led rojo ");
             change=1;
         }
         else if (c =='g'){
             the_led=LED_GREEN;
+            send_str("Led verde ");
             change=1;
         }
         else{
-            send_str("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
+            send_str("Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
         }
 
 
         if(change != 0){
             if(led_state[the_led] == 0){
                 leds_on(the_led);
+                send_str1("encendido\n\r");
             }
             else{
                 leds_off(the_led);
+                send_str("apagado\n\r");
             }
 
             led_state[the_led] ^= 1;
