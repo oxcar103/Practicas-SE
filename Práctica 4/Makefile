@@ -74,7 +74,7 @@ LDFLAGS        = -nostartfiles
 #
 
 # Aplicación
-PROGNAME = hello
+PROGNAME = buttons
 OBJ      = $(PROGNAME).o
 ELF      = $(PROGNAME).elf
 BIN      = $(PROGNAME).bin
