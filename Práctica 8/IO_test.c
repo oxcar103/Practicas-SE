@@ -97,6 +97,7 @@ void send_str (uart_id_t uart, char * str){
 int main (){
     int change = 0, the_led;
     char c;
+
     gpio_init();
 
     /* Leds apagados al principio */

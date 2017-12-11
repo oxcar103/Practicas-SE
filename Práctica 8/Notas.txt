@@ -12,3 +12,6 @@ Cambiar el modo de funcionamiento de los pines es básicamente hacer uso de la f
 
 Para el caso de la lectura/escritura de un byte, esperamos a tener caracteres/huecos en la cola y después leemos/escribimos nosotros.
 La lectura/escritura es básicamente el acceso a Rx_data/Tx_data del registro uart_regs[uart] respectivamente.
+
+Para comprobar el correcto funcionamiento de esta práctica, haremos un programa que interactúa con nuestro ordenador usando la UART. Para ello, el programa tendrá que enviar mensajes, recibirlos y actuar en consecuencia.
+Usando las funciones definidas actualmente en el bsp, tendríamos que enviar el mensaje caracter a caracter, y es un rollo hacerlo así, por lo que he implementado la función send_str() que básicamente hace lo mismo que uart_send_byte() (de hecho, la llama) pero con char * en lugar de char. Intenté hacer lo mismo para uart_receive_byte() mediante receive_str() pero ha dado errores de caracteres que no he sido capaz de resolver.
