@@ -62,8 +62,10 @@ void leds_off (uint32_t led){
  * @param str   String a enviar
  */
 void send_str (uart_id_t uart, char * str){
-    while (*str)
-        uart_send_byte(uart, *str++);
+    while (*str){
+        uart_send_byte(uart, *str);
+        str++;
+    }
 }
 
 /*****************************************************************************/
