@@ -34,16 +34,20 @@ void circular_buffer_init (volatile circular_buffer_t *cb, uint8_t *addr, uint32
 /*****************************************************************************/
 
 /**
- * Retorna 1 si el buffer está lleno
+ * Comprueba si el buffer está lleno
  * @param cb    Buffer circular
+ * @return      1 si el buffer está lleno
+ *              0 si no lo está
  */
 inline uint32_t circular_buffer_is_full (volatile circular_buffer_t *cb);
 
 /*****************************************************************************/
 
 /**
- * Retorna 1 si el buffer está vacío
+ * Comprueba si el buffer está vacío
  * @param cb    Buffer circular
+ * @return      1 si el buffer está vacío
+ *              0 si no lo está
  */
 inline uint32_t circular_buffer_is_empty (volatile circular_buffer_t *cb);
 
@@ -53,7 +57,7 @@ inline uint32_t circular_buffer_is_empty (volatile circular_buffer_t *cb);
  * Escribe un byte en un buffer circular
  * @param cb    Buffer circular
  * @param byte  Byte a escribir
- * @return      El byte (tras un casting a int32_t) en caso de éxito
+ * @return      Byte escrito en caso de éxito
  *              -1 en caso de error
  */
 int32_t circular_buffer_write (volatile circular_buffer_t *cb, uint8_t byte);
@@ -63,7 +67,7 @@ int32_t circular_buffer_write (volatile circular_buffer_t *cb, uint8_t byte);
 /**
  * Lee un byte en un buffer circular
  * @param cb    Buffer circular
- * @return      El byte (tras un casting a int32_t) en caso de éxito
+ * @return      Byte leído en caso de éxito
  *              -1 en caso de error
  */
 int32_t circular_buffer_read (volatile circular_buffer_t *cb);
