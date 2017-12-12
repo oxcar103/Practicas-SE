@@ -69,7 +69,7 @@ uint8_t uart_receive_byte (uart_id_t uart);
  * Implementación del driver de nivel 1
  * La llamada es no bloqueante y se realiza mediante interrupciones
  * @param uart  Identificador de la uart
- * @param buf   Búfer con los caracteres
+ * @param buf   Buffer con los caracteres
  * @param count Número de caracteres a escribir
  * @return      Número de bytes almacenados en caso de éxito
  *              -1 en caso de error
@@ -84,7 +84,7 @@ ssize_t uart_send (uint32_t uart, char *buf, size_t count);
  * Implementación del driver de nivel 1
  * La llamada es no bloqueante y se realiza mediante interrupciones
  * @param uart  Identificador de la uart
- * @param buf   Búfer para almacenar los bytes
+ * @param buf   Buffer para almacenar los bytes
  * @param count Número de bytes a leer
  * @return      Número de bytes leídos en caso de éxito
  *              -1 en caso de error

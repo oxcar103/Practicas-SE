@@ -1,6 +1,6 @@
 /*
  * Sistemas operativos empotrados
- * Búfer circular
+ * Buffer circular
  */
 
 #include "circular_buffer.h"
@@ -8,10 +8,10 @@
 /*****************************************************************************/
 
 /**
- * Inicializa un búfer circular dado un puntero a una zona de memoria y su tamaño
- * @param cb    Puntero a la estructura de gestión del búfer circular
- * @param addr  Puntero a la zona de memoria que se gestionará como un búfer circular
- * @param size  Tamaño en bytes del búfer
+ * Inicializa un buffer circular dado un puntero a una zona de memoria y su tamaño
+ * @param cb    Puntero a la estructura de gestión del buffer circular
+ * @param addr  Puntero a la zona de memoria que se gestionará como un buffer circular
+ * @param size  Tamaño en bytes del buffer
  */
 void circular_buffer_init (volatile circular_buffer_t *cb, uint8_t *addr, uint32_t size){
     cb->data = addr;
@@ -24,8 +24,8 @@ void circular_buffer_init (volatile circular_buffer_t *cb, uint8_t *addr, uint32
 /*****************************************************************************/
 
 /**
- * Retorna 1 si el búfer está lleno
- * @param cb    Búfer circular
+ * Retorna 1 si el buffer está lleno
+ * @param cb    Buffer circular
  */
 inline uint32_t circular_buffer_is_full (volatile circular_buffer_t *cb){
     return cb->count == cb->size;
@@ -34,8 +34,8 @@ inline uint32_t circular_buffer_is_full (volatile circular_buffer_t *cb){
 /*****************************************************************************/
 
 /**
- * Retorna 1 si el búfer está vacío
- * @param cb    Búfer circular
+ * Retorna 1 si el buffer está vacío
+ * @param cb    Buffer circular
  */
 inline uint32_t circular_buffer_is_empty (volatile circular_buffer_t *cb){
     return cb->count == 0;
@@ -44,14 +44,14 @@ inline uint32_t circular_buffer_is_empty (volatile circular_buffer_t *cb){
 /*****************************************************************************/
 
 /**
- * Escribe un byte en un búfer circular
- * @param cb    Búfer circular
+ * Escribe un byte en un buffer circular
+ * @param cb    Buffer circular
  * @param byte  Byte a escribir
  * @return      El byte (tras un casting a int32_t) en caso de éxito
  *              -1 en caso de error
  */
 int32_t circular_buffer_write (volatile circular_buffer_t *cb, uint8_t byte){
-    /* Escribimos en el búfer sólo si hay espacio */
+    /* Escribimos en el buffer sólo si hay espacio */
     if (circular_buffer_is_full(cb)){
         return -1;
     }
@@ -72,15 +72,15 @@ int32_t circular_buffer_write (volatile circular_buffer_t *cb, uint8_t byte){
 /*****************************************************************************/
 
 /**
- * Lee un byte en un búfer circular
- * @param cb    Búfer circular
+ * Lee un byte en un buffer circular
+ * @param cb    Buffer circular
  * @return      El byte (tras un casting a int32_t) en caso de éxito
  *              -1 en caso de error
  */
 int32_t circular_buffer_read (volatile circular_buffer_t *cb){
     int32_t byte;
 
-    /* Leemos del búfer sólo si hay algo */
+    /* Leemos del buffer sólo si hay algo */
     if (circular_buffer_is_empty(cb)){
         return -1;
     }
