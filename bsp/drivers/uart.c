@@ -75,8 +75,8 @@ typedef struct{
 
     union{
         struct{
-            uint32_t BRMOD              :16;
-            uint32_t BRINC              :16;
+            uint16_t BRMOD;
+            uint16_t BRINC;
         };
         uint32_t BR;
     };
@@ -145,16 +145,17 @@ static volatile uart_callbacks_t uart_callbacks[uart_max];
  */
 int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
     /* Calculamos mod e inc asumiendo un oversampling de 8x y un Peripheral_Bus_Blk = 24Mhz */
-    uint32_t mod = 9999;
-    uint32_t inc = br * mod / (CPU_FREQ >> 4) - 1;
+    uint16_t mod = 9999;
+    uint16_t inc = br * mod / (CPU_FREQ >> 4) - 1;
 
     /* Fijamos los parámetros por defecto y deshabilitamos la uart */
     /* La uart debe estar deshabilitada para fijar la frecuencia */
     uart_regs[uart]->CON = (1 << 13) | (1 << 14);
 
     /* Fijamos la frecuencia */
-    uart_regs[uart]->BRMOD = mod;
-    uart_regs[uart]->BRINC = inc;
+    //uart_regs[uart]->BRINC = inc;
+    //uart_regs[uart]->BRMOD = mod;
+    uart_regs[uart]->BR = (inc << 16) | mod;
 
     /* Habilitamos la uart */
     /* En el MC1322x hay que habilitar el periférico antes fijar el modo de funcionamiento de sus pines */
