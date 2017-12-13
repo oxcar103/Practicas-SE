@@ -95,18 +95,6 @@ ssize_t uart_receive (uint32_t uart, char *buf, size_t count);
 /*****************************************************************************/
 
 /**
- * Fija la función callback de recepción de una uart
- * @param uart  Identificador de la uart
- * @param func  Función callback. NULL para anular una selección anterior
- * @return      0 en caso de éxito
- *              -1 en caso de error
- *              La condición de error se indica en la variable global errno
- */
-int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func);
-
-/*****************************************************************************/
-
-/**
  * Fija la función callback de transmisión de una uart
  * @param uart  Identificador de la uart
  * @param func  Función callback. NULL para anular una selección anterior
@@ -115,6 +103,18 @@ int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func);
  *              La condición de error se indica en la variable global errno
  */
 int32_t uart_set_send_callback (uart_id_t uart, uart_callback_t func);
+
+/*****************************************************************************/
+
+/**
+ * Fija la función callback de recepción de una uart
+ * @param uart  Identificador de la uart
+ * @param func  Función callback. NULL para anular una selección anterior
+ * @return      0 en caso de éxito
+ *              -1 en caso de error
+ *              La condición de error se indica en la variable global errno
+ */
+int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func);
 
 /*****************************************************************************/
 
