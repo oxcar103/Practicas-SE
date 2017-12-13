@@ -2,3 +2,5 @@ LUCHA FEROZ POR LA EXTINCIÓN DE BÚFER!!!
 
 La función uart_send() comprueba que sus argumentos son correctos y ajusta errno al valor correspondiente si no lo son. Si sus argumentos son válidos, escribe en uart_circular_tx_buffers[uart] tantos bytes como se le hayan indicado o hasta llenarlo y devuelve cuántos bytes ha copiado.
 Análogamente, uart_receive() hace lo mismo pero leyendo uart_circular_rx_buffers[uart] con tantos bytes como se le hayan indicado o hasta vaciarlo.
+
+Para fijar una función callback, comprobamos que la uart es correcta y la asignamos para recepción(rx) o transmisión(tx).
