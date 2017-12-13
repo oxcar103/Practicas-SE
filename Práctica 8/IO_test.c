@@ -63,8 +63,7 @@ void leds_off (uint32_t led){
  */
 void send_str (uart_id_t uart, char * str){
     while (*str){
-        uart_send_byte(uart, *str);
-        str++;
+        uart_send_byte(uart, *str++);
     }
 }
 
