@@ -225,8 +225,34 @@ uint8_t uart_receive_byte (uart_id_t uart){
  *              La condición de error se indica en la variable global errno
  */
 ssize_t uart_send (uint32_t uart, char *buf, size_t count){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 9 */
-    return count;
+    ssize_t copied_bytes = 0;
+
+    if(uart >= uart_max){
+        errno = ENODEV;
+
+        return -1;
+    }
+
+    if(buf = NULL || count < 0){
+        errno = EFAULT;
+
+        return -1;
+    }
+
+    /* Desactivamos las interrupciones */
+    uart_regs[uart]->mTxR = 1;
+
+    while(count > 0 && !circular_buffer_is_full (&uart_circular_tx_buffers[uart_max])){
+        circular_buffer_write (&uart_circular_tx_buffers[uart], *buf++);
+
+        copied_bytes++;
+        count--;
+    }
+
+    /* Activamos las interrupciones */
+    uart_regs[uart]->mTxR = 0;
+
+    return copied_bytes;
 }
 
 /*****************************************************************************/
