@@ -356,7 +356,19 @@ static inline void uart_isr (uart_id_t uart){
     uint32_t status = uart_regs[uart]->stat;
 
     if(uart_regs[uart]->TxRdy){
+        while(uart_regs[uart]->Tx_fifo_addr_diff > 0 && !circular_buffer_is_empty (&uart_circular_tx_buffers[uart_max])){
+            uart_regs[uart]->Tx_data = circular_buffer_read (&uart_circular_tx_buffers[uart]);
+        }
+
+        if(uart_callbacks[uart]->tx_callback){
+            uart_callbacks[uart]->tx_callback;
+        }
+
+        if(circular_buffer_is_empty (&uart_circular_tx_buffers[uart_max])){
+            uart_regs[uart]->mTxR = 1;
+        }
     }
+
     if(uart_regs[uart]->RxRdy){
         while(uart_regs[uart]->Rx_fifo_addr_diff > 0 && !circular_buffer_is_full (&uart_circular_rx_buffers[uart_max])){
             circular_buffer_write (&uart_circular_rx_buffers[uart], uart_regs[uart]->Rx_data);
