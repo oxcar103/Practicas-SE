@@ -144,6 +144,18 @@ static volatile uart_callbacks_t uart_callbacks[uart_max];
  *              La condición de error se indica en la variable global errno
  */
 int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
+    if(uart >= uart_max){
+        errno = ENODEV;
+
+        return -1;
+    }
+
+    if(name = NULL){
+        errno = EFAULT;
+
+        return -1;
+    }
+
     /* Calculamos mod e inc asumiendo un oversampling de 8x y un Peripheral_Bus_Blk = 24Mhz */
     uint16_t mod = 9999;
     uint16_t inc = br * mod / (CPU_FREQ >> 4) - 1;
@@ -174,6 +186,27 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
     gpio_set_pin_dir_input (uart_pins[uart].rx);
     gpio_set_pin_dir_input (uart_pins[uart].rts);
 
+    /* Inicializamos los bufferes circulares */
+    circular_buffer_init(&uart_circular_rx_buffers[uart], (uint8_t *) uart_rx_buffers[uart], sizeof(uart_rx_buffers[uart]));
+    circular_buffer_init(&uart_circular_tx_buffers[uart], (uint8_t *) uart_tx_buffers[uart], sizeof(uart_tx_buffers[uart]));
+
+    /* Fijamos los valores de activación de las interrupciones */
+    uart_regs[uart]->TxLevel=31;            /* Cuando queden 31 huecos libres en la cola de transmisión */
+    uart_regs[uart]->RxLevel=1;             /* Cuando se haya llenado 1 hueco en la cola de recepción */
+
+    /* Habilitamos las interrupciones de la uart en el ITC */
+    itc_set_priority (itc_src_uart1 + uart, itc_priority_normal);
+    itc_set_handler (itc_src_uart1 + uart, uart_irq_handlers[uart]);
+    itc_enable_interrupt (itc_src_uart1 + uart);
+
+    /* Inicializamos los callbacks */
+    uart_callbacks[uart].tx_callback = NULL;
+    uart_callbacks[uart].rx_callback = NULL;
+    
+
+    /* Y habilitamos las interrupciones de recepción */
+    uart_regs[uart]->MRxR = 0;
+    
     return 0;
 }
 
