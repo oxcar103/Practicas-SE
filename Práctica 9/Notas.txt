@@ -12,3 +12,9 @@ El funcionamiento de la ISR es simple:
     - Copiar los que se puedan al/del buffer circular.
     - Callbacks.
     - Desactivar interrupciones si fuese necesario.
+
+Los cambios de la función uart_init() se resumen en:
+  · Comprobación de parámetros correctos.
+  · Inicialización de bufferes circulares.
+  · Configuración de las interrupciones.
+  · Inicialización de callbacks.
