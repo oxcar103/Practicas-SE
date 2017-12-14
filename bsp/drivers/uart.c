@@ -242,6 +242,7 @@ ssize_t uart_send (uint32_t uart, char *buf, size_t count){
     /* Desactivamos las interrupciones */
     uart_regs[uart]->mTxR = 1;
 
+    /* Copiamos los datos que podamos al buffer circular */
     while(count > 0 && !circular_buffer_is_full (&uart_circular_tx_buffers[uart])){
         circular_buffer_write (&uart_circular_tx_buffers[uart], *buf++);
 
@@ -286,6 +287,7 @@ ssize_t uart_receive (uint32_t uart, char *buf, size_t count){
     /* Desactivamos las interrupciones */
     uart_regs[uart]->mRxR = 1;
 
+    /* Copiamos los datos que podamos del buffer circular */
     while(count > 0 && !circular_buffer_is_empty (&uart_circular_rx_buffers[uart])){
         circular_buffer_read (&uart_circular_rx_buffers[uart], *buf++);
 
