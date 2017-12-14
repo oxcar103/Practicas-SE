@@ -349,9 +349,8 @@ int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func){
 
 /**
  * Manejador genérico de interrupciones para las uart.
- * Cada isr llamará a este manejador indicando la uart en la que se ha
- * producido la interrupción.
- * Lo declaramos inline para reducir la latencia de la isr
+ * Cada isr llamará a este manejador indicando la uart de la interrupción.
+ * Declarado inline para reducir la latencia de la isr.
  * @param uart  Identificador de la uart
  */
 static inline void uart_isr (uart_id_t uart){
