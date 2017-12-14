@@ -242,7 +242,7 @@ ssize_t uart_send (uint32_t uart, char *buf, size_t count){
     /* Desactivamos las interrupciones */
     uart_regs[uart]->mTxR = 1;
 
-    while(count > 0 && !circular_buffer_is_full (&uart_circular_tx_buffers[uart_max])){
+    while(count > 0 && !circular_buffer_is_full (&uart_circular_tx_buffers[uart])){
         circular_buffer_write (&uart_circular_tx_buffers[uart], *buf++);
 
         copied_bytes++;
@@ -286,7 +286,7 @@ ssize_t uart_receive (uint32_t uart, char *buf, size_t count){
     /* Desactivamos las interrupciones */
     uart_regs[uart]->mRxR = 1;
 
-    while(count > 0 && !circular_buffer_is_empty (&uart_circular_rx_buffers[uart_max])){
+    while(count > 0 && !circular_buffer_is_empty (&uart_circular_rx_buffers[uart])){
         circular_buffer_read (&uart_circular_rx_buffers[uart], *buf++);
 
         copied_bytes++;
@@ -358,7 +358,7 @@ static inline void uart_isr (uart_id_t uart){
     /* Interrupción de Transmisión (quiere más datos) */
     if(uart_regs[uart]->TxRdy){
         /* Le pasamos desde el buffer circular tanto como podemos */
-        while(uart_regs[uart]->Tx_fifo_addr_diff > 0 && !circular_buffer_is_empty (&uart_circular_tx_buffers[uart_max])){
+        while(uart_regs[uart]->Tx_fifo_addr_diff > 0 && !circular_buffer_is_empty (&uart_circular_tx_buffers[uart])){
             uart_regs[uart]->Tx_data = circular_buffer_read (&uart_circular_tx_buffers[uart]);
         }
 
@@ -369,7 +369,7 @@ static inline void uart_isr (uart_id_t uart){
         }
 
         /* Si el buffer circular está vacío... */
-        if(circular_buffer_is_empty (&uart_circular_tx_buffers[uart_max])){
+        if(circular_buffer_is_empty (&uart_circular_tx_buffers[uart])){
             /* ... desactivamos las interrupciones */
             uart_regs[uart]->mTxR = 1;
         }
@@ -378,7 +378,7 @@ static inline void uart_isr (uart_id_t uart){
     /* Interrupción de Recepción (hay nuevos datos) */
     if(uart_regs[uart]->RxRdy){
         /* Le pasamos al buffer circular tanto como podemos */
-        while(uart_regs[uart]->Rx_fifo_addr_diff > 0 && !circular_buffer_is_full (&uart_circular_rx_buffers[uart_max])){
+        while(uart_regs[uart]->Rx_fifo_addr_diff > 0 && !circular_buffer_is_full (&uart_circular_rx_buffers[uart])){
             circular_buffer_write (&uart_circular_rx_buffers[uart], uart_regs[uart]->Rx_data);
         }
 
@@ -389,7 +389,7 @@ static inline void uart_isr (uart_id_t uart){
         }
 
         /* Si el buffer circular está lleno... */
-        if(circular_buffer_is_full (&uart_circular_rx_buffers[uart_max])){
+        if(circular_buffer_is_full (&uart_circular_rx_buffers[uart])){
             /* ... desactivamos las interrupciones */
             uart_regs[uart]->mRxR = 1;
         }
