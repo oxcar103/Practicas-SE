@@ -353,7 +353,23 @@ int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func){
  * @param uart  Identificador de la uart
  */
 static inline void uart_isr (uart_id_t uart){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 9 */
+    uint32_t status = uart_regs[uart]->stat;
+
+    if(uart_regs[uart]->TxRdy){
+    }
+    if(uart_regs[uart]->RxRdy){
+        while(uart_regs[uart]->Rx_fifo_addr_diff > 0 && !circular_buffer_is_full (&uart_circular_rx_buffers[uart_max])){
+            circular_buffer_write (&uart_circular_rx_buffers[uart], uart_regs[uart]->Rx_data);
+        }
+
+        if(uart_callbacks[uart]->rx_callback){
+            uart_callbacks[uart]->rx_callback;
+        }
+
+        if(circular_buffer_is_full (&uart_circular_rx_buffers[uart_max])){
+            uart_regs[uart]->mRxR = 1;
+        }
+    }
 }
 
 /*****************************************************************************/
