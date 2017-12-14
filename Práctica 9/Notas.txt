@@ -4,3 +4,11 @@ La función uart_send() comprueba que sus argumentos son correctos y ajusta errn
 Análogamente, uart_receive() hace lo mismo pero leyendo uart_circular_rx_buffers[uart] con tantos bytes como se le hayan indicado o hasta vaciarlo.
 
 Para fijar una función callback, comprobamos que la uart es correcta y la asignamos para recepción(rx) o transmisión(tx).
+
+El funcionamiento de la ISR es simple:
+  · Guardamos USTAT en una variable para que deje de quejarse.
+  · Atendemos cada registro activo (en realidad somos unos guays y pasamos de los errores pero se deberían atender)
+  · Tanto para recepción como transmisión, el procedimiento es el mismo:
+    - Copiar los que se puedan al/del buffer circular.
+    - Callbacks.
+    - Desactivar interrupciones si fuese necesario.
