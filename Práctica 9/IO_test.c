@@ -14,12 +14,6 @@
  */
 #define LED_RED         gpio_pin_44
 #define LED_GREEN       gpio_pin_45
-#define UART_ID         UART1_ID
- 
-/*
- * Estado de los leds: 0 apagado, 1 encendido
- */
-uint32_t led_state[2];
  
 /*****************************************************************************/
 
@@ -70,49 +64,30 @@ void pause(void){
  * Programa principal
  */
 int main (){
-    int change = 0, the_led;
-    char c;
+    /* Parpadear los leds: 0 no, 1 sí */
+    uint32_t blink_led[2];
 
+    /* Inicialización del GPIO */
     gpio_init();
 
-    /* Leds apagados al principio */
-    led_state[0] = 0;
-    led_state[1] = 0;
-
-    send_str(UART_ID, "Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
+    /* Parpadeo de los leds activado al principio */
+    blink_led[0] = 1;       /* Led rojo */
+    blink_led[1] = 1;       /* Led verde */
 
     while (1){
-        change=0;
-        c = uart_receive_byte(UART_ID);
-        send_str(UART_ID, "\n\r");
-
-        if (c == 'r'){
-            the_led=LED_RED;
-            send_str(UART_ID, "Led rojo ");
-            change=1;
+        if(blink_led[0]=1){
+            leds_on(LED_RED);
         }
-        else if (c == 'g'){
-            the_led=LED_GREEN;
-            send_str(UART_ID, "Led verde ");
-            change=1;
-        }
-        else{
-            send_str(UART_ID, "Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
+        if(blink_led[1]=1){
+            leds_on(LED_GREEN);
         }
 
+        pause();
 
-        if(change != 0){
-            if(led_state[the_led] == 0){
-                leds_on(the_led);
-                send_str(UART_ID, "encendido\n\r");
-            }
-            else{
-                leds_off(the_led);
-                send_str(UART_ID, "apagado\n\r");
-            }
+        leds_off(LED_RED);
+        leds_off(LED_GREEN);
 
-            led_state[the_led] ^= 1;
-        }
+        pause();
     }
 
     return 0;
