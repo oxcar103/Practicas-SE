@@ -57,6 +57,16 @@ void leds_off (uint32_t led){
 /*****************************************************************************/
 
 /*
+ * Retardo para el parpedeo
+ */
+void pause(void){
+    uint32_t i;
+    for (i=0 ; i<delay ; i++);
+}
+
+/*****************************************************************************/
+
+/*
  * Envía todo el string que se le pase
  * @param uart  Identificador de la uart
  * @param str   String a enviar
