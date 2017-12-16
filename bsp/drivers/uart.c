@@ -220,11 +220,26 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
  * @param c     El carácter
  */
 void uart_send_byte (uart_id_t uart, uint8_t c){
+    /* Desactivamos las interrupciones guardando su valor */
+    uint32_t old_mTxR = uart_regs[uart]->mTxR;
+    uart_regs[uart]->mTxR = 1;
+
+    /* Vaciamos primero el buffer circular */
+    while (!circular_buffer_is_empty (&uart_circular_tx_buffers[uart])){
+        if(uart_regs[uart]->Tx_fifo_addr_diff > 0){
+            uart_regs[uart]->Tx_data = circular_buffer_read (&uart_circular_tx_buffers[uart]);
+        }
+    }
+
     /* Esperamos a poder transmitir */
     while (uart_regs[uart]->Tx_fifo_addr_diff == 0);
     
     /* Escribimos el carácter en la cola HW de la uart */
     uart_regs[uart]->Tx_data = c;
+
+    /* Restauramos el estado de las interrupciones */
+    uart_regs[uart]->mTxR = old_mTxR;
+
 }
 
 /*****************************************************************************/
