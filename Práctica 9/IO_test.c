@@ -14,7 +14,19 @@
  */
 #define LED_RED         gpio_pin_44
 #define LED_GREEN       gpio_pin_45
+#define UART_ID         UART1_ID
  
+/*
+ * Constantes relativas a la aplicacion
+ */
+uint32_t const delay = 0x20000;
+
+/*
+ * Parpadeo de los leds: 0 no, 1 sí
+ */
+uint32_t blink_red;
+uint32_t blink_green;
+
 /*****************************************************************************/
 
 /*
@@ -61,24 +73,62 @@ void pause(void){
 /*****************************************************************************/
 
 /*
+ * Callback de recepción
+ */
+void my_rx_callback(void){
+    char c, * msg;
+    size_t n_msg;
+
+    uart_receive(uart_1, &c, 1);
+
+    if(c == 'r'){
+        blink_red= !blink_red;
+        msg="Led rojo modificado\n\r";
+        n_msg = sizeof(msg)/sizeof(msg[0]);
+
+        uart_send(UART_ID, msg, n_msg);
+    }
+    else if( c == 'g'){
+        blink_green = !blink_green;
+        msg="Led verde modificado\n\r";
+        n_msg = sizeof(msg)/sizeof(msg[0]);
+
+        uart_send(UART_ID, msg, n_msg);
+    }
+    else{
+        msg="Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";
+        n_msg = sizeof(msg)/sizeof(msg[0]);
+
+        uart_send(UART_ID, msg, n_msg);
+    }
+}
+
+/*****************************************************************************/
+
+/*
  * Programa principal
  */
 int main (){
-    /* Parpadear los leds: 0 no, 1 sí */
-    uint32_t blink_led[2];
+    char * msg;
+    size_t n_msg;
+
+    /* Parpadeo de los leds activado al principio */
+    blink_red = 1;         /* Led rojo */
+    blink_green = 1;       /* Led verde */
 
     /* Inicialización del GPIO */
     gpio_init();
 
-    /* Parpadeo de los leds activado al principio */
-    blink_led[0] = 1;       /* Led rojo */
-    blink_led[1] = 1;       /* Led verde */
+    msg="Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";
+    n_msg = sizeof(msg)/sizeof(msg[0]);
+
+    uart_send(UART_ID, msg, n_msg);
 
     while (1){
-        if(blink_led[0]=1){
+        if(blink_red=1){
             leds_on(LED_RED);
         }
-        if(blink_led[1]=1){
+        if(blink_green=1){
             leds_on(LED_GREEN);
         }
 
@@ -94,4 +144,3 @@ int main (){
 }
 
 /*****************************************************************************/
-
