@@ -20,6 +20,8 @@ Prácticas de la asignatura Sistemas Empotrados (SE).
 
 - **P8-Desarrollo de un driver L0 para las UART**: En esta práctica, empezaremos a desarrollar el diseño de los drivers, empezando por el nivel 0 o L0 consistente únicamente en la construcción de la estructura de registros, la inicialización correspondiente y las funciones de envío y recepción de caracteres. Adicionalmente, implementaremos un sencillo programa para testear el correcto funcionamiento de esta capa de drivers.  
 
+- **P9-Desarrollo de un driver L1 para las UART**: En esta práctica, continuaremos con el desarrollo del diseño de los drivers, mediante la implementación del nivel 1 o L1 consistente principalmente en la incorporación del manejo de las interrupciones y de bufferes circulares para evitar el comportamiento bloqueante de las funciones de envío y recepción del L0. Adicionalmente, implementaremos un sencillo programa para testear el correcto funcionamiento de esta capa de drivers.  
+
 Licencia  
 ------------------------
 El proyecto en conjunto se distribuye bajo la licencia [GPL](https://github.com/oxcar103/Practicas-SE/blob/master/LICENSE).  
