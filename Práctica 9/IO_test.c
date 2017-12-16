@@ -67,41 +67,6 @@ void pause(void){
 /*****************************************************************************/
 
 /*
- * Envía todo el string que se le pase
- * @param uart  Identificador de la uart
- * @param str   String a enviar
- */
-void send_str (uart_id_t uart, char * str){
-    while (*str){
-        uart_send_byte(uart, *str);
-        str++;
-    }
-}
-
-/*****************************************************************************/
-
-/*
- * Recibe hasta encontrar un fin de línea
- * @param uart  Identificador de la uart
- */
-/*char * receive_str (uart_id_t uart){
-    char * str = "", *aux = "x";
-    char c;
-
-    c=uart_receive_byte(uart);
-
-    while(c != ' '){
-        *aux = c;
-        strcat(str, aux);
-        c=uart_receive_byte(uart);
-    }
-
-    return str;
-}*/
-
-/*****************************************************************************/
-
-/*
  * Programa principal
  */
 int main (){
