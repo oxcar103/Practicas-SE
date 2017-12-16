@@ -430,15 +430,15 @@ static inline void uart_isr (uart_id_t uart){
             uart_regs[uart]->Tx_data = circular_buffer_read (&uart_circular_tx_buffers[uart]);
         }
 
-        /* Si hay definida una función callback... */
+        /* Si hay definida una función callback: */
         if(uart_callbacks[uart]->tx_callback){
-            /* ... la llamamos */
+            /* La llamamos */
             uart_callbacks[uart]->tx_callback;
         }
 
-        /* Si el buffer circular está vacío... */
+        /* Si el buffer circular está vacío: */
         if(circular_buffer_is_empty (&uart_circular_tx_buffers[uart])){
-            /* ... desactivamos las interrupciones */
+            /* Desactivamos las interrupciones */
             uart_regs[uart]->mTxR = 1;
         }
     }
@@ -450,15 +450,15 @@ static inline void uart_isr (uart_id_t uart){
             circular_buffer_write (&uart_circular_rx_buffers[uart], uart_regs[uart]->Rx_data);
         }
 
-        /* Si hay definida una función callback... */
+        /* Si hay definida una función callback: */
         if(uart_callbacks[uart]->rx_callback){
-            /* ... la llamamos */
+            /* La llamamos */
             uart_callbacks[uart]->rx_callback;
         }
 
-        /* Si el buffer circular está lleno... */
+        /* Si el buffer circular está lleno: */
         if(circular_buffer_is_full (&uart_circular_rx_buffers[uart])){
-            /* ... desactivamos las interrupciones */
+            /* Desactivamos las interrupciones */
             uart_regs[uart]->mRxR = 1;
         }
     }
