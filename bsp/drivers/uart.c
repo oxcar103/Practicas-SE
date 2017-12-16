@@ -239,7 +239,6 @@ void uart_send_byte (uart_id_t uart, uint8_t c){
 
     /* Restauramos el estado de las interrupciones */
     uart_regs[uart]->mTxR = old_mTxR;
-
 }
 
 /*****************************************************************************/
@@ -252,11 +251,31 @@ void uart_send_byte (uart_id_t uart, uint8_t c){
  * @return      El byte recibido
  */
 uint8_t uart_receive_byte (uart_id_t uart){
-    /* Esperamos a que haya datos que leer */
-    while (uart_regs[uart]->Rx_fifo_addr_diff == 0);
-    
-    /* Leemos el byte */
-    return uart_regs[uart]->Rx_data;
+    uint8_t data;
+
+    /* Desactivamos las interrupciones guardando su valor */
+    uint32_t old_mRxR = uart_regs[uart]->mRxR;
+    uart_regs[uart]->mRxR = 1;
+
+    /* Si hay datos en el buffer circular: */
+    if(!circular_buffer_is_empty (&uart_circular_rx_buffers[uart])){
+        /* Leemos el byte del buffer circular */
+        data = circular_buffer_read (&uart_circular_rx_buffers[uart]);
+    }
+    /* Si no hay: */
+    else{
+        /* Esperamos a que haya datos que leer en la cola FIFO */
+        while (uart_regs[uart]->Rx_fifo_addr_diff == 0);
+        
+        /* Leemos el byte de la cola FIFO */
+        data = uart_regs[uart]->Rx_data;
+    }
+
+    /* Restauramos el estado de las interrupciones */
+    uart_regs[uart]->mRxR = old_mRxR;
+
+    /* Devolvemos el byte */
+    return data;
 }
 
 /*****************************************************************************/
