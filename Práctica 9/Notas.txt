@@ -18,3 +18,8 @@ Los cambios de la función uart_init() se resumen en:
   · Inicialización de bufferes circulares.
   · Configuración de las interrupciones.
   · Inicialización de callbacks.
+
+Debemos modificar las funciones definidas en la implementación de la capa L0 pues:
+  · En el caso de lectura, debe mirar si hay datos primero en el buffer circular y luego en la cola FIFO, y bloquearse si la última no tiene.
+  · En el caso de escritura, debe esperar a que se hayan escrito los caracteres que hay en el buffer circular antes de escribir el suyo.
+  · En ambos casos, deben deshabilitar y restaurar las interrupciones para que no se le cuelen.
