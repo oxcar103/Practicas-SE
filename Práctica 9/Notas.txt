@@ -25,4 +25,5 @@ Debemos modificar las funciones definidas en la implementación de la capa L0 pu
   · En ambos casos, deben deshabilitar y restaurar las interrupciones para que no se le cuelen.
 
 Para comprobar el correcto funcionamiento de esta práctica, haremos un programa que interactúa con nuestro ordenador usando la UART. Para ello, el programa configuraremos un callback que envia mensajes, los recibe y actuar en consecuencia mientras que el programa principal hace otras tares (en este caso, parpadear los leds pertinentes).
+Nuestro callback, se encarga de comunicarse con la UART cada vez que nos llega un caracter. Lo leemos y en función de su valor, modificamos el comportamiento del led rojo (si nos llegó una 'r'), el del led verde (si nos llegó una 'g') o mandamos un mensaje de error reenviando de nuevos las instrucciones. Obviamente, este comportamiento tenemos que manejarlo nosotros mismos mediante variables de nuestro programa.
 
