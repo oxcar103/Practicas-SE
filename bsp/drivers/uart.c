@@ -433,7 +433,7 @@ static inline void uart_isr (uart_id_t uart){
         /* Si hay definida una función callback: */
         if(uart_callbacks[uart].tx_callback){
             /* La llamamos */
-            uart_callbacks[uart].tx_callback;
+            uart_callbacks[uart].tx_callback();
         }
 
         /* Si el buffer circular está vacío: */
@@ -453,7 +453,7 @@ static inline void uart_isr (uart_id_t uart){
         /* Si hay definida una función callback: */
         if(uart_callbacks[uart].rx_callback){
             /* La llamamos */
-            uart_callbacks[uart].rx_callback;
+            uart_callbacks[uart].rx_callback();
         }
 
         /* Si el buffer circular está lleno: */
