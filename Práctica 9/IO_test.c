@@ -85,7 +85,7 @@ void my_rx_callback(void){
     /* Si es 'r': */
     if(c == 'r'){
         /* Cambiamos el estado del led rojo */
-        blink_red= !blink_red;
+        blink_red = (blink_red == 0) ? 1 : 0;
 
         /* Imprimimos un mensaje informando */
         msg="Led rojo modificado\n\r";          /* Guardamos el mensaje */
@@ -96,7 +96,7 @@ void my_rx_callback(void){
     /* Si es 'g': */
     else if( c == 'g'){
         /* Cambiamos el estado del led verde */
-        blink_green = !blink_green;
+        blink_green = (blink_green == 0) ? 1 : 0;
 
         /* Imprimimos un mensaje informando */
         msg="Led verde modificado\n\r";         /* Guardamos el mensaje */
