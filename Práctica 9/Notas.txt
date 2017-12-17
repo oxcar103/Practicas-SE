@@ -23,3 +23,6 @@ Debemos modificar las funciones definidas en la implementación de la capa L0 pu
   · En el caso de lectura, debe mirar si hay datos primero en el buffer circular y luego en la cola FIFO, y bloquearse si la última no tiene.
   · En el caso de escritura, debe esperar a que se hayan escrito los caracteres que hay en el buffer circular antes de escribir el suyo.
   · En ambos casos, deben deshabilitar y restaurar las interrupciones para que no se le cuelen.
+
+Para comprobar el correcto funcionamiento de esta práctica, haremos un programa que interactúa con nuestro ordenador usando la UART. Para ello, el programa configuraremos un callback que envia mensajes, los recibe y actuar en consecuencia mientras que el programa principal hace otras tares (en este caso, parpadear los leds pertinentes).
+
