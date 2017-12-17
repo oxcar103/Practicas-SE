@@ -80,7 +80,7 @@ void my_rx_callback(void){
     size_t n_msg;
 
     /* Leemos un caracter */
-    uart_receive(uart_1, &c, 1);
+    uart_receive(UART_ID, &c, 1);
 
     /* Si es 'r': */
     if(c == 'r'){
@@ -89,7 +89,7 @@ void my_rx_callback(void){
 
         /* Imprimimos un mensaje informando */
         msg="Led rojo modificado\n\r";          /* Guardamos el mensaje */
-        n_msg = sizeof(msg)/sizeof(msg[0]);     /* Calculamos su tamaño */
+        n_msg = strlen(msg);                    /* Calculamos su tamaño */
         uart_send(UART_ID, msg, n_msg);         /* Lo mandamos imprimir */
     }
 
@@ -100,7 +100,7 @@ void my_rx_callback(void){
 
         /* Imprimimos un mensaje informando */
         msg="Led verde modificado\n\r";         /* Guardamos el mensaje */
-        n_msg = sizeof(msg)/sizeof(msg[0]);     /* Calculamos su tamaño */
+        n_msg = strlen(msg);                    /* Calculamos su tamaño */
         uart_send(UART_ID, msg, n_msg);         /* Lo mandamos imprimir */
     }
 
@@ -108,7 +108,7 @@ void my_rx_callback(void){
     else{
         /* Imprimimos un mensaje de error */
         msg="Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";    /* Guardamos el mensaje*/
-        n_msg = sizeof(msg)/sizeof(msg[0]);     /* Calculamos su tamaño */
+        n_msg = strlen(msg);                    /* Calculamos su tamaño */
         uart_send(UART_ID, msg, n_msg);         /* Lo mandamos imprimir */
     }
 }
@@ -134,7 +134,7 @@ int main (){
 
     /* Imprimimos las instrucciones de uso */
     msg="Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";     /* Guardamos el mensaje*/
-    n_msg = sizeof(msg)/sizeof(msg[0]);         /* Calculamos su tamaño */
+    n_msg = strlen(msg);                        /* Calculamos su tamaño */
     uart_send(UART_ID, msg, n_msg);             /* Lo mandamos imprimir */
 
     /* Bucle infinito de parpadeo de los leds si sus estados lo permiten */
