@@ -119,6 +119,8 @@ int main (){
     /* Inicialización del GPIO */
     gpio_init();
 
+    uart_set_receive_callback (UART_ID, my_rx_callback);
+
     msg="Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";
     n_msg = sizeof(msg)/sizeof(msg[0]);
 
