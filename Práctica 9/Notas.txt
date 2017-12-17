@@ -10,7 +10,7 @@ El funcionamiento de la ISR es simple:
   · Atendemos cada registro activo (en realidad somos unos guays y pasamos de los errores pero se deberían atender)
   · Tanto para recepción como transmisión, el procedimiento es el mismo:
     - Copiar los que se puedan al/del buffer circular.
-    - Callbacks.
+    - Callbacks. (IMPORTANTE: Sin los paréntesis, no llamamos a la función)
     - Desactivar interrupciones si fuese necesario.
 
 Los cambios de la función uart_init() se resumen en:
