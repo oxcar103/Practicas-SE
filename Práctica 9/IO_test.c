@@ -144,14 +144,16 @@ int main (){
         if(blink_red == 1){
             leds_on(LED_RED);
         }
-        if(blink_green == 1){
-            leds_on(LED_GREEN);
-        }
+
+        leds_off(LED_GREEN);
 
         pause();
 
         leds_off(LED_RED);
-        leds_off(LED_GREEN);
+
+        if(blink_green == 1){
+            leds_on(LED_GREEN);
+        }
 
         pause();
     }
