@@ -79,10 +79,10 @@ void my_rx_callback(void){
     char c, * msg;
     size_t n_msg;
 
-    uart_send(UART_ID,"\n\r", 2);               /* Salto de línea, muy necesario */
-
     /* Leemos un caracter */
     uart_receive(UART_ID, &c, 1);
+
+    uart_send(UART_ID,"\n\r", 2);               /* Salto de línea, muy necesario */
 
     /* Si es 'r': */
     if(c == 'r'){
