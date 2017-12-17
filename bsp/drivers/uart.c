@@ -150,7 +150,7 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
         return -1;
     }
 
-    if(name = NULL){
+    if(name == NULL){
         errno = EFAULT;
 
         return -1;
@@ -205,7 +205,7 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
     
 
     /* Y habilitamos las interrupciones de recepción */
-    uart_regs[uart]->MRxR = 0;
+    uart_regs[uart]->mRxr = 0;
     
     return 0;
 }
@@ -221,8 +221,8 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
  */
 void uart_send_byte (uart_id_t uart, uint8_t c){
     /* Desactivamos las interrupciones guardando su valor */
-    uint32_t old_mTxR = uart_regs[uart]->mTxR;
-    uart_regs[uart]->mTxR = 1;
+    uint32_t old_mTxr = uart_regs[uart]->mTxr;
+    uart_regs[uart]->mTxr = 1;
 
     /* Vaciamos primero el buffer circular */
     while (!circular_buffer_is_empty (&uart_circular_tx_buffers[uart])){
@@ -238,7 +238,7 @@ void uart_send_byte (uart_id_t uart, uint8_t c){
     uart_regs[uart]->Tx_data = c;
 
     /* Restauramos el estado de las interrupciones */
-    uart_regs[uart]->mTxR = old_mTxR;
+    uart_regs[uart]->mTxr = old_mTxr;
 }
 
 /*****************************************************************************/
@@ -254,8 +254,8 @@ uint8_t uart_receive_byte (uart_id_t uart){
     uint8_t data;
 
     /* Desactivamos las interrupciones guardando su valor */
-    uint32_t old_mRxR = uart_regs[uart]->mRxR;
-    uart_regs[uart]->mRxR = 1;
+    uint32_t old_mRxr = uart_regs[uart]->mRxr;
+    uart_regs[uart]->mRxr = 1;
 
     /* Si hay datos en el buffer circular: */
     if(!circular_buffer_is_empty (&uart_circular_rx_buffers[uart])){
@@ -272,7 +272,7 @@ uint8_t uart_receive_byte (uart_id_t uart){
     }
 
     /* Restauramos el estado de las interrupciones */
-    uart_regs[uart]->mRxR = old_mRxR;
+    uart_regs[uart]->mRxr = old_mRxr;
 
     /* Devolvemos el byte */
     return data;
@@ -300,14 +300,14 @@ ssize_t uart_send (uint32_t uart, char *buf, size_t count){
         return -1;
     }
 
-    if(buf = NULL || count < 0){
+    if(buf == NULL || count < 0){
         errno = EFAULT;
 
         return -1;
     }
 
     /* Desactivamos las interrupciones */
-    uart_regs[uart]->mTxR = 1;
+    uart_regs[uart]->mTxr = 1;
 
     /* Copiamos los datos que podamos al buffer circular */
     while(count > 0 && !circular_buffer_is_full (&uart_circular_tx_buffers[uart])){
@@ -318,7 +318,7 @@ ssize_t uart_send (uint32_t uart, char *buf, size_t count){
     }
 
     /* Activamos las interrupciones */
-    uart_regs[uart]->mTxR = 0;
+    uart_regs[uart]->mTxr = 0;
 
     return copied_bytes;
 }
@@ -345,25 +345,25 @@ ssize_t uart_receive (uint32_t uart, char *buf, size_t count){
         return -1;
     }
 
-    if(buf = NULL || count < 0){
+    if(buf == NULL || count < 0){
         errno = EFAULT;
 
         return -1;
     }
 
     /* Desactivamos las interrupciones */
-    uart_regs[uart]->mRxR = 1;
+    uart_regs[uart]->mRxr = 1;
 
     /* Copiamos los datos que podamos del buffer circular */
     while(count > 0 && !circular_buffer_is_empty (&uart_circular_rx_buffers[uart])){
-        circular_buffer_read (&uart_circular_rx_buffers[uart], *buf++);
+        *buf++=circular_buffer_read (&uart_circular_rx_buffers[uart]);
 
         copied_bytes++;
         count--;
     }
 
     /* Activamos las interrupciones */
-    uart_regs[uart]->mRxR = 0;
+    uart_regs[uart]->mRxr = 0;
 
     return copied_bytes;
 }
@@ -385,7 +385,7 @@ int32_t uart_set_send_callback (uart_id_t uart, uart_callback_t func){
         return -1;
     }
 
-    uart_callbacks[uart]->tx_callback = func;
+    uart_callbacks[uart].tx_callback = func;
 
     return 0;
 }
@@ -407,7 +407,7 @@ int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func){
         return -1;
     }
 
-    uart_callbacks[uart]->rx_callback = func;
+    uart_callbacks[uart].rx_callback = func;
 
     return 0;
 }
@@ -421,7 +421,7 @@ int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func){
  * @param uart  Identificador de la uart
  */
 static inline void uart_isr (uart_id_t uart){
-    uint32_t status = uart_regs[uart]->stat;
+    uint32_t status = uart_regs[uart]->STAT;
 
     /* Interrupción de Transmisión (quiere más datos) */
     if(uart_regs[uart]->TxRdy){
@@ -431,15 +431,15 @@ static inline void uart_isr (uart_id_t uart){
         }
 
         /* Si hay definida una función callback: */
-        if(uart_callbacks[uart]->tx_callback){
+        if(uart_callbacks[uart].tx_callback){
             /* La llamamos */
-            uart_callbacks[uart]->tx_callback;
+            uart_callbacks[uart].tx_callback;
         }
 
         /* Si el buffer circular está vacío: */
         if(circular_buffer_is_empty (&uart_circular_tx_buffers[uart])){
             /* Desactivamos las interrupciones */
-            uart_regs[uart]->mTxR = 1;
+            uart_regs[uart]->mTxr = 1;
         }
     }
 
@@ -451,15 +451,15 @@ static inline void uart_isr (uart_id_t uart){
         }
 
         /* Si hay definida una función callback: */
-        if(uart_callbacks[uart]->rx_callback){
+        if(uart_callbacks[uart].rx_callback){
             /* La llamamos */
-            uart_callbacks[uart]->rx_callback;
+            uart_callbacks[uart].rx_callback;
         }
 
         /* Si el buffer circular está lleno: */
         if(circular_buffer_is_full (&uart_circular_rx_buffers[uart])){
             /* Desactivamos las interrupciones */
-            uart_regs[uart]->mRxR = 1;
+            uart_regs[uart]->mRxr = 1;
         }
     }
 }

@@ -125,10 +125,10 @@ int main (){
     uart_send(UART_ID, msg, n_msg);
 
     while (1){
-        if(blink_red=1){
+        if(blink_red == 1){
             leds_on(LED_RED);
         }
-        if(blink_green=1){
+        if(blink_green == 1){
             leds_on(LED_GREEN);
         }
 
