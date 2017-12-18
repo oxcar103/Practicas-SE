@@ -144,6 +144,7 @@ static volatile uart_callbacks_t uart_callbacks[uart_max];
  *              La condición de error se indica en la variable global errno
  */
 int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
+    /* Comprobamos la validez de los argumentos */
     if(uart >= uart_max){
         errno = ENODEV;
 
@@ -203,7 +204,6 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
     uart_callbacks[uart].tx_callback = NULL;
     uart_callbacks[uart].rx_callback = NULL;
     
-
     /* Y habilitamos las interrupciones de recepción */
     uart_regs[uart]->mRxr = 0;
     
@@ -294,6 +294,7 @@ uint8_t uart_receive_byte (uart_id_t uart){
 ssize_t uart_send (uint32_t uart, char *buf, size_t count){
     ssize_t copied_bytes = 0;
 
+    /* Comprobamos la validez de los argumentos */
     if(uart >= uart_max){
         errno = ENODEV;
 
@@ -339,6 +340,7 @@ ssize_t uart_send (uint32_t uart, char *buf, size_t count){
 ssize_t uart_receive (uint32_t uart, char *buf, size_t count){
     ssize_t copied_bytes = 0;
 
+    /* Comprobamos la validez de los argumentos */
     if(uart >= uart_max){
         errno = ENODEV;
 
@@ -379,12 +381,14 @@ ssize_t uart_receive (uint32_t uart, char *buf, size_t count){
  *              La condición de error se indica en la variable global errno
  */
 int32_t uart_set_send_callback (uart_id_t uart, uart_callback_t func){
+    /* Comprobamos la validez de los argumentos */
     if(uart >= uart_max){
         errno = ENODEV;
 
         return -1;
     }
 
+    /* Asignamos la función callback */
     uart_callbacks[uart].tx_callback = func;
 
     return 0;
@@ -401,12 +405,14 @@ int32_t uart_set_send_callback (uart_id_t uart, uart_callback_t func){
  *              La condición de error se indica en la variable global errno
  */
 int32_t uart_set_receive_callback (uart_id_t uart, uart_callback_t func){
+    /* Comprobamos la validez de los argumentos */
     if(uart >= uart_max){
         errno = ENODEV;
 
         return -1;
     }
 
+    /* Asignamos la función callback */
     uart_callbacks[uart].rx_callback = func;
 
     return 0;
