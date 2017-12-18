@@ -156,7 +156,7 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
         return -1;
     }
 
-    /* Calculamos mod e inc asumiendo un oversampling de 8x y un Peripheral_Bus_Blk = 24Mhz */
+    /* Calculamos mod e inc asumiendo un oversampling de 8x y un Peripheral_Bus_Clk = 24Mhz */
     uint16_t mod = 9999;
     uint16_t inc = br * mod / (CPU_FREQ >> 4) - 1;
 
