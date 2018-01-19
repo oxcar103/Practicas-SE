@@ -78,7 +78,8 @@ int32_t bsp_register_dev (const char  *name,
         ssize_t (*write)(uint32_t id, char *buf, size_t count),
         off_t (*lseek)(uint32_t id, off_t offset, int whence),
         int (*fstat)(uint32_t id, struct stat *buf),
-        int (*isatty)(uint32_t id)){
+        int (*isatty)(uint32_t id))
+{
     int32_t index = -1;
     if (bsp_next_dev < BSP_MAX_DEV){
         index = bsp_next_dev;
