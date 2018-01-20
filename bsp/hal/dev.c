@@ -43,10 +43,9 @@ static uint32_t bsp_next_dev = 1;
 /*****************************************************************************/
 
 /**
- * Lista de descriptores de fichero abiertos. Las primeras tres entradas se
- * reservan para E/S estándar, asignada por defecto a /dev/null.
- * El máximo número de descriptores abiertos simultáneamente se define en
- * "system.h"
+ * Lista de descriptores de fichero abiertos.
+ * Las primeras tres entradas se reservan para E/S estándar, asignada por defecto a /dev/null.
+ * El máximo número de descriptores abiertos simultáneamente se define en "system.h".
  */
 static bsp_fd_t bsp_fd_list[BSP_MAX_FD] ={
     { bsp_dev_list, 0 },    /* Entrada estándar (STDIN) -> /dev/null  */
@@ -61,14 +60,15 @@ static bsp_fd_t bsp_fd_list[BSP_MAX_FD] ={
  * Registro de un dispositivo en el sistema.
  * @param name      Nombre del dispositivo
  * @param id        Dirección base de los registros de gestión del dispositivo
- * @param open      Función de apertura del dispositivo
+ * @param open      Función open del dispositivo
  * @param close     Función close del dispositivo
  * @param read      Función read del dispositivo
  * @param write     Función write del dispositivo
  * @param lseek     Función lseek del dispositivo
  * @param fstat     Función fsat del dispositivo
  * @param isatty    Función isatty del dispositivo
- * @return          El numero de dispositivo asignado o -1 en caso de error
+ * @return          Número de dispositivo asignado en caso de éxito
+ *                  -1 en caso de error
  */
 int32_t bsp_register_dev (const char  *name,
         uint32_t id,
@@ -81,6 +81,7 @@ int32_t bsp_register_dev (const char  *name,
         int (*isatty)(uint32_t id))
 {
     int32_t index = -1;
+
     if (bsp_next_dev < BSP_MAX_DEV){
         index = bsp_next_dev;
         bsp_next_dev++;
@@ -104,6 +105,8 @@ int32_t bsp_register_dev (const char  *name,
 /**
  * Busca un dispositivo en el sistema
  * @param pathname  Nombre del dispositivo
+ * @return          Puntero al bloque bsp_dev_t del dispositivo en caso de éxito
+ *                  NULL en caso de error
  */
 bsp_dev_t * find_dev (const char *pathname){
     uint32_t i;
@@ -123,7 +126,9 @@ bsp_dev_t * find_dev (const char *pathname){
 
 /**
  * Retorna el puntero del dispositivo asociado al descriptor de un fichero
- * @param fd    El descriptor
+ * @param fd    Descriptor de fichero
+ * @return      Puntero al dispositivo en caso de éxito
+ *              NULL en caso de error
  */
 inline bsp_dev_t* get_dev (uint32_t fd){
     return bsp_fd_list[fd].dev;
@@ -133,7 +138,8 @@ inline bsp_dev_t* get_dev (uint32_t fd){
 
 /**
  * Retorna los flags de apertura de un fichero
- * @param fd    El descriptor
+ * @param fd    Descriptor de fichero
+ * @return      Flags de apertura
  */
 inline int get_flags (uint32_t fd){
     return bsp_fd_list[fd].flags;
@@ -143,10 +149,11 @@ inline int get_flags (uint32_t fd){
 
 /**
  * Asigna un nuevo descriptor de fichero a un dispositivo
- * @param dev   El dispositivo
- * @param flags Modo de acceso seleccionado en su apertura
- * @return      El numero de descriptor o -1 en caso de error.
- *              La condición de error se indica en la variable global errno.
+ * @param dev   Dispositivo
+ * @param flags Flags de apertura
+ * @return      Número de descriptor en caso de éxito
+ *              -1 en caso de error
+ *              La condición de error se indica en la variable global errno
  */
 int32_t get_fd(bsp_dev_t *dev, int flags){
     int32_t i;
@@ -168,11 +175,12 @@ int32_t get_fd(bsp_dev_t *dev, int flags){
 /*****************************************************************************/
 
 /**
- * Liberación de un descriptor de fichero. Los descriptores de los ficheros
- * asignados a la E/S estándar (0, 1 y 2) no pueden ser liberados.
- * @param fd    Número del descriptor
+ * Liberación de un descriptor de fichero.
+ * Los descriptores de los ficheros asignados a la E/S estándar no pueden ser liberados.
+ * @param fd    Descriptor de fichero
  */
 void release_fd (uint32_t fd){
+    /* La E/S estándar es 0, 1 y 2 */
     if (fd > 2){
         bsp_fd_list[fd].dev   = NULL;
         bsp_fd_list[fd].flags = 0;
@@ -182,10 +190,8 @@ void release_fd (uint32_t fd){
 /*****************************************************************************/
 
 /**
- * Abre un dispositivo y lo asigna al descriptor de fichero especificado en vez
- * de crear una nueva entrada en la tabla de descriptores de fichero.
+ * Abre un dispositivo y lo asigna al descriptor de fichero especificado.
  * @param fd    Descriptor de fichero al que se redireccionará el dispositivo
- *              una vez abierto
  * @param name  Nombre del dispositivo
  * @param flags Configuración
  * @param mode  Modo de apertura

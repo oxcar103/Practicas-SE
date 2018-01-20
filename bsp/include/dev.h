@@ -17,9 +17,8 @@
 typedef struct{
     const char  *name;                                      /* Nombre del dispositivo */
     uint32_t id;                                            /* Identificador del dispositivo */
-                                                            /* Por defecto es cero. Se usa para */
-                                                            /* diferenciar a varios dispositivos */
-                                                            /* del mismo tipo */
+                                                            /* Por defecto es 0 */
+                                                            /* Se usa para diferenciar varios dispositivos del mismo tipo */
     int (*open)(uint32_t id, int flags, mode_t mode);       /* Función open */
     int (*close)(uint32_t id);                              /* Función close */
     ssize_t (*read)(uint32_t id, char *buf, size_t count);  /* Función read */
@@ -35,7 +34,7 @@ typedef struct{
  * Estructura de un descriptor de fichero
  */
 typedef struct{
-    bsp_dev_t*  dev;    /* Puntero a la estructura gestión del dispositivo */
+    bsp_dev_t*  dev;    /* Puntero a la estructura de gestión del dispositivo */
     int         flags;  /* Flags de apertura/creación del fichero */
 } bsp_fd_t;
 
@@ -44,15 +43,16 @@ typedef struct{
 /**
  * Registro de un dispositivo en el sistema.
  * @param name      Nombre del dispositivo
- * @param id        Identificador del dispositivo
- * @param open      Función de apertura del dispositivo
+ * @param id        Dirección base de los registros de gestión del dispositivo
+ * @param open      Función open del dispositivo
  * @param close     Función close del dispositivo
  * @param read      Función read del dispositivo
  * @param write     Función write del dispositivo
  * @param lseek     Función lseek del dispositivo
  * @param fstat     Función fsat del dispositivo
  * @param isatty    Función isatty del dispositivo
- * @return          El numero de dispositivo asignado o -1 en caso de error
+ * @return          Número de dispositivo asignado en caso de éxito
+ *                  -1 en caso de error
  */
 int32_t bsp_register_dev (const char  *name,
 		uint32_t id,
@@ -69,6 +69,8 @@ int32_t bsp_register_dev (const char  *name,
 /**
  * Busca un dispositivo en el sistema
  * @param pathname  Nombre del dispositivo
+ * @return          Puntero al bloque bsp_dev_t del dispositivo en caso de éxito
+ *                  NULL en caso de error
  */
 bsp_dev_t * find_dev (const char *pathname);
 
@@ -76,7 +78,9 @@ bsp_dev_t * find_dev (const char *pathname);
 
 /**
  * Retorna el puntero del dispositivo asociado al descriptor de un fichero
- * @param fd    El descriptor
+ * @param fd    Descriptor de fichero
+ * @return      Puntero al dispositivo en caso de éxito
+ *              NULL en caso de error
  */
 inline bsp_dev_t* get_dev (uint32_t fd);
 
@@ -84,7 +88,8 @@ inline bsp_dev_t* get_dev (uint32_t fd);
 
 /**
  * Retorna los flags de apertura de un fichero
- * @param fd    El descriptor
+ * @param fd    Descriptor de fichero
+ * @return      Flags de apertura
  */
 inline int get_flags (uint32_t fd);
 
@@ -92,29 +97,28 @@ inline int get_flags (uint32_t fd);
 
 /**
  * Asigna un nuevo descriptor de fichero a un dispositivo
- * @param dev   El dispositivo
- * @param flags Modo de acceso seleccionado en su apertura
- * @return      El numero de descriptor o -1 en caso de error. La condición de error
- *              se indica en la variable global errno.
+ * @param dev   Dispositivo
+ * @param flags Flags de apertura
+ * @return      Número de descriptor en caso de éxito
+ *              -1 en caso de error
+ *              La condición de error se indica en la variable global errno
  */
 int32_t get_fd(bsp_dev_t *dev, int flags);
 
 /*****************************************************************************/
 
 /**
- * Liberación de un descriptor de fichero. Los descriptores de los ficheros
- * asignados a la E/S estándar (0, 1 y 2) no pueden ser liberados.
- * @param fd Número del descriptor
+ * Liberación de un descriptor de fichero.
+ * Los descriptores de los ficheros asignados a la E/S estándar no pueden ser liberados.
+ * @param fd    Descriptor de fichero
  */
 void release_fd (uint32_t fd);
 
 /*****************************************************************************/
 
 /**
- * Abre un dispositivo y lo asigna al descriptor de fichero especificado en vez
- * de crear una nueva entrada en la tabla de descriptores de fichero.
+ * Abre un dispositivo y lo asigna al descriptor de fichero especificado.
  * @param fd    Descriptor de fichero al que se redireccionará el dispositivo
- *              una vez abierto
  * @param name  Nombre del dispositivo
  * @param flags Configuración
  * @param mode  Modo de apertura
