@@ -46,3 +46,10 @@ _fstat:
             ^ Si falla, devolvemos su salida
             ^ Si funciona, devolvemos su salida
 
+_isatty:
+    - Si el dispositivo no existe, devolvemos 1
+    - Si el dispositivo existe:
+        * Si el dispositivo no tiene implementación específica, devolvemos 1
+        * Si el dispositivo tiene implementación específica, se llama:
+            ^ Si falla, devolvemos su salida
+            ^ Si funciona, devolvemos su salida
