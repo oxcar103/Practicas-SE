@@ -21,3 +21,11 @@ _read:
         * Si el dispositivo tiene implementación específica, se llama:
             ^ Si falla, devolvemos su salida
             ^ Si funciona, devolvemos su salida
+
+_write:
+    - Si el dispositivo no existe, devolvemos el total de datos a escribir
+    - Si el dispositivo existe:
+        * Si el dispositivo no tiene implementación específica, devolvemos el total de datos a escribir
+        * Si el dispositivo tiene implementación específica, se llama:
+            ^ Si falla, devolvemos su salida
+            ^ Si funciona, devolvemos su salida
