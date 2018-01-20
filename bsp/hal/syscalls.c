@@ -152,8 +152,17 @@ ssize_t _read(int fd, char *buf, size_t count){
  *              La condición de error se indica en la variable global errno
  */
 ssize_t _write (int fd, char *buf, size_t count){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
-    return count;
+	bsp_dev_t * dev = get_dev (fd);     /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe y tiene implementada la función write, devolvemos su salida */
+    if (dev != NULL && dev->write != NULL){
+        return dev->write(dev->id, buf, count);
+    }
+
+    /* En otro caso */
+    else{
+        return count;           /* Devolvemos el total, claramente hemos escrito todo (MENTIRA!!!) */
+    }
 }
 
 /*****************************************************************************/
