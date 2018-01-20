@@ -225,8 +225,17 @@ int _fstat(int fd, struct stat *buf){
  *              La condición de error se indica en la variable global errno
  */
 int _isatty (int fd){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
-    return 1;
+	bsp_dev_t * dev = get_dev (fd);     /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe y tiene implementada la función isatty, devolvemos su salida */
+    if (dev != NULL && dev->isatty != NULL){
+        return dev->isatty(dev->id);
+    }
+
+    /* En otro caso */
+    else{
+        return 1;           /* Devolvemos 1, es una terminal 100% REAL, NO FAKE */
+    }
 }
 
 /*****************************************************************************/
