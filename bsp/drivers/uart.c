@@ -206,6 +206,9 @@ int32_t uart_init (uart_id_t uart, uint32_t br, const char *name){
     
     /* Y habilitamos las interrupciones de recepción */
     uart_regs[uart]->mRxr = 0;
+
+    /* Registramos el dispositivo */
+    bsp_register_dev (name, uart, NULL, NULL, uart_receive, uart_send, NULL, NULL, NULL);
     
     return 0;
 }
