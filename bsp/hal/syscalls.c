@@ -201,8 +201,18 @@ off_t _lseek(int fd, off_t offset, int whence){
  *              La condición de error se indica en la variable global errno
  */
 int _fstat(int fd, struct stat *buf){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
-    return 0;
+    bsp_dev_t * dev = get_dev (fd);     /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe y tiene implementada la función fstat, devolvemos su salida */
+    if (dev != NULL && dev->fstat != NULL){
+        return dev->fstat(dev->id, buf);
+    }
+
+    /* En otro caso */
+    else{
+        buf->st_mode = S_IFCHR;     /* Está abierto sobre un dispositivo de caracteres */
+        return 0;                   /* Devolvemos 0, es decir, no hay errores */
+    }
 }
 
 /*****************************************************************************/
