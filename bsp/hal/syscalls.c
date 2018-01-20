@@ -65,8 +65,8 @@ void * _sbrk (intptr_t incr){
  *                  -1 en caso de error
  *                  La condición de error se indica en la variable global errno
  */
-int _open(const char *pathname, int flags, mode_t mode){
-    bsp_dev_t *dev = find_dev (pathname);       /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+int _open(const char * pathname, int flags, mode_t mode){
+    bsp_dev_t * dev = find_dev (pathname);       /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
 
     /* Si el dispositivo existe */
     if (dev != NULL){
@@ -98,8 +98,21 @@ int _open(const char *pathname, int flags, mode_t mode){
  *              La condición de error se indica en la variable global errno
  */
 int _close (int fd){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
-    return -1;
+    release_fd(fd);                     /* Liberamos el descriptor de fichero */
+
+    bsp_dev_t * dev = get_dev (fd);      /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe y tiene implementada la función close, devolvemos su salida */
+    if (dev != NULL && dev->close != NULL){
+        return dev->close(dev->id) >= 0;
+    }
+
+    /* Si no, fd no es un descriptor válido */
+    else
+        errno = EBADF;      /* Ajustamos el valor de errno */
+
+        return -1;
+    }
 }
 
 /*****************************************************************************/
