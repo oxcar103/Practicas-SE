@@ -66,7 +66,24 @@ void * _sbrk (intptr_t incr){
  *                  La condición de error se indica en la variable global errno
  */
 int _open(const char *pathname, int flags, mode_t mode){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
+    bsp_dev_t *dev = find_dev (pathname);       /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe */
+    if (dev != NULL){
+        /*
+        * Si tiene implementada la función open y no falla al llamarla, se le asigna un descriptor
+        * Si no la tiene, como por defecto se puede abrir cualquier dispositivo, también se le asigna un descriptor
+        */
+        if (dev->open==NULL || dev->open(dev->id, flags, mode) >= 0){
+            return get_fd(dev, flags);
+        }
+    }
+
+    /* Si el dispositivo no existe */
+    else
+        errno = ENODEV;     /* Ajustamos el valor de errno */
+    }
+    
 
     return -1;
 }
