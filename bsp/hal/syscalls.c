@@ -127,8 +127,17 @@ int _close (int fd){
  *              La condición de error se indica en la variable global errno
  */
 ssize_t _read(int fd, char *buf, size_t count){
-	/* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
-	return 0;
+	bsp_dev_t * dev = get_dev (fd);      /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe y tiene implementada la función read, devolvemos su salida */
+    if (dev != NULL && dev->read != NULL){
+        return dev->read(dev->id, buf, count);
+    }
+
+    /* En otro caso */
+    else{
+        return 0;           /* Devolvemos 0, es decir, que no se ha podido leer ningún byte */
+    }
 }
 
 /*****************************************************************************/
