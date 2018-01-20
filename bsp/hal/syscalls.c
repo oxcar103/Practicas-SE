@@ -27,8 +27,8 @@ extern void _heap_start, _heap_end;
  *              La condición de error se indica en la variable global errno
  */
 void * _sbrk (intptr_t incr){
-    static void *current_break = &_heap_start;
-    void *last_break = current_break;
+    static void * current_break = &_heap_start;
+    void * last_break = current_break;
 
     /* Anulamos las interrupciones durante el proceso de reserva */
     /* Comienzo de la sección crítica */
@@ -66,7 +66,7 @@ void * _sbrk (intptr_t incr){
  *                  La condición de error se indica en la variable global errno
  */
 int _open(const char * pathname, int flags, mode_t mode){
-    bsp_dev_t * dev = find_dev (pathname);       /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+    bsp_dev_t * dev = find_dev (pathname);      /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
 
     /* Si el dispositivo existe */
     if (dev != NULL){
@@ -100,15 +100,15 @@ int _open(const char * pathname, int flags, mode_t mode){
 int _close (int fd){
     release_fd(fd);                     /* Liberamos el descriptor de fichero */
 
-    bsp_dev_t * dev = get_dev (fd);      /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+    bsp_dev_t * dev = get_dev (fd);     /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
 
     /* Si el dispositivo existe y tiene implementada la función close, devolvemos su salida */
     if (dev != NULL && dev->close != NULL){
-        return dev->close(dev->id) >= 0;
+        return dev->close(dev->id);
     }
 
     /* Si no, fd no es un descriptor válido */
-    else
+    else{
         errno = EBADF;      /* Ajustamos el valor de errno */
 
         return -1;
@@ -127,7 +127,7 @@ int _close (int fd){
  *              La condición de error se indica en la variable global errno
  */
 ssize_t _read(int fd, char *buf, size_t count){
-	bsp_dev_t * dev = get_dev (fd);      /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+	bsp_dev_t * dev = get_dev (fd);     /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
 
     /* Si el dispositivo existe y tiene implementada la función read, devolvemos su salida */
     if (dev != NULL && dev->read != NULL){
