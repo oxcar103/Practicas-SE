@@ -1,15 +1,15 @@
 _open:
     - Si el dispositivo no existe, errno=ENODEV y devolvemos -1
     - Si el dispositivo existe:
-        * Si el dispositivo no tiene función open, se le asigna un descriptor y lo devolvemos
-        * Si el dispositivo tiene función open, se llama:
-            ^ Si la función falla, la función ajusta errno y devolvemos -1
-            ^ Si la función funciona, se le asigna un descriptor y lo devolvemos
+        * Si el dispositivo no tiene implementación específica, se le asigna un descriptor y lo devolvemos
+        * Si el dispositivo tiene implementación específica, se llama:
+            ^ Si falla, la función ajusta errno y devolvemos -1
+            ^ Si funciona, se le asigna un descriptor y lo devolvemos
 
 _close:
     - Si el dispositivo no existe, errno=EBADF y devolvemos -1
     - Si el dispositivo existe:
-        * Si el dispositivo no tiene función close, errno=EBADF y devolvemos -1
-        * Si el dispositivo tiene función close, se llama:
-            ^ Si la función falla, devolvemos su salida
-            ^ Si la función funciona, devolvemos su salida
+        * Si el dispositivo no tiene implementación específica, errno=EBADF y devolvemos -1
+        * Si el dispositivo tiene implementación específica, se llama:
+            ^ Si falla, devolvemos su salida
+            ^ Si funciona, devolvemos su salida
