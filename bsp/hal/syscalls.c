@@ -177,8 +177,17 @@ ssize_t _write (int fd, char *buf, size_t count){
  *                  La condición de error se indica en la variable global errno
  */
 off_t _lseek(int fd, off_t offset, int whence){
-    /* ESTA FUNCIÓN SE DEFINIRÁ EN LA PRÁCTICA 10 */
-    return 0;
+	bsp_dev_t * dev = get_dev (fd);     /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
+
+    /* Si el dispositivo existe y tiene implementada la función lseek, devolvemos su salida */
+    if (dev != NULL && dev->lseek != NULL){
+        return dev->lseek(dev->id, offset, whence);
+    }
+
+    /* En otro caso */
+    else{
+        return 0;           /* Devolvemos 0, es decir, el inicio del fichero */
+    }
 }
 
 /*****************************************************************************/
