@@ -28,7 +28,7 @@ uint32_t const led_red_mask =   (1 << (44-32));
 uint32_t const led_green_mask = (1 << (45-32));
 
 /*
- * Constantes relativas a la aplicacion
+ * Constantes relativas a la aplicación
  */
 uint32_t const delay = 0x20000;
  

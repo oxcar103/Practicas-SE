@@ -20,7 +20,7 @@
 #define BUTTON_S3_IN    gpio_pin_26
  
 /*
- * Constantes relativas a la aplicacion
+ * Constantes relativas a la aplicación
  */
 uint32_t const delay = 0x20000;
 
