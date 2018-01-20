@@ -76,13 +76,12 @@ void pause(void){
  * Callback de recepción
  */
 void my_rx_callback(void){
-    char c, * msg;
-    size_t n_msg;
+    char c;
 
     /* Leemos un caracter */
-    uart_receive(UART_ID, &c, 1);
+    c = getchar();
 
-    uart_send(UART_ID,"\n\r", 2);               /* Salto de línea, muy necesario */
+//    printf("\n\r");                             /* Salto de línea, muy necesario */
 
     /* Si es 'r': */
     if(c == 'r'){
@@ -90,9 +89,7 @@ void my_rx_callback(void){
         blink_red = (blink_red == 0) ? 1 : 0;
 
         /* Imprimimos un mensaje informando */
-        msg="Led rojo modificado\n\r";          /* Guardamos el mensaje */
-        n_msg = strlen(msg);                    /* Calculamos su tamaño */
-        uart_send(UART_ID, msg, n_msg);         /* Lo mandamos imprimir */
+        printf("Led rojo modificado\n\r");
     }
 
     /* Si es 'g': */
@@ -101,17 +98,13 @@ void my_rx_callback(void){
         blink_green = (blink_green == 0) ? 1 : 0;
 
         /* Imprimimos un mensaje informando */
-        msg="Led verde modificado\n\r";         /* Guardamos el mensaje */
-        n_msg = strlen(msg);                    /* Calculamos su tamaño */
-        uart_send(UART_ID, msg, n_msg);         /* Lo mandamos imprimir */
+        printf("Led verde modificado\n\r");
     }
 
     /* Si no es 'r' ni 'g': */
     else{
         /* Imprimimos un mensaje de error */
-        msg="Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";    /* Guardamos el mensaje*/
-        n_msg = strlen(msg);                    /* Calculamos su tamaño */
-        uart_send(UART_ID, msg, n_msg);         /* Lo mandamos imprimir */
+        printf("Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
     }
 }
 
@@ -121,9 +114,6 @@ void my_rx_callback(void){
  * Programa principal
  */
 int main (){
-    char * msg;
-    size_t n_msg;
-
     /* Parpadeo de los leds activado al principio */
     blink_red = 1;         /* Led rojo */
     blink_green = 1;       /* Led verde */
@@ -135,9 +125,7 @@ int main (){
     uart_set_receive_callback (UART_ID, my_rx_callback);
 
     /* Imprimimos las instrucciones de uso */
-    msg="Envía 'r' para modificar el led rojo y 'g' para el verde\n\r";     /* Guardamos el mensaje*/
-    n_msg = strlen(msg);                        /* Calculamos su tamaño */
-    uart_send(UART_ID, msg, n_msg);             /* Lo mandamos imprimir */
+    printf("Envía 'r' para modificar el led rojo y 'g' para el verde\n\r");
 
     /* Bucle infinito de parpadeo de los leds si sus estados lo permiten */
     while (1){
