@@ -1,3 +1,4 @@
+Implementamos las funciones stub que necesitamos:
 _open:
     - Si el dispositivo no existe, errno=ENODEV y devolvemos -1
     - Si el dispositivo existe:
@@ -53,3 +54,5 @@ _isatty:
         * Si el dispositivo tiene implementación específica, se llama:
             ^ Si falla, devolvemos su salida
             ^ Si funciona, devolvemos su salida
+
+Después de implementar todas estas funciones stub, registramos nuestro dispositivo dándole como implementaciones específicas uart_receive para read y uart_send para write, el resto se dejan a NULL.
