@@ -80,7 +80,7 @@ int _open(const char * pathname, int flags, mode_t mode){
     }
 
     /* Si el dispositivo no existe */
-    else
+    else{
         errno = ENODEV;     /* Ajustamos el valor de errno */
     }
     
