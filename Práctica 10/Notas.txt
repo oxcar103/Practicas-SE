@@ -56,3 +56,6 @@ _isatty:
             ^ Si funciona, devolvemos su salida
 
 Después de implementar todas estas funciones stub, registramos nuestro dispositivo dándole como implementaciones específicas uart_receive para read y uart_send para write, el resto se dejan a NULL.
+
+Para comprobar el correcto funcionamiento de esta práctica, basta con sustituir todas las funciones de la capa L1 usadas en la práctica anterior por las funciones de la librería estándar de C, es decir, printf() y getchar() principalmente en nuestra práctica.
+
