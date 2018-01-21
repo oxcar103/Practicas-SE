@@ -59,3 +59,5 @@ Después de implementar todas estas funciones stub, registramos nuestro disposit
 
 Para comprobar el correcto funcionamiento de esta práctica, basta con sustituir todas las funciones de la capa L1 usadas en la práctica anterior por las funciones de la librería estándar de C, es decir, printf() y getchar() principalmente en nuestra práctica.
 
+Como en esta práctica también necesitamos acceder a la UART, grabaremos el programa en la memoria flash y usaremos un programa de comunicación en serie a nuestra elección configurado con los parámetros correspondientes.
+De nuevo, el resumen para ejecutar el programa es el mismo: make erase -> sudo chmod o+w /dev/ttyUSB1 -> make flash -> (resetear la placa) -> picocom -b 115200 -c /dev/ttyUSB1 -> (resetear la placa).
