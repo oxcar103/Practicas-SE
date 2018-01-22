@@ -62,4 +62,4 @@ Para comprobar el correcto funcionamiento de esta práctica, basta con sustituir
 Como en esta práctica también necesitamos acceder a la UART, grabaremos el programa en la memoria flash y usaremos un programa de comunicación en serie a nuestra elección configurado con los parámetros correspondientes.
 De nuevo, el resumen para ejecutar el programa es el mismo: make erase -> sudo chmod o+w /dev/ttyUSB1 -> make flash -> (resetear la placa) -> picocom -b 115200 -c /dev/ttyUSB1 -> (resetear la placa).
 
-Nota: Me sigue pareciendo magia de qué depende el peso del fichero que se carga a la placa. Cada ejecución tiene un valor aunque no toque los ficheros fuente.
+Nota: Me sigue pareciendo magia de qué depende el peso del fichero que se carga a la placa. Cada ejecución tiene un valor aunque no toque los ficheros fuente. Además, iprintf ocupa más que printf a pesar de que debería ocupar más pues sirve para flotantes, quizás sean cosas de optimización.
