@@ -70,18 +70,27 @@ int _open(const char * pathname, int flags, mode_t mode){
 
     /* Si el dispositivo existe */
     if (dev != NULL){
-        /*
-        * Si tiene implementada la función open y no falla al llamarla, se le asigna un descriptor
-        * Si no la tiene, como por defecto se puede abrir cualquier dispositivo, también se le asigna un descriptor
-        */
-        if (dev->open==NULL || dev->open(dev->id, flags, mode) >= 0){
-            return get_fd(dev, flags);
+
+        /* Si el dispositivo tiene implementada la función open */
+        if (dev->open != NULL){
+
+            /* Si no falla la llamada a open */
+            if (dev->open(dev->id, flags, mode) >= 0){ 
+                return get_fd(dev, flags);      /* Se retorna su descriptor */
+            }
+
+            /* Si falla, la propia función open ajustará errno*/
         }
+
+        /* Si no tiene implementada la función open */
+        else{
+            errno = ENOTSUP;    /* Operación no soportada */
+        }        
     }
 
     /* Si el dispositivo no existe */
     else{
-        errno = ENODEV;     /* Ajustamos el valor de errno */
+        errno = ENODEV;         /* Lo informamos mediante errno */
     }
 
     return -1;

@@ -199,7 +199,7 @@ void release_fd (uint32_t fd){
 void redirect_fd(uint32_t fd, const char* name, int flags, mode_t mode){
     int temp = -1;
 
-    bsp_dev_t *dev = find_dev (name);
+    bsp_dev_t * dev = find_dev (name);      /* Buscamos el dispositivo en la tabla de dispositivos del BSP */
 
     if (dev){
         /*
