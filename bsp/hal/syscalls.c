@@ -83,7 +83,6 @@ int _open(const char * pathname, int flags, mode_t mode){
     else{
         errno = ENODEV;     /* Ajustamos el valor de errno */
     }
-    
 
     return -1;
 }

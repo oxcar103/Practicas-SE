@@ -21,10 +21,10 @@
 #define CPU_FREQ        24000000u
 
 /* Máximo número de dispositivos gestionables por el BSP */
-#define BSP_MAX_DEV 8
+#define BSP_MAX_DEV     8
 
 /* Máximo número de ficheros (dispositivos) abiertos simultánemente */
-#define BSP_MAX_FD 8
+#define BSP_MAX_FD      8
 
 /*
  * Configuración del GPIO
@@ -49,8 +49,8 @@
 /*
  * Configuración de E/S estándar
  */
-#define BSP_STDOUT      UART1_NAME
 #define BSP_STDIN       UART1_NAME
+#define BSP_STDOUT      UART1_NAME
 #define BSP_STDERR      UART1_NAME
 
 /*
