@@ -59,7 +59,7 @@ static bsp_fd_t bsp_fd_list[BSP_MAX_FD] ={
 /**
  * Registro de un dispositivo en el sistema.
  * @param name      Nombre del dispositivo
- * @param id        Dirección base de los registros de gestión del dispositivo
+ * @param id        Identificador del dispositivo
  * @param open      Función open del dispositivo
  * @param close     Función close del dispositivo
  * @param read      Función read del dispositivo
