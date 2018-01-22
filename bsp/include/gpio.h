@@ -66,7 +66,7 @@ typedef enum
 /*****************************************************************************/
 
 /**
- * Fija la dirección los pines seleccionados en la máscara como de entrada
+ * Fija la dirección de los pines seleccionados en la máscara como de entrada
  *
  * @param   port    Puerto
  * @param   mask    Máscara para seleccionar los pines
@@ -78,7 +78,7 @@ inline gpio_err_t gpio_set_port_dir_input (gpio_port_t port, uint32_t mask);
 /*****************************************************************************/
 
 /**
- * Fija la dirección los pines seleccionados en la máscara como de salida
+ * Fija la dirección de los pines seleccionados en la máscara como de salida
  *
  * @param   port    Puerto
  * @param   mask    Máscara para seleccionar los pines
