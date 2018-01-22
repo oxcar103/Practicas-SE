@@ -63,7 +63,7 @@ static bsp_fd_t bsp_fd_list[BSP_MAX_FD] =
  * Registro de un dispositivo en el sistema.
  * @param name		Nombre del dispositivo
  * @param id		Dirección base de los registros de gestión del dispositivo
- * @param open		Función de apertura del dispositivo
+ * @param open		Función open del dispositivo
  * @param close		Función close del dispositivo
  * @param read		Función read del dispositivo
  * @param write		Función write del dispositivo
@@ -201,9 +201,18 @@ void release_fd (uint32_t fd)
  */
 void redirect_fd(uint32_t fd, const char* name, int flags, mode_t mode)
 {
-	int temp;
+	int temp = -1;
 
-	temp = open (name, flags, mode);
+	bsp_dev_t *dev = find_dev (name);
+	if (dev)
+	{
+		/*
+	     * Si el dispositivo no tiene implementada la función open o
+	     * si no falla la llamada a open, se le asigna un descriptor
+	     */
+	    if (dev->open==NULL || dev->open(dev->id, flags, mode) >= 0)
+	        temp = get_fd(dev, flags);
+	}
 
 	if (temp >= 0)
 	{
