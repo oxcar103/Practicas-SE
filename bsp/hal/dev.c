@@ -197,9 +197,19 @@ void release_fd (uint32_t fd){
  * @param mode  Modo de apertura
  */
 void redirect_fd(uint32_t fd, const char* name, int flags, mode_t mode){
-    int temp;
+    int temp = -1;
 
-    temp = open (name, flags, mode);
+    bsp_dev_t *dev = find_dev (name);
+
+    if (dev){
+        /*
+        * Si tiene implementada la función open y no falla al llamarla, se le asigna un descriptor
+        * Si no la tiene, como por defecto se puede abrir cualquier dispositivo, también se le asigna un descriptor
+        */
+        if (dev->open==NULL || dev->open(dev->id, flags, mode) >= 0){
+            temp = get_fd(dev, flags);
+        }
+    }
 
     if (temp >= 0){
         bsp_fd_list[fd].dev   = bsp_fd_list[temp].dev;
