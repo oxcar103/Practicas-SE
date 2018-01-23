@@ -105,7 +105,7 @@ void my_rx_callback(void){
     /* Si no es 'r' ni 'g': */
     else{
         /* Imprimimos un mensaje de error */
-        printf("Carácter incorrecto: Envía 'r' para modificar el led rojo y 'g' para el verde\r\n");
+        printf("Carácter incorrecto: Envía 'R' o 'r' para modificar el led rojo y 'G' o 'g' para el verde\r\n");
     }
 }
 
@@ -126,7 +126,7 @@ int main (){
     uart_set_receive_callback (UART_ID, my_rx_callback);
 
     /* Imprimimos las instrucciones de uso */
-    printf("Envía 'r' para modificar el led rojo y 'g' para el verde\r\n");
+    printf("Envía 'R' o 'r' para modificar el led rojo y 'G' o 'g' para el verde\r\n");
 
     /* Bucle infinito de parpadeo de los leds si sus estados lo permiten */
     while (1){
