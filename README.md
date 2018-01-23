@@ -22,6 +22,8 @@ Prácticas de la asignatura Sistemas Empotrados (SE).
 
 - **P9-Desarrollo de un driver L1 para las UART**: En esta práctica, continuaremos con el desarrollo del diseño de los drivers, mediante la implementación del nivel 1 o L1 consistente principalmente en la incorporación del manejo de las interrupciones y de bufferes circulares para evitar el comportamiento bloqueante de las funciones de envío y recepción del L0. Adicionalmente, implementaremos un sencillo programa para testear el correcto funcionamiento de esta capa de drivers.  
 
+- **P10-Desarrollo de un driver L2 para las UART**: En esta práctica, terminaremos poéticamente tanto con la asignatura como con  los drivers, culminando con el nivel 2 o L2 consistente esencialmente de la integración de nuestra placa con el estándar de C, permitiéndonos así la realización de cualquier aplicación para nuestro sistema empotrado de manera análoga a como lo haríamos para nuestro SO. Para esta integración, nos basta con la implementación mínima de 7 funciones stub: *_open*, *_close*, *_read*, *_write*, *_lseek*, *_fstat* e *_isatty* que sirven de base para las llamadas al sistema casi homónimas. Adicionalmente, traduciremos el programa de la práctica anterior plenamente a funciones estándar de C para testear el correcto funcionamiento de esta capa de drivers.  
+
 Licencia  
 ------------------------
 El proyecto en conjunto se distribuye bajo la licencia [GPL](LICENSE).  
