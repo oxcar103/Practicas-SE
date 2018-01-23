@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <ctype.h>
 #include "system.h"
 
 /*
@@ -79,7 +80,7 @@ void my_rx_callback(void){
     char c;
 
     /* Leemos un caracter */
-    c = getchar();
+    c = tolower(getchar());
 
     printf("\r\n");                             /* Salto de línea, muy necesario */
 
